@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -439,12 +438,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -604,7 +603,7 @@ GameObject:
   - component: {fileID: 947604511}
   - component: {fileID: 947604510}
   m_Layer: 0
-  m_Name: MouseRenderer
+  m_Name: MouseManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -757,6 +756,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1172577852}
     m_Modifications:
+    - target: {fileID: 3020274497580218165, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
+      propertyPath: _isClickable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3119944532961296034, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -831,6 +834,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1172577852}
     m_Modifications:
+    - target: {fileID: 3020274497580218165, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
+      propertyPath: _isClickable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3119944532961296034, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5

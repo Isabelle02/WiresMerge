@@ -18,10 +18,4 @@ public sealed class CameraManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

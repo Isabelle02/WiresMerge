@@ -302,6 +302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b71b3320ec26b48a9d6e5254cdb7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 5229855301273442540}
+  _isClickable: 1
   _wires:
   - {fileID: 8769226295020566962}
   - {fileID: 4040534483427540312}
