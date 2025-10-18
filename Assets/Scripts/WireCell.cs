@@ -1,34 +1,47 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 
+public enum WireCellState
+{
+    Source,
+    Wire,
+    Bulb
+}
+
 public class WireCell : MonoBehaviour, IClickable, IWireCell
 {
+    [SerializeField] private GameObject _light;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private bool _isClickable;
-    [SerializeField] private bool _isSource;
+    [SerializeField] private WireCellState _state;
+    [SerializeField] private int _wireCount;
+    [SerializeField] private List<int> _outputAngles; // relative to z    right - 0    up - 90    left - 180    down - 270
 
-    // fill the list counterclockwise
-    [SerializeField] private List<GameObject> _wires = new List<GameObject>();
-
+    private float _baseAngle = 0f;
     private Tween _rotateTween;
     private int _rotateCount = 0;
 
-    private Action<IWireCell> _changedRotation;
-
-    public int WireCount => _wires.Count;
+    public Vector3 Position => transform.position;
+    public WireCellState State => _state;
+    public int WireCount => _wireCount;
     public int OutputCount { get; private set; }
-    public List<bool> ActiveStates => new List<bool>(_wires.Select(w => w.activeSelf));
-    public Action<IWireCell> ChangedRotation { get => _changedRotation; set => _changedRotation = value; }
+    public List<int> OutputAngles => _outputAngles;
+    public Action Rotated { get; set; }
+    public Action<IWireCell> BulbTurnedOn { get; set; }
+    public Action<IWireCell> BulbTurnedOff { get; set; }
+
+    public int OutputUsedCount { get; set; } = 0;
+    public bool IsHighlighted { get; private set; } = false;
 
     public Collider2D Collider { get => _collider; }
 
     public void Awake()
     {
-        OutputCount = _wires.Count(w => w.activeSelf);
+        OutputCount = _outputAngles.Count;
+        IsHighlighted = _state == WireCellState.Source;
+        _light.SetActive(IsHighlighted);
     }
 
     public void Start()
@@ -37,6 +50,28 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             MouseManager.AddClickable(this);
 
         Gameplay.WireSystem.AddWireCell(this);
+    }
+
+    public void Highlight()
+    {
+        if (_state == WireCellState.Source || IsHighlighted)
+            return;
+
+        IsHighlighted = true;
+        _light.SetActive(true);
+        if (_state == WireCellState.Bulb)
+            BulbTurnedOn?.Invoke(this);
+    }
+
+    public void Unhighlight()
+    {
+        if (_state == WireCellState.Source || !IsHighlighted)
+            return;
+
+        IsHighlighted = false;
+        _light.SetActive(false);
+        if (_state == WireCellState.Bulb)
+            BulbTurnedOff?.Invoke(this);
     }
 
     public void OnClick()
@@ -51,14 +86,17 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         _rotateTween = RotateAnimation();
         _rotateTween.OnComplete(() =>
         {
-            transform.rotation = Quaternion.identity;
-            var tempWires = ActiveStates;
-            for (var i = 0; i < WireCount; i++)
-                _wires[i].SetActive(tempWires[(i + WireCount - _rotateCount % WireCount) % WireCount]);
+            transform.rotation = Quaternion.Euler(Vector3.forward * (transform.rotation.eulerAngles.z % 360));
+            var angle = _rotateCount % WireCount * 360 / WireCount;
+            for (var i = 0; i < _outputAngles.Count; i++)
+            {
+                _outputAngles[i] = (_outputAngles[i] + angle) % 360;
+            }
 
+            _baseAngle = transform.rotation.eulerAngles.z;
             _rotateCount = 0;
 
-            _changedRotation?.Invoke(this);
+            Rotated?.Invoke();
         });
     }
 
@@ -66,8 +104,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     {
         int maxExtraRotations = 2;
         int effectiveRotateCount = Mathf.Min(_rotateCount, maxExtraRotations * WireCount + _rotateCount % WireCount);
-        var angle = 360 / WireCount * effectiveRotateCount;
-        var duration = 0.7f + effectiveRotateCount / 10f;
+        var angle = _baseAngle + 360 / WireCount * effectiveRotateCount;
+        var duration = 0.1f + effectiveRotateCount / 100f;
         return transform.DORotate(new Vector3(0f, 0f, angle) - transform.rotation.eulerAngles, duration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear);
     }
 }
