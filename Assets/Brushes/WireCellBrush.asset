@@ -36,4 +36,5 @@ MonoBehaviour:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_CanChangeZPosition: 0
   m_FloodFillContiguousOnly: 1
-  _wireCellPrefab: {fileID: 7471757773641423453, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
+  wireCellPrefab: {fileID: 7471757773641423453, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
+  brushShape: 1

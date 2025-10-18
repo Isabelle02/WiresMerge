@@ -23,6 +23,8 @@ public class WireSystem
         wireCell.BulbTurnedOn += OnBulbTurnedOn;
         wireCell.BulbTurnedOff += OnBulbTurnedOff;
         _wireCells.Add(wireCell);
+
+        OnRotated();
     }
 
     public void RemoveWireCell(IWireCell wireCell)
@@ -52,50 +54,65 @@ public class WireSystem
             cell.Unhighlight();
         }
 
+        var wireCells = new List<IWireCell>(_wireCells);
+        var usedSources = new List<IWireCell>();
         foreach (var cell in _sourceCells)
         {
-            CheckConnection(cell, _wireCells);
+            if (usedSources.Contains(cell))
+                continue;
+
+            usedSources.AddRange(CheckConnection(cell, wireCells));
         }
+
+        CheckWin();
     }
 
-    private void CheckConnection(IWireCell wireCell, List<IWireCell> wireCells)
+    private List<IWireCell> CheckConnection(IWireCell wireCell, List<IWireCell> wireCells)
     {
+        var usedSources = new List<IWireCell>();
+        var remainedCells = new List<IWireCell>(wireCells);
+        remainedCells.Remove(wireCell);
         for (var i = 0; i < wireCell.OutputCount; i++)
         {
             var direction = GetDirection(wireCell.OutputAngles[i]);
             var hits = Physics2D.RaycastAll(wireCell.Position, direction, 1f);
-            var cell = wireCells.FirstOrDefault(w => w.Position != wireCell.Position && hits.FirstOrDefault(hit => hit.transform.position == w.Position));
+            var cell = remainedCells.FirstOrDefault(w => hits.FirstOrDefault(hit => hit.transform.position == w.Position));
 
             if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle) == direction)))
             {
-                Debug.Log("connected neighbor " + cell.Position);
+                Debug.Log(wireCell.Position + " connected neighbor " + cell.Position);
 
                 wireCell.OutputUsedCount++;
                 cell.OutputUsedCount++;
 
                 cell.Highlight();
 
-                var remainedCells = new List<IWireCell>(wireCells);
-                remainedCells.Remove(wireCell);
                 remainedCells.Remove(cell);
-                
-                CheckConnection(cell, remainedCells);
+                if (_sourceCells.Contains(cell))
+                    usedSources.Add(cell);
+
+                usedSources.AddRange(CheckConnection(cell, remainedCells));
             }
         }
+
+        return usedSources;
     }
 
     private void OnBulbTurnedOn(IWireCell wireCell)
     {
         Debug.Log("OnBulbTurnedOn " + _bulbTurnedOnCount + " " + _bulbNeedToTurnOnCount);
-
         _bulbTurnedOnCount++;
-        if (_bulbNeedToTurnOnCount == _bulbTurnedOnCount && _wireCells.Where(w => w.IsHighlighted).All(w => w.OutputUsedCount == w.OutputCount))
-            Debug.Log("WIN");
     }
 
     private void OnBulbTurnedOff(IWireCell wireCell)
     {
         Debug.Log("OnBulbTurnedOff");
         _bulbTurnedOnCount--;
+    }
+
+    private void CheckWin()
+    {
+        if (_bulbNeedToTurnOnCount == _bulbTurnedOnCount && _wireCells.Where(w => w.IsHighlighted).All(w => w.OutputUsedCount == w.OutputCount))
+            Debug.Log("WIN");
     }
 }

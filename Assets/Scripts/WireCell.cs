@@ -3,6 +3,12 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 
+public enum ShapeType
+{
+    Rect,
+    Hex
+}
+
 public enum WireCellState
 {
     Source,
@@ -12,8 +18,12 @@ public enum WireCellState
 
 public class WireCell : MonoBehaviour, IClickable, IWireCell
 {
-    [SerializeField] private GameObject _light;
-    [SerializeField] private Collider2D _collider;
+    [SerializeField] private ShapeType _shapeType;
+    [SerializeField] private Collider2D _rectCollider;
+    [SerializeField] private Collider2D _hexCollider;
+    [SerializeField] private GameObject _rectLight;
+    [SerializeField] private GameObject _hexLight;
+
     [SerializeField] private bool _isClickable;
     [SerializeField] private WireCellState _state;
     [SerializeField] private int _wireCount;
@@ -35,13 +45,14 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     public int OutputUsedCount { get; set; } = 0;
     public bool IsHighlighted { get; private set; } = false;
 
-    public Collider2D Collider { get => _collider; }
+    public Collider2D Collider { get => _shapeType == ShapeType.Rect ? _rectCollider : _hexCollider; }
+    public GameObject Light { get => _shapeType == ShapeType.Rect ? _rectLight : _hexLight; }
 
     public void Awake()
     {
         OutputCount = _outputAngles.Count;
         IsHighlighted = _state == WireCellState.Source;
-        _light.SetActive(IsHighlighted);
+        Light.SetActive(IsHighlighted);
     }
 
     public void Start()
@@ -58,7 +69,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             return;
 
         IsHighlighted = true;
-        _light.SetActive(true);
+        Light.SetActive(true);
         if (_state == WireCellState.Bulb)
             BulbTurnedOn?.Invoke(this);
     }
@@ -69,7 +80,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             return;
 
         IsHighlighted = false;
-        _light.SetActive(false);
+        Light.SetActive(false);
         if (_state == WireCellState.Bulb)
             BulbTurnedOff?.Invoke(this);
     }
