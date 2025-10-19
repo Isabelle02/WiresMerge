@@ -1,0 +1,104 @@
+<dialog>
+	<name>Энзо Фарн</name>
+	<message>Ну наконец ты пришел. Сколько можно уже ждать!</message>
+
+	<dialog>
+		<answer>Я переводил бабушку через дорогу.</answer>
+		<name>User</name>
+		<message>Я переводил бабушку через дорогу.</message>
+		<dialog>
+			<name>Энзо Фарн</name>
+			<message>Благие дела благие, если они реальны, а не являются отмазками!</message>
+			
+		</dialog>
+	</dialog>
+
+	<dialog>
+		<answer>Были свои дела.</answer>
+		<name>User</name>
+		<message>Были свои дела.</message>
+		<dialog>
+			<name>Энзо Фарн</name>
+			<message>Как же. Твоё дело сейчас — помогать мне.</message>
+		</dialog>
+	</dialog>
+
+	<dialog>
+		<answer>Прошу прощения, Энзо. Этого не повторится.</answer>
+		<name>User</name>
+		<message>Прошу прощения, Энзо. Этого не повторится.</message>
+		<dialog>
+			<name>Энзо Фарн</name>
+			<message>Надеюсь на это.</message>
+		</dialog>
+	</dialog>
+
+	
+	
+	
+	<dialog>
+		<name>Энзо Фарн</name>
+		<message>И соберись. Мы создадим бесконечную энергию, User!</message>
+		<dialog>
+			<name>Энзо Фарн</name>
+			<message>Это будет кропотливая и усердная для нас обоих работа. Тебе выпала честь помогать мне с этим делом!</message>
+			<dialog>
+				<name>Энзо Фарн</name>
+				<message>Итак, сначала покажи не растерял ли ты навыки за время, что мы не виделись. Собери эту простейшую схему. Тебе надо напомнить азы?</message>
+
+				<dialog>
+					<answer>Сам справлюсь.</answer>
+					<name>User</name>
+					<message>Сам справлюсь.</message>
+					<dialog>
+						<name>Энзо Фарн</name>
+						<message>Ну смотри. Помогать я тебе не собираюсь.</message>
+						<dialog>
+							<name>User</name>
+							<message>Приступим.</message>
+							<action id="0"></action>
+						</dialog>
+					</dialog>
+				</dialog>
+
+				<dialog>
+					<answer>Да, пожалуйста.</answer>
+					<name>User</name>
+					<message>Да, пожалуйста.</message>
+					<dialog>
+						<name>Энзо Фарн</name>
+						<message>Все вам объясняй... Ладно, слушай внимательно.</message>
+						<dialog>
+							<name>Энзо Фарн</name>
+							<message>Нажимай на провода, чтобы собрать их в необходимую комбинацию. Работа считается завершенной, если энергия проведена из источника в получатель.</message>
+							<dialog>
+								<name>Энзо Фарн</name>
+								<message>Смотри не оставляй подключенные провода в воздухе! Все обязано быть герметичным.</message>
+								<dialog>
+									<name>Энзо Фарн</name>
+									<message>И не забывай о правилах безопасности.</message>
+									<dialog>
+										<name>Энзо Фарн</name>
+										<message>Готов?</message>
+										<dialog>
+											<answer>Приступим.</answer>
+											<name>User</name>
+											<message>Приступим.</message>
+											<action id="0"></action>
+										</dialog>
+										<dialog>
+											<answer>Повторите ещё раз.</answer>
+											<name>User</name>
+											<message>Повторите ещё раз.</message>
+											<action id="1"></action>
+										</dialog>
+									</dialog>
+								</dialog>
+							</dialog>
+						</dialog>
+					</dialog>
+				</dialog>
+			</dialog>
+		</dialog>
+	</dialog>
+</dialog>
