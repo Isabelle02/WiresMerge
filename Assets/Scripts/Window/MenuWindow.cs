@@ -2,16 +2,10 @@
 
 public class MenuWindow : BaseWindow
 {
-    private int _count = 1;
-
     public override async UniTask OnOpen()
     {
-        if (_count == 1)
-        {
-            await UniTask.Delay(2000);
-            WindowManager.Open<InfoWindow>();
-            _count = 0;
-        }
+        await UniTask.Delay(2000);
+        WindowManager.Open<DialogWindow>();
     }
 
     public override async UniTask OnClose()

@@ -13,6 +13,9 @@ public class WireSystem
 
     public void AddWireCell(IWireCell wireCell)
     {
+        if (_wireCells.Contains(wireCell))
+            return;
+
         if (wireCell.State == WireCellState.Bulb)
             _bulbNeedToTurnOnCount++;
 
@@ -23,7 +26,6 @@ public class WireSystem
         wireCell.BulbTurnedOn += OnBulbTurnedOn;
         wireCell.BulbTurnedOff += OnBulbTurnedOff;
         _wireCells.Add(wireCell);
-
         OnRotated();
     }
 
@@ -47,7 +49,6 @@ public class WireSystem
     private void OnRotated()
     {
         Debug.Log("CheckConnections");
-
         foreach (var cell in _wireCells)
         {
             cell.OutputUsedCount = 0;
@@ -58,10 +59,8 @@ public class WireSystem
         var usedSources = new List<IWireCell>();
         foreach (var cell in _sourceCells)
         {
-            if (usedSources.Contains(cell))
-                continue;
-
-            usedSources.AddRange(CheckConnection(cell, wireCells));
+            if (!usedSources.Contains(cell))
+                usedSources.AddRange(CheckConnection(cell, wireCells));
         }
 
         CheckWin();
@@ -77,16 +76,12 @@ public class WireSystem
             var direction = GetDirection(wireCell.OutputAngles[i]);
             var hits = Physics2D.RaycastAll(wireCell.Position, direction, 1f);
             var cell = remainedCells.FirstOrDefault(w => hits.FirstOrDefault(hit => hit.transform.position == w.Position));
-
             if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle) == direction)))
             {
                 Debug.Log(wireCell.Position + " connected neighbor " + cell.Position);
-
                 wireCell.OutputUsedCount++;
                 cell.OutputUsedCount++;
-
                 cell.Highlight();
-
                 remainedCells.Remove(cell);
                 if (_sourceCells.Contains(cell))
                     usedSources.Add(cell);

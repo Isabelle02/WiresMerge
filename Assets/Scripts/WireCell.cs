@@ -37,13 +37,12 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     public WireCellState State => _state;
     public int WireCount => _wireCount;
     public int OutputCount { get; private set; }
+    public int OutputUsedCount { get; set; } = 0;
+    public bool IsHighlighted { get; private set; } = false;
     public List<int> OutputAngles => _outputAngles;
     public Action Rotated { get; set; }
     public Action<IWireCell> BulbTurnedOn { get; set; }
     public Action<IWireCell> BulbTurnedOff { get; set; }
-
-    public int OutputUsedCount { get; set; } = 0;
-    public bool IsHighlighted { get; private set; } = false;
 
     public Collider2D Collider { get => _shapeType == ShapeType.Rect ? _rectCollider : _hexCollider; }
     public GameObject Light { get => _shapeType == ShapeType.Rect ? _rectLight : _hexLight; }
@@ -100,13 +99,10 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             transform.rotation = Quaternion.Euler(Vector3.forward * (transform.rotation.eulerAngles.z % 360));
             var angle = _rotateCount % WireCount * 360 / WireCount;
             for (var i = 0; i < _outputAngles.Count; i++)
-            {
                 _outputAngles[i] = (_outputAngles[i] + angle) % 360;
-            }
 
             _baseAngle = transform.rotation.eulerAngles.z;
             _rotateCount = 0;
-
             Rotated?.Invoke();
         });
     }

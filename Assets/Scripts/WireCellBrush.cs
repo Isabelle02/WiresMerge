@@ -16,16 +16,13 @@ public class WireCellBrush : GridBrush
             return;
 
         Erase(grid, brushTarget, position);
-
         var instance = (GameObject)PrefabUtility.InstantiatePrefab(wireCellPrefab);
         if (instance != null)
         {
             instance.transform.SetParent(brushTarget.transform);
             instance.transform.position = grid.LocalToWorld(grid.CellToLocalInterpolated(position + new Vector3(0.5f, 0.5f, 0f)));
             if (brushShape == ShapeType.Hex)
-            {
                 instance.transform.position = grid.CellToWorld(position) + grid.cellSize * 0.5f - new Vector3(0.435f, 0.5f, 0f);
-            }
 
             Undo.RegisterCreatedObjectUndo(instance, "Paint WireCell");
         }
@@ -51,9 +48,7 @@ public class WireCellBrush : GridBrush
         {
             var worldPos = grid.LocalToWorld(grid.CellToLocalInterpolated(position + new Vector3(0.5f, 0.5f, 0f)));
             if (brushShape == ShapeType.Hex)
-            {
                 worldPos = grid.CellToWorld(position) + grid.cellSize * 0.5f - new Vector3(0.435f, 0.5f, 0f);
-            }
 
             foreach (Transform child in brushTarget.transform)
             {

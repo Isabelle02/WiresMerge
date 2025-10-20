@@ -44,6 +44,9 @@ public class Pool<T> : Pool where T : MonoBehaviour
 
     public static void Release(T obj)
     {
+        if (obj is IDisposable disposable)
+            disposable.Dispose();
+
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(_instance.transform);
         _poolObjects.Push(obj);

@@ -8,7 +8,6 @@ public class WindowManager : MonoBehaviour
     [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
 
     private static WindowManager _instance;
-
     private BaseWindow _currentWindow;
     private List<BaseWindow> _initedWindows = new List<BaseWindow>();
     private Stack<BaseWindow> _windowsStack = new Stack<BaseWindow>();
@@ -63,19 +62,14 @@ public class WindowManager : MonoBehaviour
 
     private async UniTask ClosePopupToOpenInternal()
     {
-        if (_windowsStack.Count < 2)
-            return;
-
-        if (_currentWindow.IsPopup)
+        if (_windowsStack.Count > 1 && _currentWindow.IsPopup)
             await _currentWindow.Close();
     }
 
     private async UniTask CloseToOpenInternal()
     {
-        if (_windowsStack.Count < 2)
-            return;
-
-        await _currentWindow.Close();
+        if (_windowsStack.Count > 1)
+             await _currentWindow.Close();
     }
 
     private async UniTask ClosePopupInternal()
@@ -117,7 +111,6 @@ public class WindowManager : MonoBehaviour
 
         var window = Instantiate(windowPrefab, transform);
         _initedWindows.Add(window);
-
         return window;
     }
 }
