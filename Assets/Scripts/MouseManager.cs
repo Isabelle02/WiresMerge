@@ -4,7 +4,6 @@ using UnityEngine;
 public class MouseManager : MonoBehaviour
 {
     private static MouseManager _instance;
-
     private List<IClickable> _clickables = new List<IClickable>();
 
     void Awake()
@@ -20,7 +19,8 @@ public class MouseManager : MonoBehaviour
 
     public static void AddClickable(IClickable clickable)
     {
-        _instance._clickables.Add(clickable);
+        if (!_instance._clickables.Contains(clickable))
+             _instance._clickables.Add(clickable);
     }
 
     public static void RemoveClickable(IClickable clickable)
@@ -32,7 +32,7 @@ public class MouseManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            var mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
             foreach (var clickable in _clickables) 
             {
