@@ -14,6 +14,19 @@ public class DialogNode
     public List<int> ParentIds = new List<int>();
     public List<int> ChildrenIds = new List<int>();
 
+    public string FormattedText
+    {
+        get
+        {
+            var paramNames = Parameters.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var args = new List<object>();
+            foreach (var name in paramNames)
+                args.Add(DynamicParameters.Get(name));
+
+            return string.Format(Text, args.ToArray());
+        }
+    }
+
     public DialogNode(int nodeId, string speaker, string text, bool isPlayer, string parameters)
     {
         NodeID = nodeId;

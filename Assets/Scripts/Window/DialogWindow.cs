@@ -60,7 +60,7 @@ public class DialogWindow : BaseWindow, IClickable
 
         _userChoices.Clear();
         if (!_dialogSystem.CurrentRootNode.IsPlayer)
-            _persText.text = _dialogSystem.CurrentRootNode.Speaker + " " + _dialogSystem.CurrentRootNode.Text;
+            _persText.text = _dialogSystem.CurrentRootNode.Speaker + " " + _dialogSystem.CurrentRootNode.FormattedText;
 
         foreach (var node in _dialogSystem.NextDialogNodes)
         {
@@ -70,7 +70,7 @@ public class DialogWindow : BaseWindow, IClickable
             var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
             button.Node = node;
             button.OnButtonClick += OnButtonClick;
-            button.SetText(node.Text);
+            button.SetText(node.FormattedText);
 
             _userChoices.Add(button);
             MouseManager.AddClickable(button);
