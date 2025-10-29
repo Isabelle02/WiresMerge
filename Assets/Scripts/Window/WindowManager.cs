@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class WindowManager : MonoBehaviour
 {
+    [SerializeField] private Canvas _canvas;
     [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
 
     private static WindowManager _instance;
@@ -68,7 +69,7 @@ public class WindowManager : MonoBehaviour
 
     private async UniTask CloseToOpenInternal()
     {
-        if (_windowsStack.Count > 1)
+        if (_windowsStack.Count > 0)
              await _currentWindow.Close();
     }
 
@@ -109,7 +110,7 @@ public class WindowManager : MonoBehaviour
         if (!windowPrefab)
             return null;
 
-        var window = Instantiate(windowPrefab, transform);
+        var window = Instantiate(windowPrefab, _canvas.transform);
         _initedWindows.Add(window);
         return window;
     }

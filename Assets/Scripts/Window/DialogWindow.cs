@@ -10,6 +10,7 @@ public class DialogWindow : BaseWindow, IClickable
     [SerializeField] private DialogGraph _graph;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private TextMeshProUGUI _persText;
+    [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private GridLayoutGroup _choicesGrid;
     [SerializeField] private List<DialogChoiceButton> _userChoices = new List<DialogChoiceButton>();
 
@@ -60,7 +61,10 @@ public class DialogWindow : BaseWindow, IClickable
 
         _userChoices.Clear();
         if (!_dialogSystem.CurrentRootNode.IsPlayer)
-            _persText.text = _dialogSystem.CurrentRootNode.Speaker + " " + _dialogSystem.CurrentRootNode.FormattedText;
+        {
+            _persText.text = _dialogSystem.CurrentRootNode.FormattedText;
+            _nameText.text = _dialogSystem.CurrentRootNode.Speaker;
+        }
 
         foreach (var node in _dialogSystem.NextDialogNodes)
         {
