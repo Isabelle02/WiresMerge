@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +14,14 @@ public class DialogWindow : BaseWindow, IClickable
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private GridLayoutGroup _choicesGrid;
     [SerializeField] private List<DialogChoiceButton> _userChoices = new List<DialogChoiceButton>();
+    [SerializeField] private BaseButton _menuButton;
 
     private DialogSystem _dialogSystem;
+
+    private float _delay = 0.05f;
+    private bool _isTyping = false;
+    private CancellationTokenSource _cancellationTokenSource;
+    private string _textToType;
 
     public Collider2D Collider => _collider;
 
@@ -31,6 +38,14 @@ public class DialogWindow : BaseWindow, IClickable
         _dialogSystem = new DialogSystem(_graph);
         _dialogSystem.OnNextStep += UpdateUI;
         _dialogSystem.Start();
+
+        _menuButton.OnButtonClick += OnMenuClick;
+        MouseManager.AddClickable(_menuButton);
+    }
+
+    private void OnMenuClick(BaseButton button)
+    {
+        WindowManager.Open<MenuPopup>();
     }
 
     private void OnButtonClick(BaseButton button)
@@ -63,6 +78,15 @@ public class DialogWindow : BaseWindow, IClickable
         if (!_dialogSystem.CurrentRootNode.IsPlayer)
         {
             _persText.text = _dialogSystem.CurrentRootNode.FormattedText;
+            //_textToType = _dialogSystem.CurrentRootNode.FormattedText;
+            //if (!_isTyping)
+            //{
+            //    StartAnimation();
+            //}
+            //else
+            //{
+            //    StopAnimation();
+            //}
             _nameText.text = _dialogSystem.CurrentRootNode.Speaker;
         }
 
@@ -71,19 +95,53 @@ public class DialogWindow : BaseWindow, IClickable
             if (!node.IsPlayer)
                 continue;
 
+            //if (!_isTyping)
+            //    continue;
+
             var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
             button.Node = node;
             button.OnButtonClick += OnButtonClick;
             button.SetText(node.FormattedText);
-
             _userChoices.Add(button);
             MouseManager.AddClickable(button);
+
         }
+    }
+
+    private async UniTask TypeText(string textToType, CancellationToken token)
+    {
+        _isTyping = true;
+        _persText.text = "";
+
+        foreach (char letter in textToType)
+        {
+            token.ThrowIfCancellationRequested();
+            _persText.text += letter;
+            await UniTask.Delay((int)(_delay * 1000));
+        }
+
+        _isTyping = false;
+    }
+
+    public void StartAnimation()
+    {
+        _cancellationTokenSource = new CancellationTokenSource();
+        TypeText(_textToType, _cancellationTokenSource.Token).Forget();
+    }
+
+    public void StopAnimation()
+    {
+        _cancellationTokenSource?.Cancel();
+        _persText.text = _textToType;
+        _isTyping = false;
     }
 
     public override UniTask OnClose()
     {
         _dialogSystem.OnNextStep -= UpdateUI;
+        _menuButton.OnButtonClick -= OnMenuClick;
+        MouseManager.RemoveClickable(_menuButton);
+
         return base.OnClose();
     }
 }

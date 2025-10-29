@@ -1,26 +1,27 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class MenuWindow : BaseWindow
+public class MenuPopup : BaseWindow
 {
     [SerializeField] private BaseButton _playButton;
     [SerializeField] private BaseButton _settingsButton;
-    [SerializeField] private BaseButton _quitButton;
+    [SerializeField] private BaseButton _exitButton;
 
     public override async UniTask OnOpen()
     {
         _playButton.OnButtonClick += OnPlayClick;
         _settingsButton.OnButtonClick += OnSettingsClick;
-        _quitButton.OnButtonClick += OnQuitButton;
+        _exitButton.OnButtonClick += OnExitButton;
 
         MouseManager.AddClickable(_playButton);
         MouseManager.AddClickable(_settingsButton);
-        MouseManager.AddClickable(_quitButton);
+        MouseManager.AddClickable(_exitButton);
     }
 
     private void OnPlayClick(BaseButton button)
     {
-        WindowManager.Open<DialogWindow>();
+        this.CloseForce();
+        Debug.Log("Click");
     }
 
     private void OnSettingsClick(BaseButton button)
@@ -28,20 +29,22 @@ public class MenuWindow : BaseWindow
         WindowManager.Open<SettingsPopup>();
     }
 
-    private void OnQuitButton(BaseButton button)
+    private void OnExitButton(BaseButton button)
     {
-        Application.Quit();
+        WindowManager.Open<MenuWindow>();
+        ///
+        WindowManager.Close<DialogWindow>();
+        ///
     }
 
     public override async UniTask OnClose()
     {
         _playButton.OnButtonClick -= OnPlayClick;
         _settingsButton.OnButtonClick -= OnSettingsClick;
-        _quitButton.OnButtonClick -= OnQuitButton;
+        _exitButton.OnButtonClick -= OnExitButton;
 
         MouseManager.RemoveClickable(_playButton);
         MouseManager.RemoveClickable(_settingsButton);
-        MouseManager.RemoveClickable(_quitButton);
+        MouseManager.RemoveClickable(_exitButton);
     }
-
 }

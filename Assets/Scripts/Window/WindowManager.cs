@@ -31,6 +31,40 @@ public class WindowManager : MonoBehaviour
         _instance.OpenInternal<T>();
     }
 
+    ///
+    public static void Close<T>() where T : BaseWindow
+    {
+        _instance.CloseInternal<T>();
+    }
+
+    private void CloseInternal<T>() where T : BaseWindow
+    {
+        var windowType = typeof(T);
+        var window = _windowsStack.FirstOrDefault(w => w.GetType() == windowType);
+        if (window == null)
+            return;
+
+        // Удаляем все окна выше целевого из стека
+        while (_windowsStack.Count > 0 && _windowsStack.Peek() != window)
+        {
+            var top = _windowsStack.Pop();
+            top.CloseForce();
+        }
+
+        // Закрываем целевое окно
+        if (_windowsStack.Count > 0 && _windowsStack.Peek() == window)
+        {
+            _windowsStack.Pop().CloseForce();
+        }
+
+        // Обновляем текущий
+        _currentWindow = _windowsStack.Count > 0 ? _windowsStack.Peek() : null;
+        if (_currentWindow != null)
+            _currentWindow.Open();
+    }
+    ///
+
+
     public static async UniTask ClosePopup()
     {
         await _instance.ClosePopupInternal();
