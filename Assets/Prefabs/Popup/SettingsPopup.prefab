@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3165882821066925094}
   - component: {fileID: 5555502920270764601}
   - component: {fileID: 8038967366426995322}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 582680511146229423}
   - component: {fileID: 7842790523432691650}
   - component: {fileID: 2695699166873391768}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 6333981382521951323}
   - component: {fileID: 3091177696759517115}
   - component: {fileID: 2982973831796516318}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollDot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4949271640873883315}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 2655641118828607130}
   - component: {fileID: 847690998353959766}
   - component: {fileID: 3879999339879489808}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPopup: 1
+  _exitButton: {fileID: 2331106848294419836}
 --- !u!1 &3614120579007894105
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +457,7 @@ GameObject:
   - component: {fileID: 273562021453901}
   - component: {fileID: 1354008872217533695}
   - component: {fileID: 4359921814150257823}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MusicText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +591,7 @@ GameObject:
   - component: {fileID: 8825059110370416847}
   - component: {fileID: 464678141097568951}
   - component: {fileID: 1334098202800061376}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollDot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,7 +800,7 @@ GameObject:
   - component: {fileID: 3459506567638301870}
   - component: {fileID: 7863776023103257633}
   - component: {fileID: 2881506679076266003}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SoundText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -931,7 +932,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7119142732569943418}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollUISound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -964,7 +965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3494483569669095725}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SettingsUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -986,6 +987,7 @@ Transform:
   m_Children:
   - {fileID: 4949271640873883315}
   - {fileID: 7119142732569943418}
+  - {fileID: 8067019317316928115}
   m_Father: {fileID: 3993596195678286845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6410302062059757745
@@ -997,7 +999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2616724262368264987}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SettingsNames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1026,6 +1028,141 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &7531672563814373044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8067019317316928115}
+  - component: {fileID: 4837979895827155059}
+  - component: {fileID: 5781120404379671118}
+  - component: {fileID: 1587471987556816447}
+  - component: {fileID: 2331106848294419836}
+  m_Layer: 5
+  m_Name: ExitButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8067019317316928115
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531672563814373044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3494483569669095725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 318.32544, y: 167.07458}
+  m_SizeDelta: {x: 67.3492, y: 63.8509}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4837979895827155059
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531672563814373044}
+  m_CullTransparentMesh: 1
+--- !u!114 &5781120404379671118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531672563814373044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.4056604, g: 0.23311232, b: 0.08993414, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 89739479, guid: 2e0d3fa3394fc4e42b6361582c35e12e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!61 &1587471987556816447
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531672563814373044}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.29223633, y: -0.5845032}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 56.556396, y: 58.830994}
+  m_EdgeRadius: 0
+--- !u!114 &2331106848294419836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7531672563814373044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab58cec42b19094ca4f534bbdea5d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 1587471987556816447}
 --- !u!1 &8357462990166115085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,7 +1174,7 @@ GameObject:
   - component: {fileID: 5776771529497291051}
   - component: {fileID: 6517247662305087824}
   - component: {fileID: 1867586096152711759}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}

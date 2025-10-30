@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 630155212932805250}
   - component: {fileID: 662883706611492632}
   - component: {fileID: 7332314122400281550}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SettingsBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2655641118828607130}
   - component: {fileID: 847690998353959766}
   - component: {fileID: 3879999339879489808}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 8279376772936071669}
   - component: {fileID: 6067951215832440714}
   - component: {fileID: 341283498606898441}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ExitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -813,7 +813,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3494483569669095725}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MenuButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 6454365527577226290}
   - component: {fileID: 2449059630805464091}
   - component: {fileID: 3100467669399720548}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

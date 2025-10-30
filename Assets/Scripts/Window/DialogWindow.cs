@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogWindow : BaseWindow, IClickable
@@ -66,6 +67,9 @@ public class DialogWindow : BaseWindow, IClickable
         {
             Debug.Log("GAME");
             //close dialogs, go to game
+            this.CloseForce();
+            GoToScene("GameScene");
+            WindowManager.Open<Level_1_Window>();
         }
     }
 
@@ -134,6 +138,11 @@ public class DialogWindow : BaseWindow, IClickable
         _cancellationTokenSource?.Cancel();
         _persText.text = _textToType;
         _isTyping = false;
+    }
+
+    public void GoToScene(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
     }
 
     public override UniTask OnClose()
