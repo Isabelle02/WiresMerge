@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 3165882821066925094}
   - component: {fileID: 5555502920270764601}
   - component: {fileID: 8038967366426995322}
+  - component: {fileID: 3619012546561149942}
   m_Layer: 5
-  m_Name: ScrollLine
+  m_Name: SliderLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,6 +76,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &3619012546561149942
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330997154736567988}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 368.7997, y: 12.3601}
+  m_EdgeRadius: 0
 --- !u!1 &383842435082038744
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +132,7 @@ GameObject:
   - component: {fileID: 582680511146229423}
   - component: {fileID: 7842790523432691650}
   - component: {fileID: 2695699166873391768}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: EffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,8 +266,9 @@ GameObject:
   - component: {fileID: 6333981382521951323}
   - component: {fileID: 3091177696759517115}
   - component: {fileID: 2982973831796516318}
+  - component: {fileID: 8949090391862887600}
   m_Layer: 5
-  m_Name: ScrollDot
+  m_Name: SliderHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -243,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 56.2712, y: 56.2712}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3091177696759517115
@@ -284,6 +331,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &8949090391862887600
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995580605116676530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 56.2712, y: 56.2712}
+  m_EdgeRadius: 0
 --- !u!1 &1228036981290384418
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,8 +385,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4949271640873883315}
+  - component: {fileID: 8593294056276579415}
   m_Layer: 5
-  m_Name: ScrollMusic
+  m_Name: SliderMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 1228036981290384418}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 160, y: 72, z: 0}
+  m_LocalPosition: {x: 130, y: 72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -317,6 +410,26 @@ Transform:
   - {fileID: 8825059110370416847}
   m_Father: {fileID: 3494483569669095725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8593294056276579415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228036981290384418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1caa04f0053d5aa4989b047196f4556b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sliderCollider: {fileID: 3619012546561149942}
+  _handleCollider: {fileID: 6941191760737571984}
+  _handlerImage: {fileID: 1334098202800061376}
+  _handle: {fileID: 8825059110370416847}
+  _minValue: 0
+  _maxValue: 100
+  _value: 100
+  _moveDuration: 0.2
 --- !u!1 &2275124171253746677
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +441,8 @@ GameObject:
   - component: {fileID: 2655641118828607130}
   - component: {fileID: 847690998353959766}
   - component: {fileID: 3879999339879489808}
-  m_Layer: 5
+  - component: {fileID: 8239921466641558355}
+  m_Layer: 1
   m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,6 +507,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &8239921466641558355
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275124171253746677}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.5288086, y: -0.842926}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 834.25146, y: 642.1464}
+  m_EdgeRadius: 0
 --- !u!1 &2484699763952001184
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3993596195678286845}
   - component: {fileID: 2879202977075706892}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: SettingsPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,6 +605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isPopup: 1
   _exitButton: {fileID: 2331106848294419836}
+  _volumeSlider: {fileID: 8971289587548454070}
 --- !u!1 &3614120579007894105
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +617,7 @@ GameObject:
   - component: {fileID: 273562021453901}
   - component: {fileID: 1354008872217533695}
   - component: {fileID: 4359921814150257823}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: MusicText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,8 +751,9 @@ GameObject:
   - component: {fileID: 8825059110370416847}
   - component: {fileID: 464678141097568951}
   - component: {fileID: 1334098202800061376}
+  - component: {fileID: 6941191760737571984}
   m_Layer: 5
-  m_Name: ScrollDot
+  m_Name: SliderHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -614,7 +775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 56.2712, y: 56.2712}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &464678141097568951
@@ -655,6 +816,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &6941191760737571984
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118976460867743178}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 56.2712, y: 56.2712}
+  m_EdgeRadius: 0
 --- !u!1 &4126210927148824367
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +872,7 @@ GameObject:
   - component: {fileID: 8364775945777976340}
   - component: {fileID: 6467240784669566498}
   - component: {fileID: 6220111267722402900}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: SettingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +1006,7 @@ GameObject:
   - component: {fileID: 3459506567638301870}
   - component: {fileID: 7863776023103257633}
   - component: {fileID: 2881506679076266003}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: SoundText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -932,8 +1138,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7119142732569943418}
+  - component: {fileID: 8971289587548454070}
   m_Layer: 5
-  m_Name: ScrollUISound
+  m_Name: SliderSoundEffects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,7 +1155,7 @@ Transform:
   m_GameObject: {fileID: 5904884371535024727}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 160, y: -33, z: 0}
+  m_LocalPosition: {x: 130, y: -33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -956,6 +1163,26 @@ Transform:
   - {fileID: 6333981382521951323}
   m_Father: {fileID: 3494483569669095725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8971289587548454070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5904884371535024727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1caa04f0053d5aa4989b047196f4556b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sliderCollider: {fileID: 956906986202257604}
+  _handleCollider: {fileID: 8949090391862887600}
+  _handlerImage: {fileID: 2982973831796516318}
+  _handle: {fileID: 6333981382521951323}
+  _minValue: 0
+  _maxValue: 100
+  _value: 100
+  _moveDuration: 0.2
 --- !u!1 &6119764074409049417
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2616724262368264987}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: SettingsNames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1174,8 +1401,9 @@ GameObject:
   - component: {fileID: 5776771529497291051}
   - component: {fileID: 6517247662305087824}
   - component: {fileID: 1867586096152711759}
+  - component: {fileID: 956906986202257604}
   m_Layer: 5
-  m_Name: ScrollLine
+  m_Name: SliderLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1238,3 +1466,48 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &956906986202257604
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8357462990166115085}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 368.7997, y: 12.3601}
+  m_EdgeRadius: 0

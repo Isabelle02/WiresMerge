@@ -147,7 +147,8 @@ GameObject:
   - component: {fileID: 2655641118828607130}
   - component: {fileID: 847690998353959766}
   - component: {fileID: 3879999339879489808}
-  m_Layer: 5
+  - component: {fileID: 3287262956702773985}
+  m_Layer: 1
   m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,6 +213,51 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &3287262956702773985
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275124171253746677}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.5315552, y: -0.70632935}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 563.04065, y: 718.4278}
+  m_EdgeRadius: 0
 --- !u!1 &2484699763952001184
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3993596195678286845}
   - component: {fileID: 4715886235141297382}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: MenuPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +323,7 @@ GameObject:
   - component: {fileID: 8364775945777976340}
   - component: {fileID: 6467240784669566498}
   - component: {fileID: 6220111267722402900}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: MenuText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
