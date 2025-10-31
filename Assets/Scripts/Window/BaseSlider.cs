@@ -7,20 +7,14 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 {
     [SerializeField] private Collider2D _sliderCollider;
     [SerializeField] private Collider2D _handleCollider;
-    [SerializeField] private Image _handlerImage;
-    [SerializeField] private Transform _handle;
     [SerializeField] private float _minValue = 0f;
     [SerializeField] private float _maxValue = 100f;
     [SerializeField] private float _value = 100f;
-
-    [Header("Animation Settings")]
-    [SerializeField] private float _moveDuration = 0.2f;
     
     private bool _isDragging = false;
-    private Ease _moveEase = Ease.Linear;
-    private Tweener _currentTween;
 
     public Collider2D Collider => _handleCollider;
+    public Transform Handle => _handleCollider.transform;
     public float Value => _value;
 
     public Action<float> OnValueChanged { get; set; }
@@ -31,13 +25,13 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 
         if (!Application.isPlaying)
         {
-            UpdateHandlePosition(false);
+            UpdateHandlePosition();
         }
     }
 
     void Start()
     {
-        UpdateHandlePosition(false);
+        UpdateHandlePosition();
     }
 
     public void OnClick()
@@ -60,7 +54,7 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 
     public void SetValue(float newValue)
     {
-        //_value = Mathf.Clamp(newValue, _minValue, _maxValue);
+        _value = Mathf.Clamp(newValue, _minValue, _maxValue);
         UpdateHandlePosition();
         OnValueChanged?.Invoke(_value);
     }
@@ -81,48 +75,20 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
         SetValue(newValue);
     }
 
-    private void UpdateHandlePosition(bool animate = true)
+    private void UpdateHandlePosition()
     {
-        if (_handle != null && _sliderCollider != null)
+        if (Handle != null && _sliderCollider != null)
         {
             Bounds sliderBounds = _sliderCollider.bounds;
             float normalizedValue = Mathf.InverseLerp(_minValue, _maxValue, _value);
-
-            Vector3 targetPosition = _handle.position;
+            Vector3 targetPosition = Handle.position;
             targetPosition.x = Mathf.Lerp(sliderBounds.min.x, sliderBounds.max.x, normalizedValue);
-
-            _currentTween?.Kill();
-            if (animate)
-            {
-                _currentTween = _handle.DOMoveX(targetPosition.x, _moveDuration)
-                    .SetEase(_moveEase)
-                    .OnUpdate(UpdateColliderPosition);
-            }
-            else
-            {
-                _handle.position = targetPosition;
-                UpdateColliderPosition();
-            }
+            Handle.position = targetPosition;
         }
     }
 
-    private void UpdateColliderPosition()
+    public void Dispose()
     {
-        if (_handleCollider != null && _handle != null)
-        {
-            _handleCollider.transform.position = _handle.position;
-        }
-    }
-
-    public virtual void Dispose()
-    {
-        _currentTween?.Kill();
         OnValueChanged = null;
     }
-
-    void OnDestroy()
-    {
-        Dispose();
-    }
-
 }

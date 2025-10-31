@@ -44,6 +44,7 @@ public class MouseManager : MonoBehaviour
         {
             var mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            Debug.Log(hit.collider);
             OnClick(hit.collider);
         }
     }

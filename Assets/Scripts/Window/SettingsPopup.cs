@@ -16,12 +16,14 @@ public class SettingsPopup : BaseWindow
     }
     private void OnExitButton(BaseButton button)
     {
-        this.CloseForce();
+        Debug.Log("exit Click");
+
+        WindowManager.ClosePopup();
     }
 
     private void OnVolumeChanged(float volume)
     {
-        Debug.Log($"Громкость изменена: {(int)volume}");
+        Debug.Log($"Sound val: {(int)volume}");
         // Здесь можно применить значение, например:
         // AudioListener.volume = volume / 100f;
     }

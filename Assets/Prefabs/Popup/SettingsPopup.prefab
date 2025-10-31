@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 582680511146229423}
   - component: {fileID: 7842790523432691650}
   - component: {fileID: 2695699166873391768}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: EffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995580605116676530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -424,12 +424,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sliderCollider: {fileID: 3619012546561149942}
   _handleCollider: {fileID: 6941191760737571984}
-  _handlerImage: {fileID: 1334098202800061376}
-  _handle: {fileID: 8825059110370416847}
   _minValue: 0
   _maxValue: 100
   _value: 100
-  _moveDuration: 0.2
 --- !u!1 &2275124171253746677
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +439,7 @@ GameObject:
   - component: {fileID: 847690998353959766}
   - component: {fileID: 3879999339879489808}
   - component: {fileID: 8239921466641558355}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3993596195678286845}
   - component: {fileID: 2879202977075706892}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: SettingsPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +574,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2484699763952001184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -617,7 +614,7 @@ GameObject:
   - component: {fileID: 273562021453901}
   - component: {fileID: 1354008872217533695}
   - component: {fileID: 4359921814150257823}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: MusicText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,7 +764,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4118976460867743178}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -872,7 +869,7 @@ GameObject:
   - component: {fileID: 8364775945777976340}
   - component: {fileID: 6467240784669566498}
   - component: {fileID: 6220111267722402900}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: SettingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1006,7 +1003,7 @@ GameObject:
   - component: {fileID: 3459506567638301870}
   - component: {fileID: 7863776023103257633}
   - component: {fileID: 2881506679076266003}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: SoundText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1177,12 +1174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sliderCollider: {fileID: 956906986202257604}
   _handleCollider: {fileID: 8949090391862887600}
-  _handlerImage: {fileID: 2982973831796516318}
-  _handle: {fileID: 6333981382521951323}
   _minValue: 0
   _maxValue: 100
   _value: 100
-  _moveDuration: 0.2
 --- !u!1 &6119764074409049417
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1202,7 @@ Transform:
   m_GameObject: {fileID: 6119764074409049417}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1226,7 +1220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2616724262368264987}
-  m_Layer: 1
+  m_Layer: 5
   m_Name: SettingsNames
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -21,6 +21,7 @@ public abstract class BaseWindow : MonoBehaviour
 
     public void CloseForce()
     {
+        OnClose();
         gameObject.SetActive(false);
     }
 
