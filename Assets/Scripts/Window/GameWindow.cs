@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class Level_1_Window : BaseWindow
+public class GameWindow : BaseWindow
 {
     [SerializeField] private BaseButton _menuButton;
 

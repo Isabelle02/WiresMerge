@@ -4,26 +4,38 @@ using UnityEngine;
 public class SettingsPopup : BaseWindow
 {
     [SerializeField] private BaseButton _exitButton;
-    [SerializeField] private BaseSlider _volumeSlider;
+    [SerializeField] private BaseButton _closeButton;
+    [SerializeField] private BaseSlider _musicVolumeSlider;
+    [SerializeField] private BaseSlider _soundUIVolumeSlider;
 
     public override async UniTask OnOpen()
     {
         _exitButton.OnButtonClick += OnExitButton;
-        _volumeSlider.OnValueChanged += OnVolumeChanged;
+        _closeButton.OnButtonClick += OnExitButton;
+        _musicVolumeSlider.OnValueChanged += OnMusicVolumeChanged;
+        _soundUIVolumeSlider.OnValueChanged += OnSoundUIVolumeChanged;
+
         MouseManager.AddClickable(_exitButton);
-        MouseManager.AddClickable(_volumeSlider);
+        MouseManager.AddClickable(_closeButton);
+        MouseManager.AddClickable(_musicVolumeSlider);
+        MouseManager.AddClickable(_soundUIVolumeSlider);
 
     }
     private void OnExitButton(BaseButton button)
     {
-        Debug.Log("exit Click");
-
         WindowManager.ClosePopup();
     }
 
-    private void OnVolumeChanged(float volume)
+    private void OnMusicVolumeChanged(float volume)
     {
-        Debug.Log($"Sound val: {(int)volume}");
+        Debug.Log($"Music val: {(int)volume}");
+        // Здесь можно применить значение, например:
+        // AudioListener.volume = volume / 100f;
+    }
+
+    private void OnSoundUIVolumeChanged(float volume)
+    {
+        Debug.Log($"SoundUI val: {(int)volume}");
         // Здесь можно применить значение, например:
         // AudioListener.volume = volume / 100f;
     }
@@ -31,9 +43,14 @@ public class SettingsPopup : BaseWindow
     public override async UniTask OnClose()
     {
         _exitButton.OnButtonClick -= OnExitButton;
-        _volumeSlider.OnValueChanged -= OnVolumeChanged;
+        _closeButton.OnButtonClick -= OnExitButton;
+        _musicVolumeSlider.OnValueChanged -= OnMusicVolumeChanged;
+        _soundUIVolumeSlider.OnValueChanged -= OnSoundUIVolumeChanged;
+
         MouseManager.RemoveClickable(_exitButton);
-        MouseManager.RemoveClickable(_volumeSlider);
+        MouseManager.RemoveClickable(_closeButton);
+        MouseManager.RemoveClickable(_musicVolumeSlider);
+        MouseManager.RemoveClickable(_soundUIVolumeSlider);
 
     }
 }

@@ -67,9 +67,7 @@ public class DialogWindow : BaseWindow, IClickable
         {
             Debug.Log("GAME");
             //close dialogs, go to game
-            this.CloseForce();
-            GoToScene("GameScene");
-            WindowManager.Open<Level_1_Window>();
+            WindowManager.Open<GameWindow>();
         }
     }
 
@@ -138,11 +136,6 @@ public class DialogWindow : BaseWindow, IClickable
         _cancellationTokenSource?.Cancel();
         _persText.text = _textToType;
         _isTyping = false;
-    }
-
-    public void GoToScene(string SceneName)
-    {
-        SceneManager.LoadScene(SceneName);
     }
 
     public override UniTask OnClose()

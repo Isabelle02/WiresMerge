@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WindowManager : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class WindowManager : MonoBehaviour
             Destroy(gameObject);
 
         Open<MenuWindow>();
+    }
+
+    public static void GoToScene(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName);
     }
 
     public static void Open<T>() where T : BaseWindow

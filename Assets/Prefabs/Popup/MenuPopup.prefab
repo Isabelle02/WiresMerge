@@ -162,7 +162,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2275124171253746677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPopup: 1
-  _playButton: {fileID: 2449059630805464091}
+  _backButton: {fileID: 2449059630805464091}
   _settingsButton: {fileID: 662883706611492632}
   _exitButton: {fileID: 6067951215832440714}
   _closeButton: {fileID: 3505554301093499270}
@@ -285,7 +285,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 1
+  m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -890,7 +890,7 @@ Transform:
   m_GameObject: {fileID: 6119764074409049417}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 2449059630805464091}
   - component: {fileID: 3100467669399720548}
   m_Layer: 5
-  m_Name: PlayBtn
+  m_Name: BackBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1047,7 +1047,7 @@ GameObject:
   - component: {fileID: 418022203021458332}
   - component: {fileID: 6961434403430290494}
   m_Layer: 5
-  m_Name: PlayText
+  m_Name: BackText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1100,7 +1100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0418\u0433\u0440\u0430\u0442\u044C"
+  m_text: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ccbdd87e430f97447816ea6f3ef9f2c2, type: 2}
   m_sharedMaterial: {fileID: 7678397772740176053, guid: ccbdd87e430f97447816ea6f3ef9f2c2, type: 2}

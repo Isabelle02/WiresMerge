@@ -20,6 +20,7 @@ public class MenuWindow : BaseWindow
 
     private void OnPlayClick(BaseButton button)
     {
+        WindowManager.GoToScene("GameScene");
         WindowManager.Open<DialogWindow>();
     }
 
