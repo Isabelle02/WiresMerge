@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class WindowManager : MonoBehaviour
 {
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private Transform _windowParent;
+    [SerializeField] private Transform _popupParent;
     [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
 
     private static WindowManager _instance;
@@ -25,11 +27,6 @@ public class WindowManager : MonoBehaviour
             Destroy(gameObject);
 
         Open<MenuWindow>();
-    }
-
-    public static void GoToScene(string SceneName)
-    {
-        SceneManager.LoadScene(SceneName);
     }
 
     public static void Open<T>() where T : BaseWindow
@@ -122,7 +119,7 @@ public class WindowManager : MonoBehaviour
         if (!windowPrefab)
             return null;
 
-        var window = Instantiate(windowPrefab, _canvas.transform);
+        var window = Instantiate(windowPrefab, windowPrefab.IsPopup ? _popupParent : _windowParent);
         _initedWindows.Add(window);
         return window;
     }

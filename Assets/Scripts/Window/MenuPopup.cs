@@ -28,7 +28,7 @@ public class MenuPopup : BaseWindow
 
     private void OnExitButton(BaseButton button)
     {
-        WindowManager.GoToScene("MainMenuScene");
+        SceneTransitionManager.Instance.LoadScene("MainMenuScene");
         WindowManager.Open<MenuWindow>();
     }
 

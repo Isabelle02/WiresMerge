@@ -1,10 +1,12 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SettingsPopup : BaseWindow
 {
     [SerializeField] private BaseButton _exitButton;
     [SerializeField] private BaseButton _closeButton;
+    [SerializeField] private BaseInputField _userNameInputField;
     [SerializeField] private BaseSlider _musicVolumeSlider;
     [SerializeField] private BaseSlider _soundUIVolumeSlider;
 
@@ -12,11 +14,13 @@ public class SettingsPopup : BaseWindow
     {
         _exitButton.OnButtonClick += OnExitButton;
         _closeButton.OnButtonClick += OnExitButton;
+        _userNameInputField.OnValueChanged += OnUserNameValueChanged;
         _musicVolumeSlider.OnValueChanged += OnMusicVolumeChanged;
         _soundUIVolumeSlider.OnValueChanged += OnSoundUIVolumeChanged;
 
         MouseManager.AddClickable(_exitButton);
         MouseManager.AddClickable(_closeButton);
+        MouseManager.AddClickable(_userNameInputField);
         MouseManager.AddClickable(_musicVolumeSlider);
         MouseManager.AddClickable(_soundUIVolumeSlider);
 
@@ -24,6 +28,11 @@ public class SettingsPopup : BaseWindow
     private void OnExitButton(BaseButton button)
     {
         WindowManager.ClosePopup();
+    }
+
+    private void OnUserNameValueChanged(string userName)
+    {
+        Debug.Log($"User name: {userName}");
     }
 
     private void OnMusicVolumeChanged(float volume)
@@ -44,11 +53,13 @@ public class SettingsPopup : BaseWindow
     {
         _exitButton.OnButtonClick -= OnExitButton;
         _closeButton.OnButtonClick -= OnExitButton;
+        _userNameInputField.OnValueChanged -= OnUserNameValueChanged;
         _musicVolumeSlider.OnValueChanged -= OnMusicVolumeChanged;
         _soundUIVolumeSlider.OnValueChanged -= OnSoundUIVolumeChanged;
 
         MouseManager.RemoveClickable(_exitButton);
         MouseManager.RemoveClickable(_closeButton);
+        MouseManager.RemoveClickable(_userNameInputField);
         MouseManager.RemoveClickable(_musicVolumeSlider);
         MouseManager.RemoveClickable(_soundUIVolumeSlider);
 

@@ -20,7 +20,7 @@ public class MenuWindow : BaseWindow
 
     private void OnPlayClick(BaseButton button)
     {
-        WindowManager.GoToScene("GameScene");
+        SceneTransitionManager.Instance.LoadScene("GameScene");
         WindowManager.Open<DialogWindow>();
     }
 
@@ -31,7 +31,7 @@ public class MenuWindow : BaseWindow
 
     private void OnQuitButton(BaseButton button)
     {
-        Application.Quit();
+        SceneTransitionManager.Instance.QuitGame();
     }
 
     public override async UniTask OnClose()
