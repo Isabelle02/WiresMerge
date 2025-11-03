@@ -12,7 +12,7 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     [SerializeField] private Image _background;
     [SerializeField] private Color _selectedColor = Color.white;
 
-    private string _text;
+    public string text;
     private bool _isSelected = false;
 
     public Collider2D Collider => _collider;
@@ -22,7 +22,14 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     public virtual void OnClick()
     {
         _isSelected = true;
+        VoidTextToInitial();
         UpdateVisuals();
+    }
+
+    public void VoidTextToInitial()
+    {
+        if (text == "")
+            text = _initialText.text;
     }
 
     private void Update()
@@ -33,17 +40,18 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             {
                 if (c == '\b') // Backspace
                 {
-                    if (_text.Length > 0)
-                        _text = _text.Substring(0, _text.Length - 1);
+                    if (text.Length > 0)
+                        text = text.Substring(0, text.Length - 1);
                 }
                 else if (c == '\n' || c == '\r') // Enter
                 {
                     _isSelected = false;
-                    OnValueChanged?.Invoke(_text);
+                    VoidTextToInitial();
+                    OnValueChanged?.Invoke(text);
                 }
                 else
                 {
-                    _text += c;
+                    text += c;
                 }
             }
             UpdateVisuals();
@@ -55,18 +63,23 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             if (_isSelected &&  hit.collider != _collider)
             {
                 _isSelected = false;
+                VoidTextToInitial();
                 UpdateVisuals();
-                OnValueChanged?.Invoke(_text);
+                OnValueChanged?.Invoke(text);
             }
+            //if (hit.collider != _collider)
+            //{
+            //    VoidTextToInitial();
+            //}
         }
         
     }
 
     private void UpdateVisuals()
     {
-        _displayText.text = _text;
+        _displayText.text = text;
         _background.color = _isSelected ? _selectedColor : Color.white;
-        _initialText.gameObject.SetActive(!_isSelected && string.IsNullOrEmpty(_text));
+        _initialText.gameObject.SetActive(!_isSelected && string.IsNullOrEmpty(text));
     }
 
     public virtual void Dispose()

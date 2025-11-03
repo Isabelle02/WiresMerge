@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4056604, g: 0.2509574, b: 0.109706864, a: 0.92156863}
+  m_Color: {r: 0.4716981, g: 0.29004985, b: 0.12237452, a: 0.92941177}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -743,7 +743,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u0430\u0448\u0435 \u0438\u043C\u044F\u2026"
+  m_Text: "\u041B\u0435\u0432"
 --- !u!1 &3614120579007894105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1665,7 +1665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.20448424, b: 0.08451996, a: 1}
+  m_Color: {r: 0.5943396, g: 0.3930545, b: 0.2270826, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1993,6 +1993,7 @@ MonoBehaviour:
   _characterLimit: 20
   _background: {fileID: 2730175484926243851}
   _selectedColor: {r: 0.7264151, g: 0.54595345, b: 0.54595345, a: 1}
+  text: 
 --- !u!1 &8769613358180313085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,7 +2052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.44313726, g: 0.27450982, b: 0.14117648, a: 1}
+  m_Color: {r: 0.4745098, g: 0.2901961, b: 0.1254902, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

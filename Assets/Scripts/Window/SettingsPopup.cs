@@ -33,6 +33,7 @@ public class SettingsPopup : BaseWindow
     private void OnUserNameValueChanged(string userName)
     {
         Debug.Log($"User name: {userName}");
+        //
     }
 
     private void OnMusicVolumeChanged(float volume)

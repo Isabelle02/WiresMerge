@@ -16,6 +16,8 @@ public class WindowManager : MonoBehaviour
     private List<BaseWindow> _initedWindows = new List<BaseWindow>();
     private Stack<BaseWindow> _windowsStack = new Stack<BaseWindow>();
 
+    private bool _isNamed;
+
     public void Awake()
     {
         if (!_instance)
@@ -27,6 +29,12 @@ public class WindowManager : MonoBehaviour
             Destroy(gameObject);
 
         Open<MenuWindow>();
+
+        //if (_isNamed = false)
+        //{
+        Open<UserNameInputPopup>(); // Why don't open?????
+        //_isNamed = true; // Writing to a save file
+        //}
     }
 
     public static void Open<T>() where T : BaseWindow
