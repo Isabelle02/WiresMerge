@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class MenuPopup : BaseWindow
+public class PausePopup : BaseWindow
 {
     [SerializeField] private BaseButton _backButton;
     [SerializeField] private BaseButton _settingsButton;
@@ -28,7 +28,7 @@ public class MenuPopup : BaseWindow
 
     private void OnExitButton(BaseButton button)
     {
-        SceneTransitionManager.Instance.LoadScene("MainMenuScene");
+        SceneHandler.Instance.LoadScene(SceneHandler.MainScene);
         WindowManager.Open<MenuWindow>();
     }
 

@@ -46,7 +46,7 @@ public class DialogWindow : BaseWindow, IClickable
 
     private void OnMenuClick(BaseButton button)
     {
-        WindowManager.Open<MenuPopup>();
+        WindowManager.Open<PausePopup>();
     }
 
     private void OnButtonClick(BaseButton button)

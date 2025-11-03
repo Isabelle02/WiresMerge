@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class UserNameInputPopup : BaseWindow
+public class UserNamePopup : BaseWindow
 {
     [SerializeField] BaseInputField _userNameInput;
     [SerializeField] BaseButton _enterButton;

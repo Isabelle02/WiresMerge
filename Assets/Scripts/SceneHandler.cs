@@ -1,9 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class SceneTransitionManager : MonoBehaviour
+public class SceneHandler : MonoBehaviour
 {
-    public static SceneTransitionManager Instance { get; private set; }
+    public static SceneHandler Instance { get; private set; }
+
+    public static string MainScene => "MainScene";
+    public static string GameScene => "GameScene";
 
     private void Awake()
     {
@@ -20,7 +22,7 @@ public class SceneTransitionManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
     public void QuitGame()

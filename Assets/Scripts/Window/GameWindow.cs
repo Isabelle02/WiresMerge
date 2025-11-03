@@ -13,7 +13,7 @@ public class GameWindow : BaseWindow
 
     private void OnMenuClick(BaseButton button)
     {
-        WindowManager.Open<MenuPopup>();
+        WindowManager.Open<PausePopup>();
     }
 
     public override async UniTask OnClose()

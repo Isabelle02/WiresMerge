@@ -32,7 +32,7 @@ public class WindowManager : MonoBehaviour
 
         //if (_isNamed = false)
         //{
-        Open<UserNameInputPopup>(); // Why don't open?????
+        Open<UserNamePopup>(); // Why don't open?????
         //_isNamed = true; // Writing to a save file
         //}
     }
