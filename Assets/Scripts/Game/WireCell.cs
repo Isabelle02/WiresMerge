@@ -49,6 +49,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
 
     public void Awake()
     {
+        _rectCollider.gameObject.SetActive(_shapeType == ShapeType.Rect);
+        _hexCollider.gameObject.SetActive(_shapeType == ShapeType.Hex);
         OutputCount = _outputAngles.Count;
         IsHighlighted = _state == WireCellState.Source;
         Light.SetActive(IsHighlighted);
