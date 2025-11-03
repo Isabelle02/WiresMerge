@@ -8,14 +8,6 @@ public class UserNamePopup : BaseWindow
 
     public string UserName;
 
-    public void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.KeypadEnter))
-        {
-            
-        }
-    }
-
     public override async UniTask OnOpen()
     {
         _enterButton.OnButtonClick += OnEnterButton;
@@ -29,15 +21,12 @@ public class UserNamePopup : BaseWindow
     {
         _userNameInput.VoidTextToInitial();
         Gameplay.UserName = _userNameInput.text;
-        //
     }
 
     private void OnEnterButton(BaseButton button)
     {
         OnUserNameValueChanged(_userNameInput.text);
         Debug.Log($"User name: {UserName}");
-        //
-
         WindowManager.ClosePopup();
     }
 
