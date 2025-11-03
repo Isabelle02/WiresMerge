@@ -6,7 +6,26 @@ public class Gameplay : MonoBehaviour
 
     public static WireSystem WireSystem { get; private set; }
     public static TimerSystem TimerSystem { get; private set; }
-    public static string UserName { get; private set; } = "User";
+
+    private static string _userName;
+    public static string UserName
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_userName))
+                _userName = PlayerPrefs.GetString("UserName", "User");
+
+            return _userName;
+        }
+        set
+        {
+            if (_userName == value)
+                return;
+
+            _userName = value;
+            PlayerPrefs.SetString("UserName", value);
+        }
+    }
 
     void Awake()
     {
