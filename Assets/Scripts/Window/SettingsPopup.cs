@@ -40,14 +40,14 @@ public class SettingsPopup : BaseWindow
     {
         Debug.Log($"Music val: {(int)volume}");
         // Here you can apply the value, for example:
-        // AudioListener.volume = volume / 100f;
+        // AudioManager.SetMusicVolume(volume / 100f);
     }
 
     private void OnSoundVolumeChanged(float volume)
     {
         Debug.Log($"SoundUI val: {(int)volume}");
         // Here you can apply the value, for example:
-        // AudioListener.volume = volume / 100f;
+        // AudioManager.SetSoundVolume(volume / 100f);
     }
 
     public override async UniTask OnClose()
