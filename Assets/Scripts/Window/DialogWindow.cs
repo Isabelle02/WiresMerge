@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogWindow : BaseWindow, IClickable
@@ -15,7 +14,7 @@ public class DialogWindow : BaseWindow, IClickable
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private GridLayoutGroup _choicesGrid;
     [SerializeField] private List<DialogChoiceButton> _userChoices = new List<DialogChoiceButton>();
-    [SerializeField] private BaseButton _menuButton;
+    [SerializeField] private BaseButton _pauseButton;
 
     private DialogSystem _dialogSystem;
 
@@ -40,11 +39,11 @@ public class DialogWindow : BaseWindow, IClickable
         _dialogSystem.OnNextStep += UpdateUI;
         _dialogSystem.Start();
 
-        _menuButton.OnButtonClick += OnMenuClick;
-        MouseManager.AddClickable(_menuButton);
+        _pauseButton.OnButtonClick += OnPauseClick;
+        MouseManager.AddClickable(_pauseButton);
     }
 
-    private void OnMenuClick(BaseButton button)
+    private void OnPauseClick(BaseButton button)
     {
         WindowManager.Open<PausePopup>();
     }
@@ -141,8 +140,8 @@ public class DialogWindow : BaseWindow, IClickable
     public override UniTask OnClose()
     {
         _dialogSystem.OnNextStep -= UpdateUI;
-        _menuButton.OnButtonClick -= OnMenuClick;
-        MouseManager.RemoveClickable(_menuButton);
+        _pauseButton.OnButtonClick -= OnPauseClick;
+        MouseManager.RemoveClickable(_pauseButton);
 
         return base.OnClose();
     }

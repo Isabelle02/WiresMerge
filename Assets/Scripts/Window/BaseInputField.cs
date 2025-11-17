@@ -1,5 +1,4 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,25 +10,28 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     [SerializeField] private int _characterLimit = 20;
     [SerializeField] private Image _background;
     [SerializeField] private Color _selectedColor = Color.white;
+    [SerializeField] private Color _unselectedColor = Color.white;
 
     public string text;
+    public string InitialTextValue => _initialText.text;
     private bool _isSelected = false;
 
     public Collider2D Collider => _collider;
     public Action<string> OnValueChanged { get; set; }
     //public Action<string> EndEdit { get; set; }
 
+
     public virtual void OnClick()
     {
         _isSelected = true;
-        VoidTextToInitial();
+        InitText();
         UpdateVisuals();
     }
 
-    public void VoidTextToInitial()
+    public void InitText()
     {
-        if (text == "")
-            text = _initialText.text;
+        if (string.IsNullOrEmpty(text))
+            text = InitialTextValue;
     }
 
     private void Update()
@@ -46,7 +48,7 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
                 else if (c == '\n' || c == '\r') // Enter
                 {
                     _isSelected = false;
-                    VoidTextToInitial();
+                    InitText();
                     OnValueChanged?.Invoke(text);
                 }
                 else
@@ -60,10 +62,10 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
         {
             var mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-            if (_isSelected &&  hit.collider != _collider)
+            if (_isSelected && hit.collider != _collider)
             {
                 _isSelected = false;
-                VoidTextToInitial();
+                InitText();
                 UpdateVisuals();
                 OnValueChanged?.Invoke(text);
             }
@@ -72,13 +74,13 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             //    VoidTextToInitial();
             //}
         }
-        
+
     }
 
     private void UpdateVisuals()
     {
         _displayText.text = text;
-        _background.color = _isSelected ? _selectedColor : Color.white;
+        _background.color = _isSelected ? _selectedColor : _unselectedColor;
         _initialText.gameObject.SetActive(!_isSelected && string.IsNullOrEmpty(text));
     }
 

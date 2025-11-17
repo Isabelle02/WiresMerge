@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class GameWindow : BaseWindow
 {
-    [SerializeField] private BaseButton _menuButton;
+    [SerializeField] private BaseButton _pauseButton;
 
     public override async UniTask OnOpen()
     {
-        _menuButton.OnButtonClick += OnMenuClick;
-        MouseManager.AddClickable(_menuButton);
+        _pauseButton.OnButtonClick += OnPauseClick;
+        MouseManager.AddClickable(_pauseButton);
     }
 
-    private void OnMenuClick(BaseButton button)
+    private void OnPauseClick(BaseButton button)
     {
         WindowManager.Open<PausePopup>();
     }
 
     public override async UniTask OnClose()
     {
-        _menuButton.OnButtonClick -= OnMenuClick;
-        MouseManager.RemoveClickable(_menuButton);
+        _pauseButton.OnButtonClick -= OnPauseClick;
+        MouseManager.RemoveClickable(_pauseButton);
     }
 }

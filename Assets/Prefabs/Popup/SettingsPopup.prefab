@@ -290,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 184, y: 0}
   m_SizeDelta: {x: 56, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3091177696759517115
@@ -606,7 +606,7 @@ MonoBehaviour:
   _closeButton: {fileID: 4886781746470273023}
   _userNameInputField: {fileID: 3170037446050776963}
   _musicVolumeSlider: {fileID: 8593294056276579415}
-  _soundUIVolumeSlider: {fileID: 8971289587548454070}
+  _soundVolumeSlider: {fileID: 8971289587548454070}
 --- !u!114 &4886781746470273023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -913,7 +913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 184, y: 0}
   m_SizeDelta: {x: 56, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &464678141097568951
@@ -1533,7 +1533,7 @@ GameObject:
   - component: {fileID: 7119142732569943418}
   - component: {fileID: 8971289587548454070}
   m_Layer: 5
-  m_Name: SliderSoundUI
+  m_Name: SliderSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1993,6 +1993,7 @@ MonoBehaviour:
   _characterLimit: 20
   _background: {fileID: 2730175484926243851}
   _selectedColor: {r: 0.7264151, g: 0.54595345, b: 0.54595345, a: 1}
+  _unselectedColor: {r: 1, g: 1, b: 1, a: 1}
   text: 
 --- !u!1 &8769613358180313085
 GameObject:

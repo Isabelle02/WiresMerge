@@ -19,7 +19,7 @@ public class UserNamePopup : BaseWindow
 
     private void OnUserNameValueChanged(string userName)
     {
-        _userNameInput.VoidTextToInitial();
+        _userNameInput.InitText();
         Gameplay.UserName = _userNameInput.text;
     }
 

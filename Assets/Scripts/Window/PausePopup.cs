@@ -28,7 +28,7 @@ public class PausePopup : BaseWindow
 
     private void OnExitButton(BaseButton button)
     {
-        SceneHandler.Instance.LoadScene(SceneHandler.MainScene);
+        SceneHandler.LoadScene(SceneHandler.MainScene);
         WindowManager.Open<MenuWindow>();
     }
 

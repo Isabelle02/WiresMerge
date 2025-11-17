@@ -2,30 +2,38 @@ using UnityEngine;
 
 public class SceneHandler : MonoBehaviour
 {
-    public static SceneHandler Instance { get; private set; }
+    private static SceneHandler _instance { get; set; }
 
     public static string MainScene => "MainScene";
     public static string GameScene => "GameScene";
 
     private void Awake()
     {
-        if (Instance == null)
+        if (!_instance)
         {
-            Instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
-    public void LoadScene(string sceneName)
+    public static void LoadScene(string sceneName)
+    {
+        _instance.InternalLoadScene(sceneName);
+    }
+
+    public static void QuitProgram()
+    {
+        _instance.InternalQuitProgram();
+    }
+
+    private void InternalLoadScene(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    public void QuitGame()
+    private void InternalQuitProgram()
     {
         Application.Quit();
     }

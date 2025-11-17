@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 
 public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 {
@@ -10,22 +8,29 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
     [SerializeField] private float _minValue = 0f;
     [SerializeField] private float _maxValue = 100f;
     [SerializeField] private float _value = 100f;
-    
+
     private bool _isDragging = false;
 
     public Collider2D Collider => _handleCollider;
     public Transform Handle => _handleCollider.transform;
-    public float Value => _value;
+    public float Value
+    {
+        get { return _value; }
+        set
+        {
+            _value = Mathf.Clamp(value, _minValue, _maxValue);
+            UpdateHandlePosition();
+            OnValueChanged?.Invoke(_value);
+        }
+    }
 
     public Action<float> OnValueChanged { get; set; }
 
     void OnValidate()
     {
-        _value = Mathf.Clamp(_value, _minValue, _maxValue);
-
         if (!Application.isPlaying)
         {
-            UpdateHandlePosition();
+            Value = _value;
         }
     }
 
@@ -52,13 +57,6 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
         }
     }
 
-    public void SetValue(float newValue)
-    {
-        _value = Mathf.Clamp(newValue, _minValue, _maxValue);
-        UpdateHandlePosition();
-        OnValueChanged?.Invoke(_value);
-    }
-
     private void UpdateSliderValue()
     {
         Vector2 mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -72,7 +70,7 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 
         float newValue = Mathf.Lerp(_minValue, _maxValue, relativePosition);
 
-        SetValue(newValue);
+        Value = newValue;
     }
 
     private void UpdateHandlePosition()
