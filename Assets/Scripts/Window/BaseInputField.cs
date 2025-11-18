@@ -23,7 +23,7 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
 
     public Collider2D Collider => _collider;
     public string InitialTextValue => _initialText.text;
-    public string DisplayTextValue => _displayText.text;
+    public string DisplayTextValue { get { return _displayText.text; } set { _displayText.text = value; } }
     public Action<string> OnValueChanged { get; set; }
 
     private void Awake()
@@ -81,7 +81,7 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     {
         _displayText.text = _text;
         _background.color = _isSelected ? _selectedColor : _unselectedColor;
-        _initialText.gameObject.SetActive(!_isSelected && string.IsNullOrEmpty(_text));
+        _initialText.gameObject.SetActive(!_isSelected || string.IsNullOrEmpty(_text));
     }
 
     private void UpdateCaret()

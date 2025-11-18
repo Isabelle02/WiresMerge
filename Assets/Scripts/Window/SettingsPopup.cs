@@ -11,6 +11,8 @@ public class SettingsPopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        _userNameInputField.DisplayTextValue = Gameplay.UserName;
+
         _exitButton.OnButtonClick += OnCloseButton;
         _closeButton.OnButtonClick += OnCloseButton;
         _userNameInputField.OnValueChanged += OnUserNameValueChanged;
@@ -27,27 +29,31 @@ public class SettingsPopup : BaseWindow
 
     private void OnCloseButton(BaseButton button)
     {
+        OnUserNameValueChanged(_userNameInputField.DisplayTextValue);
         WindowManager.ClosePopup();
     }
 
     private void OnUserNameValueChanged(string userName)
     {
-        Debug.Log($"User name: {userName}");
-        //
+        if (!string.IsNullOrEmpty(_userNameInputField.DisplayTextValue))
+        {
+            Gameplay.UserName = _userNameInputField.DisplayTextValue;
+        }
+        Debug.Log($"User name: {Gameplay.UserName}");
     }
 
     private void OnMusicVolumeChanged(float volume)
     {
         Debug.Log($"Music val: {(int)volume}");
         // Here you can apply the value, for example:
-        // AudioManager.SetMusicVolume(volume / 100f);
+        // AudioManager.SetMusicVolume(volume / 100f); || ((int)volume)
     }
 
     private void OnSoundVolumeChanged(float volume)
     {
         Debug.Log($"SoundUI val: {(int)volume}");
         // Here you can apply the value, for example:
-        // AudioManager.SetSoundVolume(volume / 100f);
+        // AudioManager.SetSoundVolume(volume / 100f); || ((int)volume)
     }
 
     public override async UniTask OnClose()

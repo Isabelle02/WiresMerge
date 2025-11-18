@@ -8,6 +8,8 @@ public class UserNamePopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        PlayerPrefs.DeleteKey("UserName"); // Del instraction after realiz one-open-popup-on-device
+
         _closeButton.OnButtonClick += OnCloseButton;
         _userNameInput.OnValueChanged += OnUserNameValueChanged;
 
@@ -25,6 +27,7 @@ public class UserNamePopup : BaseWindow
 
     private void OnCloseButton(BaseButton button)
     {
+        OnUserNameValueChanged(_userNameInput.DisplayTextValue);
         Debug.Log($"User name: {Gameplay.UserName}");
         WindowManager.ClosePopup();
     }
@@ -36,6 +39,9 @@ public class UserNamePopup : BaseWindow
 
         MouseManager.RemoveClickable(_closeButton);
         MouseManager.RemoveClickable(_userNameInput);
+
+        //PlayerPrefs.SetInt("FirstLaunch", 1);
+        //PlayerPrefs.Save();
     }
 
 }

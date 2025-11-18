@@ -15,7 +15,7 @@ public class WindowManager : MonoBehaviour
     private List<BaseWindow> _initedWindows = new List<BaseWindow>();
     private Stack<BaseWindow> _windowsStack = new Stack<BaseWindow>();
 
-    private bool _isNamed;
+    //private bool _isNamed;
 
     public void Awake()
     {
