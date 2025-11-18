@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 7253972573592130227}
   - component: {fileID: 5835156787339731858}
   m_Layer: 5
-  m_Name: MenuButton
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -979,7 +979,7 @@ MonoBehaviour:
   _nameText: {fileID: 3476602606639341531}
   _choicesGrid: {fileID: 4137429847618833117}
   _userChoices: []
-  _menuButton: {fileID: 7253972573592130227}
+  _pauseButton: {fileID: 7253972573592130227}
 --- !u!61 &1929694232433061367
 BoxCollider2D:
   m_ObjectHideFlags: 0

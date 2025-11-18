@@ -4,38 +4,37 @@ using UnityEngine;
 public class UserNamePopup : BaseWindow
 {
     [SerializeField] BaseInputField _userNameInput;
-    [SerializeField] BaseButton _enterButton;
-
-    public string UserName;
+    [SerializeField] BaseButton _closeButton;
 
     public override async UniTask OnOpen()
     {
-        _enterButton.OnButtonClick += OnEnterButton;
+        _closeButton.OnButtonClick += OnCloseButton;
         _userNameInput.OnValueChanged += OnUserNameValueChanged;
 
-        MouseManager.AddClickable(_enterButton);
+        MouseManager.AddClickable(_closeButton);
         MouseManager.AddClickable(_userNameInput);
     }
 
     private void OnUserNameValueChanged(string userName)
     {
-        _userNameInput.InitText();
-        Gameplay.UserName = _userNameInput.text;
+        if (string.IsNullOrEmpty(_userNameInput.DisplayTextValue))
+            Gameplay.UserName = _userNameInput.InitialTextValue;
+        else
+            Gameplay.UserName = _userNameInput.DisplayTextValue;
     }
 
-    private void OnEnterButton(BaseButton button)
+    private void OnCloseButton(BaseButton button)
     {
-        OnUserNameValueChanged(_userNameInput.text);
-        Debug.Log($"User name: {UserName}");
+        Debug.Log($"User name: {Gameplay.UserName}");
         WindowManager.ClosePopup();
     }
 
     public override async UniTask OnClose()
     {
-        _enterButton.OnButtonClick -= OnEnterButton;
+        _closeButton.OnButtonClick -= OnCloseButton;
         _userNameInput.OnValueChanged -= OnUserNameValueChanged;
 
-        MouseManager.RemoveClickable(_enterButton);
+        MouseManager.RemoveClickable(_closeButton);
         MouseManager.RemoveClickable(_userNameInput);
     }
 

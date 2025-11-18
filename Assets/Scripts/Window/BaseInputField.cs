@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,49 +12,54 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     [SerializeField] private Image _background;
     [SerializeField] private Color _selectedColor = Color.white;
     [SerializeField] private Color _unselectedColor = Color.white;
+    [SerializeField] private Text caretText;
 
-    public string text;
-    public string InitialTextValue => _initialText.text;
+    private string _text;
     private bool _isSelected = false;
 
-    public Collider2D Collider => _collider;
-    public Action<string> OnValueChanged { get; set; }
-    //public Action<string> EndEdit { get; set; }
+    private string _lastText;
+    private bool caretVisible = true;
+    private float caretBlinkRate = 0.5f;
+    private float caretTimer = 0f;
 
+    public Collider2D Collider => _collider;
+    public string InitialTextValue => _initialText.text;
+    public string DisplayTextValue => _displayText.text;
+    public Action<string> OnValueChanged { get; set; }
+
+    private void Awake()
+    {
+        UpdateVisuals();
+    }
 
     public virtual void OnClick()
     {
         _isSelected = true;
-        InitText();
+        caretText.gameObject.SetActive(true);
         UpdateVisuals();
-    }
-
-    public void InitText()
-    {
-        if (string.IsNullOrEmpty(text))
-            text = InitialTextValue;
     }
 
     private void Update()
     {
         if (_isSelected && Input.anyKeyDown)
         {
-            foreach (char c in Input.inputString)
+            foreach (var c in Input.inputString)
             {
                 if (c == '\b') // Backspace
                 {
-                    if (text.Length > 0)
-                        text = text.Substring(0, text.Length - 1);
+                    if (_text.Length > 0)
+                        _text = _text.Substring(0, _text.Length - 1);
                 }
                 else if (c == '\n' || c == '\r') // Enter
                 {
                     _isSelected = false;
-                    InitText();
-                    OnValueChanged?.Invoke(text);
+                    OnValueChanged?.Invoke(_text);
                 }
                 else
                 {
-                    text += c;
+                    _text += c;
+                    _displayText.text = _text;
+                    OnValueChanged?.Invoke(_text);
                 }
             }
             UpdateVisuals();
@@ -65,28 +71,79 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             if (_isSelected && hit.collider != _collider)
             {
                 _isSelected = false;
-                InitText();
                 UpdateVisuals();
-                OnValueChanged?.Invoke(text);
+                OnValueChanged?.Invoke(_text);
             }
-            //if (hit.collider != _collider)
-            //{
-            //    VoidTextToInitial();
-            //}
         }
+        UpdateCaret();
+    }
 
+    private void InitText()
+    {
+        if (string.IsNullOrEmpty(_text))
+            _text = InitialTextValue;
     }
 
     private void UpdateVisuals()
     {
-        _displayText.text = text;
+        _displayText.text = _text;
         _background.color = _isSelected ? _selectedColor : _unselectedColor;
-        _initialText.gameObject.SetActive(!_isSelected && string.IsNullOrEmpty(text));
+        _initialText.gameObject.SetActive(!_isSelected && string.IsNullOrEmpty(_text));
+    }
+
+    private void UpdateCaret()
+    {
+        if (_isSelected)
+        {
+            caretTimer += Time.deltaTime;
+            if (caretTimer >= caretBlinkRate)
+            {
+                caretVisible = !caretVisible;
+                caretText.gameObject.SetActive(caretVisible);
+                caretTimer = 0f;
+            }
+
+            if (_lastText != _displayText.text)
+            {
+                UpdateCaretPosition();
+                _lastText = _displayText.text;
+            }
+        }
+        else
+        {
+            caretText.gameObject.SetActive(false);
+            _lastText = "";
+        }
+    }
+
+    private void UpdateCaretPosition()
+    {
+        if (string.IsNullOrEmpty(_displayText.text))
+        {
+            caretText.rectTransform.anchoredPosition = new Vector2(0, 0);
+            return;
+        }
+
+        float textWidth = _displayText.preferredWidth;
+        float xOffset = 0f;
+
+        switch (_displayText.alignment)
+        {
+            case TextAnchor.MiddleCenter:
+                xOffset = -textWidth * 0.5f;
+                break;
+            default:
+                xOffset = 0f;
+                break;
+        }
+
+        float caretOffset = 2f;
+        float caretX = xOffset + textWidth + caretOffset;
+        caretText.rectTransform.anchoredPosition = new Vector2(caretX, 0);
     }
 
     public virtual void Dispose()
     {
         OnValueChanged = null;
-        //EndEdit = null;
     }
 }
