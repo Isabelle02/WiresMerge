@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,12 +75,6 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             }
         }
         UpdateCaret();
-    }
-
-    private void InitText()
-    {
-        if (string.IsNullOrEmpty(_text))
-            _text = InitialTextValue;
     }
 
     private void UpdateVisuals()
