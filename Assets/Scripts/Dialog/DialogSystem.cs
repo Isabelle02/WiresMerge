@@ -17,9 +17,9 @@ public class DialogSystem
         _graph = dialogGraph;
     }
 
-    public void Start()
+    public void Start(int nodeId)
     {
-        NextStep(_graph.RootNode);
+        NextStep(_graph.GetNode(nodeId));
     }
 
     public bool NextStep(DialogNode node = null)
@@ -31,15 +31,21 @@ public class DialogSystem
         if ((node.IsPlayer && children.Count == 0))
             return false;
 
-        Debug.Log(node.NodeID);
+        Debug.Log(node.Id);
 
         CurrentRootNode = node;
         NextDialogNodes = children;
         if (CurrentRootNode.IsPlayer && NextDialogNodes.Any(n => !n.IsPlayer))
-            return NextStep(NextDialogNodes.First());
+            return NextPersNode();
         else
             OnNextStep?.Invoke();
 
+        LevelManager.LastDialogNodeId = node.Id;
         return true;
+    }
+
+    public bool NextPersNode()
+    {
+        return NextStep(NextDialogNodes.FirstOrDefault(n => n.Available));
     }
 }

@@ -63,8 +63,9 @@ public static class DialogParser
                 var text = fields[5];
                 var isPlayer = bool.Parse(fields[6]);
                 var parameters = fields[7];
+                var conditions = fields[8];
 
-                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters);
+                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions);
                 DialogGraph.Nodes.Add(newNode);
 
                 if (nodeId == 0)
@@ -106,7 +107,7 @@ public static class DialogParser
         DialogGraph.RootNode = DialogGraph.Nodes[0];
         for (var i = 0; i < DialogGraph.Nodes.Count; i++)
         {
-            var id = DialogGraph.Nodes[i].NodeID;
+            var id = DialogGraph.Nodes[i].Id;
             foreach (var relation in DialogGraph.Relations)
             {
                 if (id == relation.ChildID)
