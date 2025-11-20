@@ -41,13 +41,13 @@ public class DialogParserEditor : Editor
         var rootNode = graph.RootNode;
         if (rootNode != null)
         {
-            GUILayout.Label($"Root Node: {rootNode.NodeID} - {rootNode.Speaker}: {rootNode.Text}");
+            GUILayout.Label($"Root Node: {rootNode.Id} - {rootNode.Speaker}: {rootNode.Text}");
             if (rootNode?.ChildrenIds?.Count > 0)
             {
                 GUILayout.Label($"Root has {rootNode.ChildrenIds.Count} children:");
                 var children = graph.GetChildren(rootNode);
                 foreach (var child in children)
-                    GUILayout.Label($"  - {child.NodeID}: {child.Speaker}: {child.Text}");
+                    GUILayout.Label($"  - {child.Id}: {child.Speaker}: {child.Text}");
             }
         }
         else

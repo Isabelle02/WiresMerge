@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
 public class DialogNode
 {
-    public int NodeID;
+    public int Id;
     public string Speaker;
     public string Text;
     public bool IsPlayer;
     public string Parameters;
+    public string Conditions;
 
     public List<int> ParentIds = new List<int>();
     public List<int> ChildrenIds = new List<int>();
@@ -27,13 +29,27 @@ public class DialogNode
         }
     }
 
-    public DialogNode(int nodeId, string speaker, string text, bool isPlayer, string parameters)
+    public bool Available
     {
-        NodeID = nodeId;
+        get
+        {
+            var conditionNames = Conditions.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var args = new List<object>();
+            foreach (var name in conditionNames)
+                args.Add(DynamicParameters.Get(name));
+
+            return args.All(a => a.Equals(true));
+        }
+    }
+
+    public DialogNode(int nodeId, string speaker, string text, bool isPlayer, string parameters, string conditions)
+    {
+        Id = nodeId;
         Speaker = speaker;
         Text = text;
         IsPlayer = isPlayer;
         Parameters = parameters;
+        Conditions = conditions;
     }
 }
 

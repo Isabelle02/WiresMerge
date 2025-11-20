@@ -6,7 +6,10 @@ public class DynamicParameters
 {
     private static readonly Dictionary<string, Func<object>> _parameterGetters = new()
     {
-        ["UserName"] = () => Gameplay.UserName
+        ["UserName"] = () => Gameplay.UserName,
+        ["Win"] = () => Gameplay.IsAllWin,
+        ["Fall"] = () => !Gameplay.IsAllWin,
+
     };
 
     public static object Get(string key)
