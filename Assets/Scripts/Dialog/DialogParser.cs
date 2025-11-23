@@ -67,9 +67,6 @@ public static class DialogParser
 
                 var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions);
                 DialogGraph.Nodes.Add(newNode);
-
-                if (nodeId == 0)
-                    DialogGraph.RootNode = newNode;
             }
         }
 
@@ -104,7 +101,6 @@ public static class DialogParser
         if (DialogGraph.Nodes.Count == 0)
             return;
 
-        DialogGraph.RootNode = DialogGraph.Nodes[0];
         for (var i = 0; i < DialogGraph.Nodes.Count; i++)
         {
             var id = DialogGraph.Nodes[i].Id;

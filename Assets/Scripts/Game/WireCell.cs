@@ -56,11 +56,6 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     public Collider2D Collider => _shapeType == ShapeType.Rect ? _rectCollider : _hexCollider;
     public GameObject Light => _shapeType == ShapeType.Rect ? _rectLight : _hexLight;
 
-    public void Start()
-    {
-        Init();
-    }
-
     public void OnValidate()
     {
         if (_lineRenderer)
@@ -69,19 +64,22 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
 
     public void Set(WireCellData data)
     {
+        if (data == null)
+            return;
+
         transform.position = data.Position;
         _shapeType = data.ShapeType;
         _state = data.State;
         _isClickable = data.IsClickable;
-        _outputAngles = data.OutputAngles;
+        _outputAngles = new List<int>(data.OutputAngles);
         _intensity = data.CurveIntensity;
         _quizNodeId = data.QuizNodeId;
-
-        Init();
     }
 
-    private void Init()
+    public void Init(WireCellData data)
     {
+        Set(data);
+
         _rectCollider.gameObject.SetActive(_shapeType == ShapeType.Rect);
         _hexCollider.gameObject.SetActive(_shapeType == ShapeType.Hex);
         IsHighlighted = _state == WireCellState.Source;
