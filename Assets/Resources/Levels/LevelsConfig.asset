@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Levels
-  m_EditorClassIdentifier: Assembly-CSharp::LevelsConfig
+  m_Script: {fileID: 11500000, guid: dc184b2b289d0f14ca04bf1fb8c59ede, type: 3}
+  m_Name: LevelsConfig
+  m_EditorClassIdentifier: 
   Levels:
-  - LevelId: 0
+  - LevelId: 1
     DialogNodeId: 0
     WireCells:
     - Position: {x: -1.5020118, y: -0.8659766, z: 0.5}
@@ -65,7 +65,7 @@ MonoBehaviour:
       OutputAngles: 4a0100001e000000
       CurveIntensity: 0.4
       QuizNodeId: -1
-  - LevelId: 1
+  - LevelId: 2
     DialogNodeId: 0
     WireCells:
     - Position: {x: -2.5, y: 0.5, z: 0}

@@ -11,7 +11,7 @@ public static class LevelManager
         get 
         { 
             if (_config == null)
-                _config = Resources.Load<LevelsConfig>("Levels/Levels"); 
+                _config = Resources.Load<LevelsConfig>("Levels/LevelsConfig"); 
 
             return _config;
         }
@@ -56,7 +56,7 @@ public static class LevelManager
         foreach (var cell in _currentConfig.WireCells)
         {
             var cellObj = Pool<WireCell>.Get(Gameplay.Transform);
-            cellObj.Set(cell);
+            cellObj.Init(cell);
         }
     }
 

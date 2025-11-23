@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class DialogWindow : BaseWindow, IClickable
 {
-    [SerializeField] private DialogGraph _graph;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private TextMeshProUGUI _persText;
     [SerializeField] private GridLayoutGroup _choicesGrid;
@@ -26,7 +25,7 @@ public class DialogWindow : BaseWindow, IClickable
         Debug.Log("On Open Dialog");
         await base.OnOpen();
 
-        _dialogSystem = new DialogSystem(_graph);
+        _dialogSystem = new DialogSystem();
         _dialogSystem.OnNextStep += UpdateUI;
         _dialogSystem.Start(LevelManager.LastDialogNodeId);
     }

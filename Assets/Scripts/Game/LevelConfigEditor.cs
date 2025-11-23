@@ -1,43 +1,144 @@
 ﻿#if UNITY_EDITOR
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(LevelsConfig))]
-public class LevelConfigEditor : Editor
+public class LevelsConfigWindow : EditorWindow
 {
-    private LevelsConfig levelsConfig;
-    private int selectedLevelIndex = 0;
-    private Vector2 scrollPosition;
-    private bool showWireCells = true;
+    private Transform _wiresParentTransform;
+    private PoolConfig _poolConfig;
+    private LevelsConfig _levelsConfig;
+    private int _selectedLevelIndex = 0;
+    private Vector2 _scrollPosition;
+    private Vector2 _wireCellsScrollPosition;
+    private bool _showWireCells = true;
+    private bool[] _wireCellFoldouts = new bool[0];
+
+    [MenuItem("Tools/Levels Config Editor")]
+    public static void ShowWindow()
+    {
+        var window = GetWindow<LevelsConfigWindow>("Levels");
+        window.minSize = new Vector2(400, 600);
+    }
 
     private void OnEnable()
     {
-        levelsConfig = (LevelsConfig)target;
+        LoadLevelsConfig();
     }
 
-    public override void OnInspectorGUI()
+    private void LoadLevelsConfig()
     {
-        serializedObject.Update();
-
-        EditorGUILayout.Space();
-
-        // Level selection
-        DrawLevelSelection();
-
-        EditorGUILayout.Space();
-
-        if (levelsConfig.Levels.Count > 0 && selectedLevelIndex < levelsConfig.Levels.Count)
+        // Try to find a LevelsConfig asset in the project
+        var guids = AssetDatabase.FindAssets("t:LevelsConfig");
+        if (guids.Length > 0)
         {
-            DrawSelectedLevel();
-        }
-        else
-        {
-            EditorGUILayout.HelpBox("No levels available. Add a new level or drag WireCell objects from scene.", MessageType.Info);
+            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            _levelsConfig = AssetDatabase.LoadAssetAtPath<LevelsConfig>(path);
         }
 
-        serializedObject.ApplyModifiedProperties();
+        // Try to find a PoolConfig asset in the project
+        var poolGuids = AssetDatabase.FindAssets("t:PoolConfig");
+        if (poolGuids.Length > 0)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(poolGuids[0]);
+            _poolConfig = AssetDatabase.LoadAssetAtPath<PoolConfig>(path);
+        }
+    }
+
+    private void OnGUI()
+    {
+        DrawToolbar();
+        if (_levelsConfig == null)
+        {
+            DrawNoConfigHelp();
+            return;
+        }
+
+        EditorGUILayout.Space();
+        using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition))
+        {
+            _scrollPosition = scrollView.scrollPosition;
+
+            DrawLevelSelection();
+            EditorGUILayout.Space();
+            if (_levelsConfig.Levels.Count > 0 && _selectedLevelIndex < _levelsConfig.Levels.Count)
+            {
+                DrawSelectedLevel();
+            }
+            else
+            {
+                DrawNoLevelsHelp();
+            }
+        }
+
+        // Apply changes if any
+        if (GUI.changed && _levelsConfig != null)
+        {
+            EditorUtility.SetDirty(_levelsConfig);
+        }
+    }
+
+    private void DrawToolbar()
+    {
+        EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+
+        // LevelsConfig object field
+        EditorGUI.BeginChangeCheck();
+        _levelsConfig = (LevelsConfig)EditorGUILayout.ObjectField(_levelsConfig, typeof(LevelsConfig), false);
+        if (EditorGUI.EndChangeCheck() && _levelsConfig != null)
+        {
+            _selectedLevelIndex = 0;
+            _wireCellFoldouts = new bool[0];
+        }
+
+        // PoolConfig object field
+        EditorGUI.BeginChangeCheck();
+        _poolConfig = (PoolConfig)EditorGUILayout.ObjectField(_poolConfig, typeof(PoolConfig), false);
+        EditorGUI.EndChangeCheck();
+
+        // WiresParent object field
+        EditorGUI.BeginChangeCheck();
+        _wiresParentTransform = (Transform)EditorGUILayout.ObjectField(_wiresParentTransform, typeof(Transform), true);
+        EditorGUI.EndChangeCheck();
+
+        GUILayout.FlexibleSpace();
+
+        // Create new LevelsConfig button
+        if (GUILayout.Button("Create New", EditorStyles.toolbarButton))
+        {
+            CreateNewLevelsConfig();
+        }
+
+        // Refresh button
+        if (GUILayout.Button("Refresh", EditorStyles.toolbarButton))
+        {
+            LoadLevelsConfig();
+        }
+
+        EditorGUILayout.EndHorizontal();
+    }
+
+    private void DrawNoConfigHelp()
+    {
+        EditorGUILayout.HelpBox("No LevelsConfig asset found or selected. Please assign a LevelsConfig asset or create a new one.", MessageType.Warning);
+
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Create New LevelsConfig", GUILayout.Height(30)))
+        {
+            CreateNewLevelsConfig();
+        }
+
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Find LevelsConfig and PoolConfig in Project", GUILayout.Height(30)))
+        {
+            LoadLevelsConfig();
+        }
+    }
+
+    private void DrawNoLevelsHelp()
+    {
+        EditorGUILayout.HelpBox("No levels available. Add a new level or drag WireCell objects from scene.", MessageType.Info);
     }
 
     private void DrawLevelSelection()
@@ -45,8 +146,15 @@ public class LevelConfigEditor : Editor
         EditorGUILayout.BeginHorizontal();
 
         // Level dropdown
-        string[] levelOptions = levelsConfig.Levels.Select((level, index) => $"Level {level.LevelId} (Index: {index})").ToArray();
-        selectedLevelIndex = EditorGUILayout.Popup("Selected Level", selectedLevelIndex, levelOptions);
+        if (_levelsConfig.Levels.Count > 0)
+        {
+            var levelOptions = _levelsConfig.Levels.Select((level, index) => $"Level {level.LevelId} (Index: {index})").ToArray();
+            _selectedLevelIndex = EditorGUILayout.Popup("Selected Level", _selectedLevelIndex, levelOptions);
+        }
+        else
+        {
+            EditorGUILayout.Popup("Selected Level", 0, new string[] { "No Levels" });
+        }
 
         // Add level button
         if (GUILayout.Button("Add Level", GUILayout.Width(80)))
@@ -55,24 +163,26 @@ public class LevelConfigEditor : Editor
         }
 
         // Remove level button
-        if (levelsConfig.Levels.Count > 0 && GUILayout.Button("Remove", GUILayout.Width(80)))
+        if (_levelsConfig.Levels.Count > 0)
         {
-            RemoveLevel(selectedLevelIndex);
+            if (GUILayout.Button("Remove", GUILayout.Width(80)))
+            {
+                RemoveLevel(_selectedLevelIndex);
+            }
         }
 
         EditorGUILayout.EndHorizontal();
 
         // Clear all button
-        if (levelsConfig.Levels.Count > 0)
+        if (_levelsConfig.Levels.Count > 0)
         {
-            if (GUILayout.Button("Clear All Levels"))
+            if (GUILayout.Button("Clear All Levels", GUILayout.Height(25)))
             {
-                if (EditorUtility.DisplayDialog("Clear All Levels",
-                    "Are you sure you want to clear all levels?", "Yes", "No"))
+                if (EditorUtility.DisplayDialog("Clear All Levels", "Are you sure you want to clear all levels?", "Yes", "No"))
                 {
-                    levelsConfig.ClearData();
-                    selectedLevelIndex = 0;
-                    EditorUtility.SetDirty(levelsConfig);
+                    _levelsConfig.ClearData();
+                    _selectedLevelIndex = 0;
+                    _wireCellFoldouts = new bool[0];
                 }
             }
         }
@@ -80,7 +190,7 @@ public class LevelConfigEditor : Editor
 
     private void DrawSelectedLevel()
     {
-        var selectedLevel = levelsConfig.Levels[selectedLevelIndex];
+        var selectedLevel = _levelsConfig.Levels[_selectedLevelIndex];
 
         EditorGUILayout.Space();
         EditorGUILayout.LabelField($"Level Configuration - ID: {selectedLevel.LevelId}", EditorStyles.boldLabel);
@@ -100,39 +210,63 @@ public class LevelConfigEditor : Editor
     private void DrawWireCellsSection(LevelConfig level)
     {
         EditorGUILayout.BeginVertical(GUI.skin.box);
+        var headerRect = EditorGUILayout.GetControlRect();
 
-        showWireCells = EditorGUILayout.Foldout(showWireCells, $"Wire Cells ({level.WireCells.Count})", true);
+        // Custom foldout with count
+        _showWireCells = EditorGUI.Foldout(headerRect, _showWireCells, $"Wire Cells ({level.WireCells.Count})", true);
 
-        if (showWireCells)
+        if (_showWireCells)
         {
             EditorGUILayout.Space();
 
             // Drag and drop area
             DrawDragDropArea(level);
-
             EditorGUILayout.Space();
 
             // Wire cells list
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.MaxHeight(300));
-
-            for (int i = 0; i < level.WireCells.Count; i++)
+            using (var scrollView = new EditorGUILayout.ScrollViewScope(_wireCellsScrollPosition, GUILayout.MaxHeight(400)))
             {
-                DrawWireCellItem(level.WireCells[i], i, level);
+                _wireCellsScrollPosition = scrollView.scrollPosition;
+
+                // Ensure foldouts array matches wire cells count
+                if (_wireCellFoldouts.Length != level.WireCells.Count)
+                {
+                    var newFoldouts = new bool[level.WireCells.Count];
+                    for (var i = 0; i < Mathf.Min(_wireCellFoldouts.Length, level.WireCells.Count); i++)
+                    {
+                        newFoldouts[i] = _wireCellFoldouts[i];
+                    }
+
+                    _wireCellFoldouts = newFoldouts;
+                }
+
+                for (var i = 0; i < level.WireCells.Count; i++)
+                {
+                    DrawWireCellItem(level.WireCells[i], i, level);
+                }
             }
 
-            EditorGUILayout.EndScrollView();
-
-            // Clear wire cells button
             if (level.WireCells.Count > 0)
             {
                 EditorGUILayout.Space();
-                if (GUILayout.Button("Clear All Wire Cells"))
+                if (GUILayout.Button("Draw All Wire Cells", GUILayout.Height(25)))
                 {
-                    if (EditorUtility.DisplayDialog("Clear Wire Cells",
-                        "Are you sure you want to clear all wire cells?", "Yes", "No"))
+                    foreach (var cell in level.WireCells)
+                    {
+                        var cellObj = Instantiate(_poolConfig.Get<WireCell>(), _wiresParentTransform);
+                        cellObj.Set(cell);
+                        cellObj.OnValidate();
+                        cell.WireCell = cellObj;
+                    }
+                }
+
+                EditorGUILayout.Space();
+                if (GUILayout.Button("Clear All Wire Cells", GUILayout.Height(25)))
+                {
+                    if (EditorUtility.DisplayDialog("Clear Wire Cells", "Are you sure you want to clear all wire cells?", "Yes", "No"))
                     {
                         level.WireCells.Clear();
-                        EditorUtility.SetDirty(levelsConfig);
+                        _wireCellFoldouts = new bool[0];
                     }
                 }
             }
@@ -143,10 +277,10 @@ public class LevelConfigEditor : Editor
 
     private void DrawDragDropArea(LevelConfig level)
     {
-        Rect dropArea = GUILayoutUtility.GetRect(0.0f, 50.0f, GUILayout.ExpandWidth(true));
-        GUI.Box(dropArea, "Drag WireCell objects from scene here");
+        var dropArea = GUILayoutUtility.GetRect(0.0f, 50.0f, GUILayout.ExpandWidth(true));
+        GUI.Box(dropArea, "Drag WireCell objects from scene here", EditorStyles.helpBox);
 
-        Event evt = Event.current;
+        var evt = Event.current;
 
         switch (evt.type)
         {
@@ -156,12 +290,10 @@ public class LevelConfigEditor : Editor
                     return;
 
                 DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
-
                 if (evt.type == EventType.DragPerform)
                 {
                     DragAndDrop.AcceptDrag();
-
-                    foreach (Object draggedObject in DragAndDrop.objectReferences)
+                    foreach (var draggedObject in DragAndDrop.objectReferences)
                     {
                         if (draggedObject is GameObject gameObject)
                         {
@@ -173,7 +305,8 @@ public class LevelConfigEditor : Editor
                         }
                     }
 
-                    EditorUtility.SetDirty(levelsConfig);
+                    // Resize foldouts array
+                    _wireCellFoldouts = new bool[level.WireCells.Count];
                 }
                 break;
         }
@@ -182,59 +315,54 @@ public class LevelConfigEditor : Editor
     private void DrawWireCellItem(WireCellData wireCellData, int index, LevelConfig level)
     {
         EditorGUILayout.BeginVertical(GUI.skin.box);
-
         EditorGUILayout.BeginHorizontal();
 
-        // Header with index and remove button
-        EditorGUILayout.LabelField($"Wire Cell {index}", EditorStyles.boldLabel);
+        // Foldout for this wire cell
+        _wireCellFoldouts[index] = EditorGUILayout.Foldout(_wireCellFoldouts[index], $"Wire Cell {index}", true);
 
+        GUILayout.FlexibleSpace();
         if (GUILayout.Button("Remove", GUILayout.Width(60)))
         {
             level.WireCells.RemoveAt(index);
-            EditorUtility.SetDirty(levelsConfig);
+            var newFoldouts = new bool[level.WireCells.Count];
+            for (var i = 0; i < level.WireCells.Count; i++)
+            {
+                var oldIndex = i < index ? i : i + 1;
+                if (oldIndex < _wireCellFoldouts.Length)
+                    newFoldouts[i] = _wireCellFoldouts[oldIndex];
+            }
+
+            _wireCellFoldouts = newFoldouts;
             return;
         }
 
         EditorGUILayout.EndHorizontal();
-
-        // WireCell reference (read-only)
-        EditorGUI.BeginChangeCheck();
-        var newWireCell = (WireCell)EditorGUILayout.ObjectField("Scene Object", wireCellData.WireCell, typeof(WireCell), true);
-
-        if (EditorGUI.EndChangeCheck())
-        {
-            ApplyWireCellSceneToData(level, wireCellData, newWireCell);
-            Debug.Log($"Updated WireCell {newWireCell.name} to level {level.LevelId}");
-        }
-
-        // Position
-        wireCellData.Position = EditorGUILayout.Vector3Field("Position", wireCellData.Position);
-
-        // Shape Type
-        wireCellData.ShapeType = (ShapeType)EditorGUILayout.EnumPopup("Shape Type", wireCellData.ShapeType);
-
-        // State
-        wireCellData.State = (WireCellState)EditorGUILayout.EnumPopup("State", wireCellData.State);
-
-        // Is Clickable
-        wireCellData.IsClickable = EditorGUILayout.Toggle("Is Clickable", wireCellData.IsClickable);
-
-        // Output Angles array
-        DrawOutputAngles(wireCellData);
-
-        // Curve Intensity
-        wireCellData.CurveIntensity = EditorGUILayout.FloatField("Curve Intensity", wireCellData.CurveIntensity);
-
-        // Quiz Node ID
-        wireCellData.QuizNodeId = EditorGUILayout.IntField("Quiz Node ID", wireCellData.QuizNodeId);
-
-        // Apply to scene object button
-        if (wireCellData.WireCell != null)
+        if (_wireCellFoldouts[index])
         {
             EditorGUILayout.Space();
-            if (GUILayout.Button("Apply to Scene Object"))
+            EditorGUI.BeginChangeCheck();
+            var newWireCell = (WireCell)EditorGUILayout.ObjectField("Scene Object", wireCellData.WireCell, typeof(WireCell), true);
+            if (EditorGUI.EndChangeCheck())
             {
-                ApplyWireCellDataToScene(wireCellData);
+                ApplyWireCellSceneToData(level, wireCellData, newWireCell);
+                Debug.Log($"Updated WireCell {newWireCell.name} to level {level.LevelId}");
+            }
+
+            wireCellData.Position = EditorGUILayout.Vector3Field("Position", wireCellData.Position);
+            wireCellData.ShapeType = (ShapeType)EditorGUILayout.EnumPopup("Shape Type", wireCellData.ShapeType);
+            wireCellData.State = (WireCellState)EditorGUILayout.EnumPopup("State", wireCellData.State);
+            wireCellData.IsClickable = EditorGUILayout.Toggle("Is Clickable", wireCellData.IsClickable);
+            wireCellData.CurveIntensity = EditorGUILayout.FloatField("Curve Intensity", wireCellData.CurveIntensity);
+            wireCellData.QuizNodeId = EditorGUILayout.IntField("Quiz Node ID", wireCellData.QuizNodeId);
+            DrawOutputAngles(wireCellData);
+
+            if (wireCellData.WireCell != null)
+            {
+                EditorGUILayout.Space();
+                if (GUILayout.Button("Apply to Scene Object"))
+                {
+                    ApplyWireCellDataToScene(wireCellData);
+                }
             }
         }
 
@@ -244,11 +372,8 @@ public class LevelConfigEditor : Editor
     private void DrawOutputAngles(WireCellData wireCellData)
     {
         EditorGUILayout.BeginVertical();
-
-        EditorGUILayout.LabelField("Output Angles");
-
-        // Current array size
-        int newSize = EditorGUILayout.IntField("Size", wireCellData.OutputAngles.Count);
+        EditorGUILayout.LabelField("Output Angles", EditorStyles.boldLabel);
+        var newSize = EditorGUILayout.IntField("Size", wireCellData.OutputAngles.Count);
 
         // Resize array if needed
         if (newSize != wireCellData.OutputAngles.Count)
@@ -260,7 +385,7 @@ public class LevelConfigEditor : Editor
         }
 
         // Array elements
-        for (int i = 0; i < wireCellData.OutputAngles.Count; i++)
+        for (var i = 0; i < wireCellData.OutputAngles.Count; i++)
         {
             wireCellData.OutputAngles[i] = EditorGUILayout.IntField($"Angle {i}", wireCellData.OutputAngles[i]);
         }
@@ -270,24 +395,33 @@ public class LevelConfigEditor : Editor
 
     private void AddWireCellToLevel(LevelConfig level, WireCell wireCell)
     {
-        WireCellData newCellData = new WireCellData();
+        var newCellData = new WireCellData();
         ApplyWireCellSceneToData(level, newCellData, wireCell);
-
         level.WireCells.Add(newCellData);
+
+        // Resize foldouts array and set the new one to be expanded
+        var newFoldouts = new bool[level.WireCells.Count];
+        for (var i = 0; i < _wireCellFoldouts.Length; i++)
+        {
+            newFoldouts[i] = _wireCellFoldouts[i];
+        }
+        newFoldouts[newFoldouts.Length - 1] = true; // Expand the new one
+        _wireCellFoldouts = newFoldouts;
+
         Debug.Log($"Added WireCell {wireCell.name} to level {level.LevelId}");
     }
 
     private void ApplyWireCellSceneToData(LevelConfig level, WireCellData data, WireCell wireCell)
     {
         // Check if this WireCell is already in the list
-        if (level.WireCells.Any(wcd => wcd.WireCell == wireCell))
+        if (level.WireCells.Any(w => w.WireCell == wireCell))
         {
             Debug.LogWarning($"WireCell {wireCell.name} is already in the level configuration");
         }
 
         data.WireCell = wireCell;
         data.Position = wireCell.transform.position;
-        data.ShapeType = wireCell.ShapeType; // Assuming you have getter methods
+        data.ShapeType = wireCell.ShapeType;
         data.State = wireCell.State;
         data.IsClickable = wireCell.IsClickable;
         data.OutputAngles = new List<int>(wireCell.OutputAngles);
@@ -299,8 +433,6 @@ public class LevelConfigEditor : Editor
     {
         if (wireCellData.WireCell != null)
         {
-            // Assuming you have a method in WireCell to apply all data at once
-            // or individual setters for each property
             wireCellData.WireCell.Set(wireCellData);
             wireCellData.WireCell.OnValidate();
             EditorUtility.SetDirty(wireCellData.WireCell);
@@ -314,25 +446,45 @@ public class LevelConfigEditor : Editor
 
     private void AddNewLevel()
     {
-        LevelConfig newLevel = new LevelConfig
+        var newLevel = new LevelConfig
         {
-            LevelId = levelsConfig.Levels.Count > 0 ? levelsConfig.Levels.Max(l => l.LevelId) + 1 : 1,
+            LevelId = _levelsConfig.Levels.Count > 0 ? _levelsConfig.Levels.Max(l => l.LevelId) + 1 : 1,
             DialogNodeId = 0,
             WireCells = new List<WireCellData>()
         };
 
-        levelsConfig.Levels.Add(newLevel);
-        selectedLevelIndex = levelsConfig.Levels.Count - 1;
-        EditorUtility.SetDirty(levelsConfig);
+        _levelsConfig.Levels.Add(newLevel);
+        _selectedLevelIndex = _levelsConfig.Levels.Count - 1;
+        _wireCellFoldouts = new bool[0];
     }
 
     private void RemoveLevel(int index)
     {
-        if (index >= 0 && index < levelsConfig.Levels.Count)
+        if (index >= 0 && index < _levelsConfig.Levels.Count)
         {
-            levelsConfig.Levels.RemoveAt(index);
-            selectedLevelIndex = Mathf.Clamp(selectedLevelIndex, 0, levelsConfig.Levels.Count - 1);
-            EditorUtility.SetDirty(levelsConfig);
+            _levelsConfig.Levels.RemoveAt(index);
+            _selectedLevelIndex = Mathf.Clamp(_selectedLevelIndex, 0, _levelsConfig.Levels.Count - 1);
+            _wireCellFoldouts = new bool[0];
+        }
+    }
+
+    private void CreateNewLevelsConfig()
+    {
+        var path = EditorUtility.SaveFilePanelInProject(
+            "Create New LevelsConfig",
+            "LevelsConfig",
+            "asset",
+            "Please enter a file name to save the LevelsConfig to");
+
+        if (!string.IsNullOrEmpty(path))
+        {
+            var newConfig = CreateInstance<LevelsConfig>();
+            AssetDatabase.CreateAsset(newConfig, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            _levelsConfig = newConfig;
+            _selectedLevelIndex = 0;
+            _wireCellFoldouts = new bool[0];
         }
     }
 }
