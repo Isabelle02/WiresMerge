@@ -15,8 +15,6 @@ public class WindowManager : MonoBehaviour
     private List<BaseWindow> _initedWindows = new List<BaseWindow>();
     private Stack<BaseWindow> _windowsStack = new Stack<BaseWindow>();
 
-    //private bool _isNamed;
-
     public void Awake()
     {
         if (!_instance)
@@ -29,18 +27,18 @@ public class WindowManager : MonoBehaviour
 
         Open<MenuWindow>();
 
-        //if (_isNamed = false)
-        //{
-        Open<UserNamePopup>(); // Why don't open?????
-        //_isNamed = true; // Writing to a save file
-        //}
+        if (!PlayerPrefs.HasKey("FirstLaunch"))
+        {
+            WindowManager.Open<UserNamePopup>();
+            PlayerPrefs.SetInt("FirstLaunch", 1);
+        }
     }
 
     public static void Open<T>() where T : BaseWindow
     {
         _instance.OpenInternal<T>();
     }
-        
+
     public static async UniTask ClosePopup()
     {
         await _instance.ClosePopupInternal();
@@ -81,7 +79,7 @@ public class WindowManager : MonoBehaviour
     {
         CloseAllPopups();
         if (_windowsStack.Count > 0)
-             await _currentWindow.Close();
+            await _currentWindow.Close();
     }
 
     private async UniTask ClosePopupInternal()

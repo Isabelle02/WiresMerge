@@ -1,8 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
+    public static readonly string DefaultUserName = "Лев";
 
     public static WireSystem WireSystem { get; private set; }
     public static TimerSystem TimerSystem { get; private set; }
@@ -12,8 +13,16 @@ public class Gameplay : MonoBehaviour
     {
         get
         {
-            if (string.IsNullOrEmpty(_userName))
-                _userName = PlayerPrefs.GetString("UserName", "User");
+            var stored = PlayerPrefs.GetString("UserName", null);
+            if (string.IsNullOrEmpty(stored))
+            {
+                _userName = DefaultUserName;
+                PlayerPrefs.SetString("UserName", _userName);
+            }
+            else
+            {
+                _userName = stored;
+            }
 
             return _userName;
         }

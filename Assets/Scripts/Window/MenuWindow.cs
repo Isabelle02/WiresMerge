@@ -15,13 +15,7 @@ public class MenuWindow : BaseWindow
 
         MouseManager.AddClickable(_playButton);
         MouseManager.AddClickable(_settingsButton);
-        MouseManager.AddClickable(_quitButton);
-
-
-        //if (!PlayerPrefs.HasKey("FirstLaunch"))
-        //{
-            //WindowManager.Open<UserNamePopup>();
-        //}
+        MouseManager.AddClickable(_quitButton);        
     }
 
     private void OnPlayClick(BaseButton button)
@@ -32,7 +26,6 @@ public class MenuWindow : BaseWindow
 
     private void OnSettingsClick(BaseButton button)
     {
-        //PlayerPrefs.DeleteKey("FirstLaunch"); // DELETE INSTRACTION AFTER DEBUG!
         WindowManager.Open<SettingsPopup>();
     }
 

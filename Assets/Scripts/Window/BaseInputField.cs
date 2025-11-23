@@ -13,7 +13,7 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     [SerializeField] private Color _unselectedColor = Color.white;
     [SerializeField] private Text caretText;
 
-    private string _text;
+    private string _lockedInitialText = Gameplay.DefaultUserName;
     private bool _isSelected = false;
 
     private string _lastText;
@@ -22,8 +22,21 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     private float caretTimer = 0f;
 
     public Collider2D Collider => _collider;
-    public string InitialTextValue => _initialText.text;
-    public string DisplayTextValue { get { return _displayText.text; } set { _displayText.text = value; } }
+    public string InitialTextValue => _lockedInitialText;
+    public string DisplayTextValue
+    {
+        get => _displayText.text;
+        set
+        {
+            _displayText.text = value;
+            UpdateVisuals();
+        }
+    }
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => _isSelected = value;
+    }
     public Action<string> OnValueChanged { get; set; }
 
     private void Awake()
@@ -46,19 +59,22 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             {
                 if (c == '\b') // Backspace
                 {
-                    if (_text.Length > 0)
-                        _text = _text.Substring(0, _text.Length - 1);
+                    if (_displayText.text.Length > 0)
+                    {
+                        _displayText.text = _displayText.text.Substring(0, _displayText.text.Length - 1);
+                        OnValueChanged?.Invoke(_displayText.text);
+                    }
                 }
                 else if (c == '\n' || c == '\r') // Enter
                 {
                     _isSelected = false;
-                    OnValueChanged?.Invoke(_text);
+                    OnValueChanged?.Invoke(_displayText.text);
                 }
                 else
                 {
-                    _text += c;
-                    _displayText.text = _text;
-                    OnValueChanged?.Invoke(_text);
+                    _displayText.text += c;
+                    _displayText.text = _displayText.text;
+                    OnValueChanged?.Invoke(_displayText.text);
                 }
             }
             UpdateVisuals();
@@ -71,7 +87,6 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             {
                 _isSelected = false;
                 UpdateVisuals();
-                OnValueChanged?.Invoke(_text);
             }
         }
         UpdateCaret();
@@ -79,9 +94,13 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
 
     private void UpdateVisuals()
     {
-        _displayText.text = _text;
         _background.color = _isSelected ? _selectedColor : _unselectedColor;
-        _initialText.gameObject.SetActive(!_isSelected || string.IsNullOrEmpty(_text));
+        _initialText.gameObject.SetActive(string.IsNullOrEmpty(_displayText.text));
+        if (_initialText.text != _lockedInitialText)
+        {
+            Debug.LogWarning("Attempt to change _initialText.text");
+            _initialText.text = _lockedInitialText;
+        }
     }
 
     private void UpdateCaret()
@@ -105,7 +124,6 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
         else
         {
             caretText.gameObject.SetActive(false);
-            _lastText = "";
         }
     }
 

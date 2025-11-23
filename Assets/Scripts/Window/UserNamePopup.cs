@@ -6,9 +6,11 @@ public class UserNamePopup : BaseWindow
     [SerializeField] BaseInputField _userNameInput;
     [SerializeField] BaseButton _closeButton;
 
+    private string _updateUserName;
+
     public override async UniTask OnOpen()
     {
-        PlayerPrefs.DeleteKey("UserName"); // Del instraction after realiz one-open-popup-on-device
+        await UniTask.NextFrame(); // Delay to ensure initialization
 
         _closeButton.OnButtonClick += OnCloseButton;
         _userNameInput.OnValueChanged += OnUserNameValueChanged;
@@ -19,16 +21,20 @@ public class UserNamePopup : BaseWindow
 
     private void OnUserNameValueChanged(string userName)
     {
-        if (string.IsNullOrEmpty(_userNameInput.DisplayTextValue))
-            Gameplay.UserName = _userNameInput.InitialTextValue;
-        else
-            Gameplay.UserName = _userNameInput.DisplayTextValue;
+        if (!string.IsNullOrEmpty(_userNameInput.DisplayTextValue))
+        {
+            _updateUserName = _userNameInput.DisplayTextValue;
+        }
     }
 
     private void OnCloseButton(BaseButton button)
     {
-        OnUserNameValueChanged(_userNameInput.DisplayTextValue);
-        Debug.Log($"User name: {Gameplay.UserName}");
+        if (!string.IsNullOrEmpty(_userNameInput.DisplayTextValue))
+            Gameplay.UserName = _updateUserName;
+        else
+            Gameplay.UserName = _userNameInput.InitialTextValue;
+        Debug.Log($"Gameplay User name: {Gameplay.UserName}");
+        _userNameInput.IsSelected = false;
         WindowManager.ClosePopup();
     }
 
@@ -39,9 +45,6 @@ public class UserNamePopup : BaseWindow
 
         MouseManager.RemoveClickable(_closeButton);
         MouseManager.RemoveClickable(_userNameInput);
-
-        //PlayerPrefs.SetInt("FirstLaunch", 1);
-        //PlayerPrefs.Save();
     }
 
 }

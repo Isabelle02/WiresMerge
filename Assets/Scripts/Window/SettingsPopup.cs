@@ -9,9 +9,15 @@ public class SettingsPopup : BaseWindow
     [SerializeField] private BaseSlider _musicVolumeSlider;
     [SerializeField] private BaseSlider _soundVolumeSlider;
 
+    private string _updateUserName;
+
     public override async UniTask OnOpen()
     {
+        await UniTask.NextFrame(); // Delay to ensure initialization
+
         _userNameInputField.DisplayTextValue = Gameplay.UserName;
+        Debug.Log($"_userNameInputField.DisplayTextValue: {_userNameInputField.DisplayTextValue}");
+        Debug.Log($"_userNameInputField.InitialTextValue: {_userNameInputField.InitialTextValue}");
 
         _exitButton.OnButtonClick += OnCloseButton;
         _closeButton.OnButtonClick += OnCloseButton;
@@ -29,7 +35,15 @@ public class SettingsPopup : BaseWindow
 
     private void OnCloseButton(BaseButton button)
     {
-        OnUserNameValueChanged(_userNameInputField.DisplayTextValue);
+        if (!string.IsNullOrEmpty(_userNameInputField.DisplayTextValue))
+        {
+            if (!string.IsNullOrEmpty(_updateUserName))
+                Gameplay.UserName = _updateUserName;
+        }
+        else
+            Gameplay.UserName = _userNameInputField.InitialTextValue;
+        Debug.Log($"Gameplay User name: {Gameplay.UserName}");
+        _userNameInputField.IsSelected = false;
         WindowManager.ClosePopup();
     }
 
@@ -37,9 +51,8 @@ public class SettingsPopup : BaseWindow
     {
         if (!string.IsNullOrEmpty(_userNameInputField.DisplayTextValue))
         {
-            Gameplay.UserName = _userNameInputField.DisplayTextValue;
+            _updateUserName = _userNameInputField.DisplayTextValue;
         }
-        Debug.Log($"User name: {Gameplay.UserName}");
     }
 
     private void OnMusicVolumeChanged(float volume)

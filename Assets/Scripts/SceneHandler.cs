@@ -20,20 +20,10 @@ public class SceneHandler : MonoBehaviour
 
     public static void LoadScene(string sceneName)
     {
-        _instance.InternalLoadScene(sceneName);
-    }
-
-    public static void QuitProgram()
-    {
-        _instance.InternalQuitProgram();
-    }
-
-    private void InternalLoadScene(string sceneName)
-    {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    private void InternalQuitProgram()
+    public static void QuitProgram()
     {
         Application.Quit();
     }

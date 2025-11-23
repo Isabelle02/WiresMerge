@@ -15,7 +15,7 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
     public Transform Handle => _handleCollider.transform;
     public float Value
     {
-        get { return _value; }
+        get => _value;
         set
         {
             _value = Mathf.Clamp(value, _minValue, _maxValue);
@@ -27,10 +27,7 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 
     void OnValidate()
     {
-        if (!Application.isPlaying)
-        {
-            Value = _value;
-        }
+        Value = _value;
     }
 
     void Start()
