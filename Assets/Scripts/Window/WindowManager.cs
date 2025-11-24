@@ -53,8 +53,9 @@ public class WindowManager : MonoBehaviour
     {
         var window = Pool<T>.Get(_canvas.transform);
 		window.transform.SetParent(window.IsPopup ? _popupParent : _windowParent);
+        Physics2D.SyncTransforms();
 
-       	if (window.IsPopup)
+        if (window.IsPopup)
             ClosePopupToOpenInternal();
         else
             CloseToOpenInternal();

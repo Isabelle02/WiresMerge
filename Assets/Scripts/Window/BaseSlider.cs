@@ -32,8 +32,6 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 
     public void Init(float val)
     {
-        _sliderCollider.enabled = false;
-        _sliderCollider.enabled = true;
         Value = val;
     }
 
