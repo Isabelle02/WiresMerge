@@ -56,7 +56,8 @@ public static class LevelManager
         foreach (var cell in _currentConfig.WireCells)
         {
             var cellObj = Pool<WireCell>.Get(Gameplay.Transform);
-            cellObj.Init(cell);
+            cellObj.Set(cell);
+            Gameplay.Started += cellObj.Init;
         }
     }
 

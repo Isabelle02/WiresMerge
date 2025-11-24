@@ -34,7 +34,8 @@ public class MouseManager : MonoBehaviour
         {
             var mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-            foreach (var clickable in _clickables) 
+            var clickables = new List<IClickable>(_clickables);
+            foreach (var clickable in clickables) 
             {
                 if (hit.collider == clickable.Collider)
                     clickable.OnClick();

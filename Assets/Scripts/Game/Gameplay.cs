@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
+
+    public static Action Started;
 
     public static Transform Transform => _instance.transform;
 
@@ -64,5 +67,7 @@ public class Gameplay : MonoBehaviour
     {
         _instance.gameObject.SetActive(true);
         TimerSystem.IsRunning = true;
+
+        Started?.Invoke();
     }
 }
