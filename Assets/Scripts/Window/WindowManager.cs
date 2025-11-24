@@ -51,9 +51,9 @@ public class WindowManager : MonoBehaviour
 
     private async void OpenInternal<T>() where T : BaseWindow
     {
-        var window = Pool<T>.Get(transform);
+        var window = Pool<T>.Get(_canvas.transform);
+		window.transform.SetParent(window.IsPopup ? _popupParent : _windowParent);
 
-		window.transform.SetParent(window.IsPopup ? _popupParent : _windowParent, false);
        	if (window.IsPopup)
             ClosePopupToOpenInternal();
         else

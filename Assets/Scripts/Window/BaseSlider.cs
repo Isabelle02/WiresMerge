@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class BaseSlider : MonoBehaviour, IClickable, IDisposable
@@ -30,9 +30,11 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
         Value = _value;
     }
 
-    void Start()
+    public void Init(float val)
     {
-        UpdateHandlePosition();
+        _sliderCollider.enabled = false;
+        _sliderCollider.enabled = true;
+        Value = val;
     }
 
     public void OnClick()

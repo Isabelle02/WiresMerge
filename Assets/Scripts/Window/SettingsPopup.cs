@@ -13,6 +13,9 @@ public class SettingsPopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        _musicVolumeSlider.Init(100f);
+        _soundVolumeSlider.Init(100f);
+
         _userNameInputField.Init(Gameplay.DefaultUserName, Gameplay.UserName);
         _updateUserName = Gameplay.UserName;
         Debug.Log($"_userNameInputField.DisplayTextValue: {_userNameInputField.DisplayTextValue}");

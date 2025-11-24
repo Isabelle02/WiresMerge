@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPopup: 0
-  _menuButton: {fileID: 5369048102967146024}
+  _pauseButton: {fileID: 5369048102967146024}
 --- !u!1 &3356932750198551518
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 5369048102967146024}
   - component: {fileID: 4557665351327222867}
   m_Layer: 5
-  m_Name: MenuButton
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
