@@ -76,10 +76,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         _quizNodeId = data.QuizNodeId;
     }
 
-    public void Init(WireCellData data)
+    public void Init()
     {
-        Set(data);
-
         _rectCollider.gameObject.SetActive(_shapeType == ShapeType.Rect);
         _hexCollider.gameObject.SetActive(_shapeType == ShapeType.Hex);
         IsHighlighted = _state == WireCellState.Source;
