@@ -7,7 +7,6 @@ public class WindowManager : MonoBehaviour
     [SerializeField] private Canvas _canvas;
     [SerializeField] private Transform _windowParent;
     [SerializeField] private Transform _popupParent;
-    [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
 
     private static WindowManager _instance;
     private BaseWindow _currentWindow;

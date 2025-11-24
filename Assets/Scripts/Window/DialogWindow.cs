@@ -64,9 +64,7 @@ public class DialogWindow : BaseWindow, IClickable
         var success = _dialogSystem.NextPersNode();
         if (!success)
         {
-            Debug.Log("GAME");
             LoadGame();
-            WindowManager.Open<GameWindow>();
         }
     }
 
@@ -75,6 +73,7 @@ public class DialogWindow : BaseWindow, IClickable
         Debug.Log("GAME");
         gameObject.SetActive(false);
         LevelManager.ShowLevel();
+        WindowManager.Open<GameWindow>();
         //close dialogs, go to game
     }
 
