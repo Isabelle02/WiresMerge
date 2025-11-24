@@ -15,7 +15,10 @@ public class MenuWindow : BaseWindow
 
         MouseManager.AddClickable(_playButton);
         MouseManager.AddClickable(_settingsButton);
-        MouseManager.AddClickable(_quitButton);        
+        MouseManager.AddClickable(_quitButton);
+        
+        //LevelManager.LoadLevel(LevelManager.LastId + 1);
+        LevelManager.LoadLevel(0);      
     }
 
     private void OnPlayClick(BaseButton button)
