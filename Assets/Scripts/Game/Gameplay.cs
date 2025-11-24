@@ -13,16 +13,8 @@ public class Gameplay : MonoBehaviour
     {
         get
         {
-            var stored = PlayerPrefs.GetString("UserName", null);
-            if (string.IsNullOrEmpty(stored))
-            {
-                _userName = DefaultUserName;
-                PlayerPrefs.SetString("UserName", _userName);
-            }
-            else
-            {
-                _userName = stored;
-            }
+            if (string.IsNullOrEmpty(_userName))
+                _userName = PlayerPrefs.GetString("UserName", DefaultUserName);
 
             return _userName;
         }

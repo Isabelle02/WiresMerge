@@ -10,7 +10,7 @@ public class UserNamePopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
-        await UniTask.NextFrame(); // Delay to ensure initialization
+        _userNameInput.Init(Gameplay.DefaultUserName, "");
 
         _closeButton.OnButtonClick += OnCloseButton;
         _userNameInput.OnValueChanged += OnUserNameValueChanged;
@@ -21,10 +21,7 @@ public class UserNamePopup : BaseWindow
 
     private void OnUserNameValueChanged(string userName)
     {
-        if (!string.IsNullOrEmpty(_userNameInput.DisplayTextValue))
-        {
-            _updateUserName = _userNameInput.DisplayTextValue;
-        }
+        _updateUserName = _userNameInput.DisplayTextValue;
     }
 
     private void OnCloseButton(BaseButton button)
@@ -33,8 +30,8 @@ public class UserNamePopup : BaseWindow
             Gameplay.UserName = _updateUserName;
         else
             Gameplay.UserName = _userNameInput.InitialTextValue;
+
         Debug.Log($"Gameplay User name: {Gameplay.UserName}");
-        _userNameInput.IsSelected = false;
         WindowManager.ClosePopup();
     }
 

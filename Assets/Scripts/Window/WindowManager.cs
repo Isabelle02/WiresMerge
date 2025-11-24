@@ -29,7 +29,7 @@ public class WindowManager : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("FirstLaunch"))
         {
-            WindowManager.Open<UserNamePopup>();
+            Open<UserNamePopup>();
             PlayerPrefs.SetInt("FirstLaunch", 1);
         }
     }
@@ -60,9 +60,9 @@ public class WindowManager : MonoBehaviour
         }
 
         if (window.IsPopup)
-            await ClosePopupToOpenInternal();
+            ClosePopupToOpenInternal();
         else
-            await CloseToOpenInternal();
+            CloseToOpenInternal();
 
         window.Open();
         _windowsStack.Push(window);

@@ -16,7 +16,7 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
     public float Value
     {
         get => _value;
-        set
+        private set
         {
             _value = Mathf.Clamp(value, _minValue, _maxValue);
             UpdateHandlePosition();
