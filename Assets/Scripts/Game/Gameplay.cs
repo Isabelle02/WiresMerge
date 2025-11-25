@@ -1,8 +1,14 @@
+using System;
 using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
+    public static readonly string DefaultUserName = "Лев";
+
+    public static Action Started;
+
+    public static Transform Transform => _instance.transform;
 
     public static WireSystem WireSystem { get; private set; }
     public static TimerSystem TimerSystem { get; private set; }
@@ -13,7 +19,7 @@ public class Gameplay : MonoBehaviour
         get
         {
             if (string.IsNullOrEmpty(_userName))
-                _userName = PlayerPrefs.GetString("UserName", "User");
+                _userName = PlayerPrefs.GetString("UserName", DefaultUserName);
 
             return _userName;
         }
@@ -24,6 +30,14 @@ public class Gameplay : MonoBehaviour
 
             _userName = value;
             PlayerPrefs.SetString("UserName", value);
+        }
+    }
+
+    public static bool IsAllWin
+    {
+        get
+        {
+            return true;
         }
     }
 
@@ -43,10 +57,18 @@ public class Gameplay : MonoBehaviour
 
     void Start()
     {
-        TimerSystem.IsRunning = true;
+        gameObject.SetActive(false);
     }
 
     void Update()
     {
+    }
+
+    public static void Play()
+    {
+        _instance.gameObject.SetActive(true);
+        TimerSystem.IsRunning = true;
+
+        Started?.Invoke();
     }
 }

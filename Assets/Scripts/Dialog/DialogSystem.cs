@@ -12,14 +12,20 @@ public class DialogSystem
 
     public Action OnNextStep { get; set; }
 
-    public DialogSystem(DialogGraph dialogGraph)
+    private DialogGraph Config
     {
-        _graph = dialogGraph;
+        get
+        {
+            if (_graph == null)
+                _graph = Resources.Load<DialogGraph>("Dialogs/DialogGraph");
+
+            return _graph;
+        }
     }
 
-    public void Start()
+    public void Start(int nodeId)
     {
-        NextStep(_graph.RootNode);
+        NextStep(Config.GetNode(nodeId));
     }
 
     public bool NextStep(DialogNode node = null)
@@ -27,19 +33,25 @@ public class DialogSystem
         if (node == null)
             return false;
 
-        var children = _graph.GetChildren(node);
+        var children = Config.GetChildren(node);
         if ((node.IsPlayer && children.Count == 0))
             return false;
 
-        Debug.Log(node.NodeID);
+        Debug.Log(node.Id);
 
         CurrentRootNode = node;
         NextDialogNodes = children;
         if (CurrentRootNode.IsPlayer && NextDialogNodes.Any(n => !n.IsPlayer))
-            return NextStep(NextDialogNodes.First());
+            return NextPersNode();
         else
             OnNextStep?.Invoke();
 
+        LevelManager.LastDialogNodeId = node.Id;
         return true;
+    }
+
+    public bool NextPersNode()
+    {
+        return NextStep(NextDialogNodes.FirstOrDefault(n => n.Available));
     }
 }

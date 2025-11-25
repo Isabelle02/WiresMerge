@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9c7ceb357d3ac4585007224b7dd974, type: 3}
+  m_Name: PoolConfig
+  m_EditorClassIdentifier: 
+  _prefabs:
+  - {fileID: 3020274497580218165, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
+  - {fileID: 7174855692548212253, guid: c2d82070f36d5fd4e8e41b7daf2bb707, type: 3}
+  - {fileID: 2859665983585717061, guid: dc76daf6373cc1e4bae9e8d0c321ab1b, type: 3}
+  - {fileID: 6174458858704402565, guid: e07b17c490e49a34da211019e92b2ac0, type: 3}
+  - {fileID: 7249585768512380694, guid: 120873dd4021329438951f30e5158e98, type: 3}
+  - {fileID: 9148961140570721014, guid: 7868629dcd16db1459857a3d50428376, type: 3}
+  - {fileID: 2879202977075706892, guid: a531cde157174824282c6b65fe4bba4f, type: 3}
+  - {fileID: 4715886235141297382, guid: 50e42776653917b4c9dcee7f2e50900d, type: 3}

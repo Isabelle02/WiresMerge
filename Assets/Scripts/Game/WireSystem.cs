@@ -41,10 +41,12 @@ public class WireSystem
         _wireCells.Remove(wireCell);
     }
 
-    private Vector2 GetDirection(float angleZ)
+    public static Vector2 GetDirection(int angleZ, float width, float height)
     {
         var angleRadians = angleZ * Mathf.Deg2Rad;
-        return new Vector2(Mathf.Cos(angleRadians), Mathf.Sin(angleRadians));
+        var vectorY = height * 0.5f * Mathf.Sin(angleRadians);
+        var vectorX = vectorY != 0 ? vectorY / Mathf.Tan(angleRadians) : width / 2f;
+        return new Vector2(vectorX, vectorY);
     }
 
     private void OnRotated()
@@ -74,10 +76,10 @@ public class WireSystem
         remainedCells.Remove(wireCell);
         for (var i = 0; i < wireCell.OutputCount; i++)
         {
-            var direction = GetDirection(wireCell.OutputAngles[i]);
-            var hits = Physics2D.RaycastAll(wireCell.Position, direction, 1f);
-            var cell = remainedCells.FirstOrDefault(w => hits.FirstOrDefault(hit => hit.transform.position == w.Position));
-            if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle) == direction)))
+            var direction = GetDirection(wireCell.OutputAngles[i], wireCell.Width, wireCell.Height);
+            var hit = Physics2D.Raycast((Vector2)wireCell.Position + direction * 1.1f, Vector3.forward);
+            var cell = remainedCells.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
+            if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle, cell.Width, cell.Height) == direction)))
             {
                 Debug.Log(wireCell.Position + " connected neighbor " + cell.Position);
                 wireCell.OutputUsedCount++;

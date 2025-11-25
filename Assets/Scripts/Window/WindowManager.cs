@@ -1,15 +1,15 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class WindowManager : MonoBehaviour
 {
-    [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
+    [SerializeField] private Canvas _canvas;
+    [SerializeField] private Transform _windowParent;
+    [SerializeField] private Transform _popupParent;
 
     private static WindowManager _instance;
     private BaseWindow _currentWindow;
-    private List<BaseWindow> _initedWindows = new List<BaseWindow>();
     private Stack<BaseWindow> _windowsStack = new Stack<BaseWindow>();
 
     public void Awake()
@@ -21,8 +21,17 @@ public class WindowManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
 
+    public void Start()
+    {
         Open<MenuWindow>();
+
+        if (!PlayerPrefs.HasKey("FirstLaunch"))
+        {
+            Open<UserNamePopup>();
+            PlayerPrefs.SetInt("FirstLaunch", 1);
+        }
     }
 
     public static void Open<T>() where T : BaseWindow
@@ -42,18 +51,14 @@ public class WindowManager : MonoBehaviour
 
     private async void OpenInternal<T>() where T : BaseWindow
     {
-        var window = _initedWindows.FirstOrDefault(w => w.GetType() == typeof(T));
-        if (!window)
-        {
-            window = Init(typeof(T));
-            if (!window)
-                return;
-        }
+        var window = Pool<T>.Get(_canvas.transform);
+		window.transform.SetParent(window.IsPopup ? _popupParent : _windowParent);
+        Physics2D.SyncTransforms();
 
         if (window.IsPopup)
-            await ClosePopupToOpenInternal();
+            ClosePopupToOpenInternal();
         else
-            await CloseToOpenInternal();
+            CloseToOpenInternal();
 
         window.Open();
         _windowsStack.Push(window);
@@ -68,8 +73,9 @@ public class WindowManager : MonoBehaviour
 
     private async UniTask CloseToOpenInternal()
     {
-        if (_windowsStack.Count > 1)
-             await _currentWindow.Close();
+        CloseAllPopups();
+        if (_windowsStack.Count > 0)
+            await _currentWindow.Close();
     }
 
     private async UniTask ClosePopupInternal()
@@ -87,13 +93,18 @@ public class WindowManager : MonoBehaviour
             _currentWindow.Open();
     }
 
-    private async UniTask CloseInternal()
+    private void CloseAllPopups()
     {
         while (_windowsStack.Count > 0 && _currentWindow.IsPopup)
         {
             _windowsStack.Pop().CloseForce();
             _currentWindow = _windowsStack.Peek();
         }
+    }
+
+    private async UniTask CloseInternal()
+    {
+        CloseAllPopups();
 
         if (_windowsStack.Count < 2)
             return;
@@ -101,16 +112,5 @@ public class WindowManager : MonoBehaviour
         await _windowsStack.Pop().Close();
         _currentWindow = _windowsStack.Peek();
         _currentWindow.Open();
-    }
-
-    private BaseWindow Init(System.Type t)
-    {
-        var windowPrefab = _windows.FirstOrDefault(w => w.GetType() == t);
-        if (!windowPrefab)
-            return null;
-
-        var window = Instantiate(windowPrefab, transform);
-        _initedWindows.Add(window);
-        return window;
     }
 }
