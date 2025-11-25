@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc184b2b289d0f14ca04bf1fb8c59ede, type: 3}
+  m_Name: LevelsConfig
+  m_EditorClassIdentifier: 
+  Levels:
+  - LevelId: 1
+    DialogNodeId: 0
+    WireCells:
+    - Position: {x: -1.5020118, y: -0.8659766, z: 0.5}
+      ShapeType: 1
+      State: 0
+      IsClickable: 0
+      OutputAngles: 1e0000005a000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -1.5020118, y: 0, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 96000000d2000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -0.7520117, y: -0.4329883, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 96000000d20000004a010000
+      CurveIntensity: 0.3
+      QuizNodeId: -1
+    - Position: {x: -0.0020117164, y: -0.8659766, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 960000000e0100004a010000
+      CurveIntensity: 0.3
+      QuizNodeId: -1
+    - Position: {x: -0.0020117164, y: -1.7319531, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: d20000000e010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 0.7479883, y: -1.2989649, z: 0.5}
+      ShapeType: 1
+      State: 0
+      IsClickable: 1
+      OutputAngles: 96000000d2000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -0.7520117, y: -2.1649413, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 4a0100001e000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+  - LevelId: 2
+    DialogNodeId: 0
+    WireCells:
+    - Position: {x: -2.5, y: 0.5, z: 0}
+      ShapeType: 0
+      State: 0
+      IsClickable: 0
+      OutputAngles: 00000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -1.5, y: 0.5, z: 0}
+      ShapeType: 0
+      State: 1
+      IsClickable: 1
+      OutputAngles: 0e01000000000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -1.5, y: 1.5, z: 0}
+      ShapeType: 0
+      State: 1
+      IsClickable: 1
+      OutputAngles: 0e01000000000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -0.5, y: 1.5, z: 0}
+      ShapeType: 0
+      State: 1
+      IsClickable: 1
+      OutputAngles: 5a0000000e010000
+      CurveIntensity: 0
+      QuizNodeId: -1
+    - Position: {x: 0.5, y: 1.5, z: 0}
+      ShapeType: 0
+      State: 1
+      IsClickable: 1
+      OutputAngles: b40000000e010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 0.5, y: 0.5, z: 0}
+      ShapeType: 0
+      State: 1
+      IsClickable: 1
+      OutputAngles: b40000000e010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 1.5, y: 0.5, z: 0}
+      ShapeType: 0
+      State: 2
+      IsClickable: 0
+      OutputAngles: b4000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -2.5, y: 1.5, z: 0}
+      ShapeType: 0
+      State: 1
+      IsClickable: 1
+      OutputAngles: 0e01000000000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1

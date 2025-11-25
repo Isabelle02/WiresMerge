@@ -1,13 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogWindow : BaseWindow, IClickable
 {
-    [SerializeField] private DialogGraph _graph;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private TextMeshProUGUI _persText;
     [SerializeField] private GridLayoutGroup _choicesGrid;
@@ -27,30 +25,38 @@ public class DialogWindow : BaseWindow, IClickable
         Debug.Log("On Open Dialog");
         await base.OnOpen();
 
-        _dialogSystem = new DialogSystem(_graph);
+        _dialogSystem = new DialogSystem();
         _dialogSystem.OnNextStep += UpdateUI;
-        _dialogSystem.Start();
+        _dialogSystem.Start(LevelManager.LastDialogNodeId);
     }
 
     private void OnButtonClick(BaseButton button)
     {
-        OnClickInternal((button as DialogChoiceButton).Node);
+        var success = _dialogSystem.NextStep((button as DialogChoiceButton).Node);
+        if (!success)
+        {
+            LoadGame();
+        }
     }
 
     public void OnClick()
     {
-        if (_userChoices.Count == 0)
-            OnClickInternal(_dialogSystem.NextDialogNodes.FirstOrDefault());
-    }
-
-    private void OnClickInternal(DialogNode node)
-    {
-        var success = _dialogSystem.NextStep(node);
+        if (_userChoices.Count != 0)
+            return;
+        
+        var success = _dialogSystem.NextPersNode();
         if (!success)
         {
-            Debug.Log("GAME");
-            //close dialogs, go to game
+            LoadGame();
         }
+    }
+
+    private void LoadGame()
+    {
+        Debug.Log("GAME");
+        gameObject.SetActive(false);
+        LevelManager.ShowLevel();
+        //close dialogs, go to game
     }
 
     private void UpdateUI()

@@ -1,15 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class WindowManager : MonoBehaviour
 {
-    [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
-
     private static WindowManager _instance;
     private BaseWindow _currentWindow;
-    private List<BaseWindow> _initedWindows = new List<BaseWindow>();
     private Stack<BaseWindow> _windowsStack = new Stack<BaseWindow>();
 
     public void Awake()
@@ -21,7 +17,10 @@ public class WindowManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
 
+    public void Start()
+    {
         Open<MenuWindow>();
     }
 
@@ -42,14 +41,7 @@ public class WindowManager : MonoBehaviour
 
     private async void OpenInternal<T>() where T : BaseWindow
     {
-        var window = _initedWindows.FirstOrDefault(w => w.GetType() == typeof(T));
-        if (!window)
-        {
-            window = Init(typeof(T));
-            if (!window)
-                return;
-        }
-
+        var window = Pool<T>.Get(transform);
         if (window.IsPopup)
             await ClosePopupToOpenInternal();
         else
@@ -101,16 +93,5 @@ public class WindowManager : MonoBehaviour
         await _windowsStack.Pop().Close();
         _currentWindow = _windowsStack.Peek();
         _currentWindow.Open();
-    }
-
-    private BaseWindow Init(System.Type t)
-    {
-        var windowPrefab = _windows.FirstOrDefault(w => w.GetType() == t);
-        if (!windowPrefab)
-            return null;
-
-        var window = Instantiate(windowPrefab, transform);
-        _initedWindows.Add(window);
-        return window;
     }
 }
