@@ -1,11 +1,12 @@
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameWindow : BaseWindow
 {
     [SerializeField] private BaseButton _pauseButton;
-
-    //private TimerSystem timerSystem;
+    [SerializeField] private Text _timerValue;
 
     public override async UniTask OnOpen()
     {
@@ -13,6 +14,7 @@ public class GameWindow : BaseWindow
         MouseManager.AddClickable(_pauseButton);
 
         Gameplay.TimerSystem.IntervalElapsed += OnIntervalElapsed;
+        Gameplay.TimerSystem.TimerElapsed += OnTimerElapsed;
     }
 
     private void OnPauseClick(BaseButton button)
@@ -22,7 +24,13 @@ public class GameWindow : BaseWindow
 
     private void OnIntervalElapsed(float tick)
     {
-        
+        _timerValue.text = (LevelManager.LastTimerDuration--).ToString();
+        Debug.Log("LastTimerDuration " + LevelManager.LastTimerDuration);
+    }
+
+    private void OnTimerElapsed()
+    {
+        Debug.Log("LOSE");
     }
 
     public override async UniTask OnClose()
@@ -30,12 +38,7 @@ public class GameWindow : BaseWindow
         _pauseButton.OnButtonClick -= OnPauseClick;
         MouseManager.RemoveClickable(_pauseButton);
 
-
-        _Button.OnButtonClick -= OndClick;
-        _ButtonLose.OnButtonClick -= OnLoseClick;
-        _ButtonWin.OnButtonClick -= OnWinClick;
-        MouseManager.RemoveClickable(_Button);
-        MouseManager.RemoveClickable(_ButtonLose);
-        MouseManager.RemoveClickable(_ButtonWin);
+        Gameplay.TimerSystem.IntervalElapsed -= OnIntervalElapsed;
+        Gameplay.TimerSystem.TimerElapsed -= OnTimerElapsed;
     }
 }

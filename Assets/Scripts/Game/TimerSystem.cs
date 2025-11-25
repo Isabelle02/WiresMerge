@@ -27,6 +27,17 @@ public class TimerSystem
             Run();
         }
     }
+    public float Duration
+    {
+        get => _duration;
+        set
+        {
+            if (_duration == value)
+                return;
+
+            _duration = value;
+        }
+    }
 
     private async void Run()
     {
@@ -41,14 +52,13 @@ public class TimerSystem
     {
         _elapsed += _interval;
         IntervalElapsed?.Invoke(_duration - _elapsed);
-        //Debug.Log("interval " + (_duration - _elapsed));
+        Debug.Log("interval " + (_duration - _elapsed));
 
         if (_elapsed >= _duration)
         {
             TimerElapsed?.Invoke();
             IsRunning = false;
             _elapsed = 0f;
-            //Debug.Log("timer elapsed");
         }
     }
 }

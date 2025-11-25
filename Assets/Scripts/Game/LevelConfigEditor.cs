@@ -201,6 +201,9 @@ public class LevelsConfigWindow : EditorWindow
         // Dialog Node ID
         selectedLevel.DialogNodeId = EditorGUILayout.IntField("Dialog Node ID", selectedLevel.DialogNodeId);
 
+        // Timer duration
+        selectedLevel.TimerDuration = EditorGUILayout.FloatField("Timer Duration", selectedLevel.TimerDuration);
+
         EditorGUILayout.Space();
 
         // Wire Cells section
@@ -450,6 +453,7 @@ public class LevelsConfigWindow : EditorWindow
         {
             LevelId = _levelsConfig.Levels.Count > 0 ? _levelsConfig.Levels.Max(l => l.LevelId) + 1 : 1,
             DialogNodeId = 0,
+            TimerDuration = 300f,
             WireCells = new List<WireCellData>()
         };
 
