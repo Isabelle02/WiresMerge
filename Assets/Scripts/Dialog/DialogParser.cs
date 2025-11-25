@@ -9,6 +9,7 @@ public static class DialogParser
     private static string _gid = "0";
     //private string DownloadUrl => $"https://docs.google.com/spreadsheets/d/{_spreadsheetID}/export?format=csv&gid={_gid}";
     //private string DownloadUrl => $"https://docs.google.com/spreadsheets/d/{_spreadsheetID}/edit?usp=sharing";
+
     private static string DownloadUrl => $"https://docs.google.com/spreadsheets/d/{_spreadsheetID}/gviz/tq?tqx=out:csv&sheet={_gid}";
 
     public static readonly DialogGraph DialogGraph = new DialogGraph();
@@ -63,12 +64,10 @@ public static class DialogParser
                 var text = fields[5];
                 var isPlayer = bool.Parse(fields[6]);
                 var parameters = fields[7];
+                var conditions = fields[8];
 
-                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters);
+                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions);
                 DialogGraph.Nodes.Add(newNode);
-
-                if (nodeId == 0)
-                    DialogGraph.RootNode = newNode;
             }
         }
 
@@ -103,10 +102,9 @@ public static class DialogParser
         if (DialogGraph.Nodes.Count == 0)
             return;
 
-        DialogGraph.RootNode = DialogGraph.Nodes[0];
         for (var i = 0; i < DialogGraph.Nodes.Count; i++)
         {
-            var id = DialogGraph.Nodes[i].NodeID;
+            var id = DialogGraph.Nodes[i].Id;
             foreach (var relation in DialogGraph.Relations)
             {
                 if (id == relation.ChildID)

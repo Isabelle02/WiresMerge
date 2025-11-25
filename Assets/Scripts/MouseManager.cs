@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class MouseManager : MonoBehaviour
 {
     private static MouseManager _instance;
     private List<IClickable> _clickables = new List<IClickable>();
+
+    public static Action<Collider2D> OnClick { get; set; }
 
     void Awake()
     {
@@ -20,11 +23,15 @@ public class MouseManager : MonoBehaviour
     public static void AddClickable(IClickable clickable)
     {
         if (!_instance._clickables.Contains(clickable))
-             _instance._clickables.Add(clickable);
+        {
+            _instance._clickables.Add(clickable);
+            OnClick += clickable.TryClick;
+        }
     }
 
     public static void RemoveClickable(IClickable clickable)
     {
+        OnClick -= clickable.TryClick;
         _instance._clickables.Remove(clickable);
     }
 
@@ -34,11 +41,8 @@ public class MouseManager : MonoBehaviour
         {
             var mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-            foreach (var clickable in _clickables) 
-            {
-                if (hit.collider == clickable.Collider)
-                    clickable.OnClick();
-            }
+            Debug.Log(hit.collider);
+            OnClick(hit.collider);
         }
     }
 }
