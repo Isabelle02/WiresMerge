@@ -22,7 +22,6 @@ public class WinPopup : BaseWindow
 
     private void OnNextButton(BaseButton button)
     {
-        WindowManager.ClosePopup();
         WindowManager.Open<DialogWindow>();
     }
 
