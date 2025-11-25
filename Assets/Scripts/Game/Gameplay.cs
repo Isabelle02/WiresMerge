@@ -4,6 +4,7 @@ using UnityEngine;
 public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
+    public static readonly string DefaultUserName = "Лев";
 
     public static Action Started;
 
@@ -18,7 +19,7 @@ public class Gameplay : MonoBehaviour
         get
         {
             if (string.IsNullOrEmpty(_userName))
-                _userName = PlayerPrefs.GetString("UserName", "User");
+                _userName = PlayerPrefs.GetString("UserName", DefaultUserName);
 
             return _userName;
         }

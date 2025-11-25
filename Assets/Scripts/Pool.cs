@@ -47,6 +47,8 @@ public class Pool<T> : Pool where T : MonoBehaviour
 
         obj.gameObject.SetActive(true);
         obj.transform.SetParent(parent);
+        obj.transform.localScale = Vector3.one;
+        obj.transform.localPosition = Vector3.zero;
         return (T)obj;
     }
 

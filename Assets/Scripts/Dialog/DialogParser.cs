@@ -9,6 +9,7 @@ public static class DialogParser
     private static string _gid = "0";
     //private string DownloadUrl => $"https://docs.google.com/spreadsheets/d/{_spreadsheetID}/export?format=csv&gid={_gid}";
     //private string DownloadUrl => $"https://docs.google.com/spreadsheets/d/{_spreadsheetID}/edit?usp=sharing";
+
     private static string DownloadUrl => $"https://docs.google.com/spreadsheets/d/{_spreadsheetID}/gviz/tq?tqx=out:csv&sheet={_gid}";
 
     public static readonly DialogGraph DialogGraph = new DialogGraph();
