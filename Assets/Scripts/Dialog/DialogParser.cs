@@ -65,8 +65,9 @@ public static class DialogParser
                 var isPlayer = bool.Parse(fields[6]);
                 var parameters = fields[7];
                 var conditions = fields[8];
+                var isCorrect = bool.Parse(fields[9]);
 
-                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions);
+                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions, isCorrect);
                 DialogGraph.Nodes.Add(newNode);
             }
         }
