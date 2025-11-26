@@ -16,11 +16,6 @@ public class DialogWindow : BaseWindow, IClickable
 
     private DialogSystem _dialogSystem;
 
-    private float _delay = 0.05f;
-    private bool _isTyping = false;
-    private CancellationTokenSource _cancellationTokenSource;
-    private string _textToType;
-
     public Collider2D Collider => _collider;
 
     public void Start()
@@ -85,15 +80,6 @@ public class DialogWindow : BaseWindow, IClickable
         if (!_dialogSystem.CurrentRootNode.IsPlayer)
         {
             _persText.text = _dialogSystem.CurrentRootNode.FormattedText;
-            //_textToType = _dialogSystem.CurrentRootNode.FormattedText;
-            //if (!_isTyping)
-            //{
-            //    StartAnimation();
-            //}
-            //else
-            //{
-            //    StopAnimation();
-            //}
             _nameText.text = _dialogSystem.CurrentRootNode.Speaker;
         }
 
@@ -101,9 +87,6 @@ public class DialogWindow : BaseWindow, IClickable
         {
             if (!node.IsPlayer)
                 continue;
-
-            //if (!_isTyping)
-            //    continue;
 
             var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
             button.Node = node;
@@ -113,34 +96,6 @@ public class DialogWindow : BaseWindow, IClickable
             MouseManager.AddClickable(button);
 
         }
-    }
-
-    private async UniTask TypeText(string textToType, CancellationToken token)
-    {
-        _isTyping = true;
-        _persText.text = "";
-
-        foreach (char letter in textToType)
-        {
-            token.ThrowIfCancellationRequested();
-            _persText.text += letter;
-            await UniTask.Delay((int)(_delay * 1000));
-        }
-
-        _isTyping = false;
-    }
-
-    public void StartAnimation()
-    {
-        _cancellationTokenSource = new CancellationTokenSource();
-        TypeText(_textToType, _cancellationTokenSource.Token).Forget();
-    }
-
-    public void StopAnimation()
-    {
-        _cancellationTokenSource?.Cancel();
-        _persText.text = _textToType;
-        _isTyping = false;
     }
 
     public override UniTask OnClose()

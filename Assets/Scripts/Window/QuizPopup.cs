@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestionPopup : BaseWindow
+public class QuizPopup : BaseWindow
 {
     [SerializeField] private Collider2D _collider;
     [SerializeField] private TextMeshProUGUI _questionText;
