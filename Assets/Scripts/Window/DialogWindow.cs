@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -17,7 +16,6 @@ public class DialogWindow : BaseWindow, IClickable
     [SerializeField] private BaseButton _pauseButton;
 
     private DialogSystem _dialogSystem;
-
     private float _delay = 0.05f;
     private bool _isTyping = false;
     private CancellationTokenSource _cancellationTokenSource;
