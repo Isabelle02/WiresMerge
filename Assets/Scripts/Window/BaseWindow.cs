@@ -16,13 +16,13 @@ public abstract class BaseWindow : MonoBehaviour
     public async UniTask Close()
     {
         await OnClose();
-        gameObject.SetActive(false);
+        Pool.Release(this);
     }
 
     public void CloseForce()
     {
         OnClose();
-        gameObject.SetActive(false);
+        Pool.Release(this);
     }
 
     public virtual async UniTask OnOpen()

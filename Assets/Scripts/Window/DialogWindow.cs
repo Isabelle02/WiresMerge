@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,8 +13,6 @@ public class DialogWindow : BaseWindow, IClickable
     [SerializeField] private List<DialogChoiceButton> _userChoices = new List<DialogChoiceButton>();
     [SerializeField] private BaseButton _pauseButton;
 
-    private DialogSystem _dialogSystem;
-
     public Collider2D Collider => _collider;
 
     public void Start()
@@ -28,9 +25,8 @@ public class DialogWindow : BaseWindow, IClickable
         Debug.Log("On Open Dialog");
         await base.OnOpen();
 
-        _dialogSystem = new DialogSystem();
-        _dialogSystem.OnNextStep += UpdateUI;
-        _dialogSystem.Start(LevelManager.LastDialogNodeId);
+        Gameplay.DialogSystem.OnNextStep += UpdateUI;
+        Gameplay.DialogSystem.Start(LevelManager.LastDialogNodeId);
 
         _pauseButton.OnButtonClick += OnPauseClick;
         MouseManager.AddClickable(_pauseButton);
@@ -43,7 +39,7 @@ public class DialogWindow : BaseWindow, IClickable
 
     private void OnButtonClick(BaseButton button)
     {
-        var success = _dialogSystem.NextStep((button as DialogChoiceButton).Node);
+        var success = Gameplay.DialogSystem.NextStep((button as DialogChoiceButton).Node);
         if (!success)
         {
             LoadGame();
@@ -55,7 +51,7 @@ public class DialogWindow : BaseWindow, IClickable
         if (_userChoices.Count != 0)
             return;
         
-        var success = _dialogSystem.NextPersNode();
+        var success = Gameplay.DialogSystem.NextPersNode();
         if (!success)
         {
             LoadGame();
@@ -74,21 +70,21 @@ public class DialogWindow : BaseWindow, IClickable
     private void UpdateUI()
     {
         foreach (var choice in _userChoices)
-            Pool<DialogChoiceButton>.Release(choice);
+            Pool.Release(choice);
 
         _userChoices.Clear();
-        if (!_dialogSystem.CurrentRootNode.IsPlayer)
+        if (!Gameplay.DialogSystem.CurrentRootNode.IsPlayer)
         {
-            _persText.text = _dialogSystem.CurrentRootNode.FormattedText;
-            _nameText.text = _dialogSystem.CurrentRootNode.Speaker;
+            _persText.text = Gameplay.DialogSystem.CurrentRootNode.FormattedText;
+            _nameText.text = Gameplay.DialogSystem.CurrentRootNode.Speaker;
         }
 
-        foreach (var node in _dialogSystem.NextDialogNodes)
+        foreach (var node in Gameplay.DialogSystem.NextDialogNodes)
         {
             if (!node.IsPlayer)
                 continue;
 
-            var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
+            var button = Pool.Get<DialogChoiceButton>(_choicesGrid.transform);
             button.Node = node;
             button.OnButtonClick += OnButtonClick;
             button.SetText(node.FormattedText);
@@ -100,7 +96,7 @@ public class DialogWindow : BaseWindow, IClickable
 
     public override UniTask OnClose()
     {
-        _dialogSystem.OnNextStep -= UpdateUI;
+        Gameplay.DialogSystem.OnNextStep -= UpdateUI;
         _pauseButton.OnButtonClick -= OnPauseClick;
         MouseManager.RemoveClickable(_pauseButton);
 

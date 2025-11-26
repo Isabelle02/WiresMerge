@@ -18,7 +18,7 @@ public enum WireCellState
     Bulb
 }
 
-public class WireCell : MonoBehaviour, IClickable, IWireCell
+public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
 {
     [SerializeField] private ShapeType _shapeType;
     [SerializeField] private Collider2D _rectCollider;
@@ -88,6 +88,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             MouseManager.AddClickable(this);
 
         Gameplay.WireSystem.AddWireCell(this);
+
+        Gameplay.Finished += OnFinished;
     }
 
     private void DrawLines()
@@ -187,6 +189,13 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     public void OnClick()
     {
         RotateToLeft();
+
+        if (_quizNodeId > -1)
+        {
+            Gameplay.QuizSystem.Start(QuizNodeId);
+            WindowManager.Open<QuizPopup>();
+            _quizNodeId = -1;
+        }
     }
 
     public void RotateToLeft()
@@ -214,5 +223,19 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         var angle = _baseAngle + 360 / SideCountInternal * effectiveRotateCount;
         var duration = 0.1f + effectiveRotateCount / 100f;
         return transform.DORotate(new Vector3(0f, 0f, angle) - transform.rotation.eulerAngles, duration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear);
+    }
+
+    private void OnFinished()
+    {
+        Pool.Release(this);
+    }
+
+    public void Dispose()
+    {
+        _baseAngle = 0f;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        Gameplay.WireSystem.RemoveWireCell(this);
+        MouseManager.RemoveClickable(this);
+        Gameplay.Finished -= OnFinished;
     }
 }

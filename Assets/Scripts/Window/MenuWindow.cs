@@ -18,12 +18,12 @@ public class MenuWindow : BaseWindow
         MouseManager.AddClickable(_quitButton);
         
         //LevelManager.LoadLevel(LevelManager.LastId + 1);
-        LevelManager.LoadLevel(0);      
     }
 
-    private void OnPlayClick(BaseButton button)
+    private async void OnPlayClick(BaseButton button)
     {
-        SceneHandler.LoadScene(SceneHandler.GameScene);
+        await SceneHandler.LoadScene(SceneHandler.GameScene);
+        LevelManager.LoadLevel(0);
         WindowManager.Open<DialogWindow>();
     }
 

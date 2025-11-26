@@ -29,7 +29,7 @@ MonoBehaviour:
       IsClickable: 1
       OutputAngles: 96000000d2000000
       CurveIntensity: 0.4
-      QuizNodeId: -1
+      QuizNodeId: 193
     - Position: {x: -0.7520117, y: -0.4329883, z: 0.5}
       ShapeType: 1
       State: 1

@@ -30,6 +30,9 @@ public class WireSystem
 
     public void RemoveWireCell(IWireCell wireCell)
     {
+        if (!_wireCells.Contains(wireCell))
+            return;
+
         if (wireCell.State == WireCellState.Source)
             _sourceCells.Remove(wireCell);
 

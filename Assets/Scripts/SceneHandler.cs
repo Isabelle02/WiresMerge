@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class SceneHandler : MonoBehaviour
@@ -18,9 +19,9 @@ public class SceneHandler : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public static void LoadScene(string sceneName)
+    public static async UniTask LoadScene(string sceneName)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName);
     }
 
     public static void QuitProgram()
