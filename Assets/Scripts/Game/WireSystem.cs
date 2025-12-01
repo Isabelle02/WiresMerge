@@ -10,7 +10,7 @@ public class WireSystem
     private int _bulbTurnedOnCount = 0;
     private int _bulbNeedToTurnOnCount = 0;
 
-    public bool IsWin { get; private set; }
+    public static bool IsWin { get; private set; }
 
     public void AddWireCell(IWireCell wireCell)
     {

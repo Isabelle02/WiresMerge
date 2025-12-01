@@ -8,6 +8,15 @@ public class GameWindow : BaseWindow
     [SerializeField] private BaseButton _pauseButton;
     [SerializeField] private Text _timerValue;
 
+    public void Update()
+    {
+        if (WireSystem.IsWin)
+        {
+            Gameplay.TimerSystem.IsRunning = false;
+            WindowManager.Open<WinPopup>();
+        }
+    }
+
     public override async UniTask OnOpen()
     {
         _pauseButton.OnButtonClick += OnPauseClick;
@@ -31,6 +40,7 @@ public class GameWindow : BaseWindow
     private void OnTimerElapsed()
     {
         Debug.Log("LOSE");
+        WindowManager.Open<LosePopup>();
     }
 
     public override async UniTask OnClose()
