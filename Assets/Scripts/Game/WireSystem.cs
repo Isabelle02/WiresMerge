@@ -67,11 +67,18 @@ public class WireSystem
         CheckWin();
     }
 
-    private List<IWireCell> CheckConnection(IWireCell wireCell, List<IWireCell> wireCells)
+    private List<IWireCell> CheckConnection(IWireCell wireCell, List<IWireCell> wireCells, HashSet<IWireCell> visited = null)
     {
+        if (visited == null)
+            visited = new HashSet<IWireCell>();
         var usedSources = new List<IWireCell>();
+        if (visited.Contains(wireCell))
+            return usedSources;
+        visited.Add(wireCell);
+
         var remainedCells = new List<IWireCell>(wireCells);
         remainedCells.Remove(wireCell);
+
         for (var i = 0; i < wireCell.OutputCount; i++)
         {
             var direction = GetDirection(wireCell.OutputAngles[i], wireCell.Width, wireCell.Height);
@@ -79,7 +86,6 @@ public class WireSystem
             var cell = remainedCells.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
             if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle, cell.Width, cell.Height) == direction)))
             {
-                Debug.Log(wireCell.Position + " connected neighbor " + cell.Position);
                 wireCell.OutputUsedCount++;
                 cell.OutputUsedCount++;
                 cell.Highlight();
@@ -87,7 +93,7 @@ public class WireSystem
                 if (_sourceCells.Contains(cell))
                     usedSources.Add(cell);
 
-                usedSources.AddRange(CheckConnection(cell, remainedCells));
+                usedSources.AddRange(CheckConnection(cell, remainedCells, visited));
             }
         }
 
