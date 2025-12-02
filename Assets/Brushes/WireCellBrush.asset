@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f55600aadcfd254f9e45662233b5b48, type: 3}
+  m_Script: {fileID: 11500000, guid: a490702d5f259cb4791f44892b491911, type: 3}
   m_Name: WireCellBrush
   m_EditorClassIdentifier: 
   m_Cells:
@@ -37,4 +37,4 @@ MonoBehaviour:
   m_CanChangeZPosition: 0
   m_FloodFillContiguousOnly: 1
   wireCellPrefab: {fileID: 7471757773641423453, guid: 354b596352966ed4195ec94b61d818ee, type: 3}
-  brushShape: 1
+  brushShape: 0

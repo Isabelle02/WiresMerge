@@ -23,8 +23,9 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     [SerializeField] private ShapeType _shapeType;
     [SerializeField] private Collider2D _rectCollider;
     [SerializeField] private Collider2D _hexCollider;
-    [SerializeField] private GameObject _rectLight;
-    [SerializeField] private GameObject _hexLight;
+    [SerializeField] private GameObject _sourceObj;
+    [SerializeField] private GameObject _bulbObj;
+    [SerializeField] private LineRenderer _lineLight;
 
     [SerializeField] private bool _isClickable;
     [SerializeField] private WireCellState _state;
@@ -52,13 +53,11 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     public Action Rotated { get; set; }
     public Action<IWireCell> BulbTurnedOn { get; set; }
     public Action<IWireCell> BulbTurnedOff { get; set; }
-
     public Collider2D Collider => _shapeType == ShapeType.Rect ? _rectCollider : _hexCollider;
-    public GameObject Light => _shapeType == ShapeType.Rect ? _rectLight : _hexLight;
 
     public void OnValidate()
     {
-        if (_lineRenderer)
+        if (_lineRenderer && _lineLight)
             DrawLines();
     }
 
@@ -80,8 +79,11 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     {
         _rectCollider.gameObject.SetActive(_shapeType == ShapeType.Rect);
         _hexCollider.gameObject.SetActive(_shapeType == ShapeType.Hex);
+        _lineRenderer.gameObject.SetActive(_state == WireCellState.Wire);
+        _lineLight.gameObject.SetActive(_state == WireCellState.Wire && IsHighlighted);
+        _sourceObj.SetActive(_state == WireCellState.Source);
+        _bulbObj.SetActive(_state == WireCellState.Bulb);
         IsHighlighted = _state == WireCellState.Source;
-        Light.SetActive(IsHighlighted);
         DrawLines();
 
         if (_isClickable)
@@ -90,9 +92,10 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         Gameplay.WireSystem.AddWireCell(this);
     }
 
+
     private void DrawLines()
     {
-        if (_outputAngles == null || _outputAngles.Count == 0) 
+        if (_outputAngles == null || _outputAngles.Count == 0)
             return;
 
         var allPoints = new List<Vector3>();
@@ -111,6 +114,9 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
 
         _lineRenderer.positionCount = allPoints.Count;
         _lineRenderer.SetPositions(allPoints.ToArray());
+
+        _lineLight.positionCount = allPoints.Count;
+        _lineLight.SetPositions(allPoints.ToArray());
     }
 
     private void DrawSingleCurve(List<Vector3> points, Vector3 start, Vector3 end, int segments)
@@ -168,7 +174,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             return;
 
         IsHighlighted = true;
-        Light.SetActive(true);
+        _lineLight.gameObject.SetActive(true);
         if (_state == WireCellState.Bulb)
             BulbTurnedOn?.Invoke(this);
     }
@@ -179,7 +185,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             return;
 
         IsHighlighted = false;
-        Light.SetActive(false);
+        _lineLight.gameObject.SetActive(false);
         if (_state == WireCellState.Bulb)
             BulbTurnedOff?.Invoke(this);
     }
