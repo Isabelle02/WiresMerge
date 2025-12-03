@@ -5,7 +5,6 @@ using UnityEngine;
 public class WireSystem
 {
     private List<IWireCell> _wireCells = new List<IWireCell>();
-    private List<IWireCell> _sourceCells = new List<IWireCell>();
 
     private int _bulbTurnedOnCount = 0;
     private int _bulbNeedToTurnOnCount = 0;
@@ -18,9 +17,6 @@ public class WireSystem
         if (wireCell.State == WireCellState.Bulb)
             _bulbNeedToTurnOnCount++;
 
-        if (wireCell.State == WireCellState.Source)
-            _sourceCells.Add(wireCell);
-
         wireCell.Rotated += OnRotated;
         wireCell.BulbTurnedOn += OnBulbTurnedOn;
         wireCell.BulbTurnedOff += OnBulbTurnedOff;
@@ -30,9 +26,6 @@ public class WireSystem
 
     public void RemoveWireCell(IWireCell wireCell)
     {
-        if (wireCell.State == WireCellState.Source)
-            _sourceCells.Remove(wireCell);
-
         wireCell.Rotated -= OnRotated;
         wireCell.BulbTurnedOn -= OnBulbTurnedOn;
         wireCell.BulbTurnedOff -= OnBulbTurnedOff;
@@ -56,44 +49,39 @@ public class WireSystem
             cell.Unhighlight();
         }
 
-        var wireCells = new List<IWireCell>(_wireCells);
         var usedSources = new List<IWireCell>();
-        foreach (var cell in _sourceCells)
+        foreach (var cell in _wireCells)
         {
-            if (!usedSources.Contains(cell))
+            if (cell.State == WireCellState.Source && !usedSources.Contains(cell))
+            {
+                var wireCells = new List<IWireCell>(_wireCells);
                 usedSources.AddRange(CheckConnection(cell, wireCells));
+            }
         }
 
         CheckWin();
     }
 
-    private List<IWireCell> CheckConnection(IWireCell wireCell, List<IWireCell> wireCells, HashSet<IWireCell> visited = null)
+    private List<IWireCell> CheckConnection(IWireCell wireCell, List<IWireCell> wireCells)
     {
-        if (visited == null)
-            visited = new HashSet<IWireCell>();
         var usedSources = new List<IWireCell>();
-        if (visited.Contains(wireCell))
-            return usedSources;
-        visited.Add(wireCell);
-
-        var remainedCells = new List<IWireCell>(wireCells);
-        remainedCells.Remove(wireCell);
+        wireCells.Remove(wireCell);
+        var remained = new List<IWireCell>(wireCells);
 
         for (var i = 0; i < wireCell.OutputCount; i++)
         {
             var direction = GetDirection(wireCell.OutputAngles[i], wireCell.Width, wireCell.Height);
             var hit = Physics2D.Raycast((Vector2)wireCell.Position + direction * 1.1f, Vector3.forward);
-            var cell = remainedCells.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
+            var cell = remained.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
             if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle, cell.Width, cell.Height) == direction)))
             {
                 wireCell.OutputUsedCount++;
                 cell.OutputUsedCount++;
                 cell.Highlight();
-                remainedCells.Remove(cell);
-                if (_sourceCells.Contains(cell))
-                    usedSources.Add(cell);
+                if (wireCell.State == WireCellState.Source)
+                    usedSources.Add(wireCell);
 
-                usedSources.AddRange(CheckConnection(cell, remainedCells, visited));
+                usedSources.AddRange(CheckConnection(cell, wireCells));
             }
         }
 

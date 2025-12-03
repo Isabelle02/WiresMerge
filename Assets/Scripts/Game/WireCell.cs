@@ -57,8 +57,11 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
 
     public void OnValidate()
     {
-        if (_lineRenderer && _lineLight)
-            DrawLines();
+        if (_lineRenderer)
+            DrawLines(_lineRenderer);
+
+        if (_lineLight)
+            DrawLines(_lineLight);
     }
 
     public void Set(WireCellData data)
@@ -84,7 +87,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         _sourceObj.SetActive(_state == WireCellState.Source);
         _bulbObj.SetActive(_state == WireCellState.Bulb);
         IsHighlighted = _state == WireCellState.Source;
-        DrawLines();
+        DrawLines(_lineRenderer);
+        DrawLines(_lineLight);
 
         if (_isClickable)
             MouseManager.AddClickable(this);
@@ -93,7 +97,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
     }
 
 
-    private void DrawLines()
+    private void DrawLines(LineRenderer line)
     {
         if (_outputAngles == null || _outputAngles.Count == 0)
             return;
@@ -101,22 +105,29 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         var allPoints = new List<Vector3>();
         var segmentsPerSegment = 15;
 
-        if (_outputAngles.Count == 1)
+        var directionPoints = new List<Vector3>();
+        foreach (var angle in _outputAngles)
         {
-            var direction = WireSystem.GetDirection(_outputAngles[0], (this as IWireCell).Width, (this as IWireCell).Height);
+            directionPoints.Add(WireSystem.GetDirection(angle, (this as IWireCell).Width, (this as IWireCell).Height));
+        }
+
+        if (directionPoints.Count == 1)
+        {
             allPoints.Add(Vector2.zero);
-            allPoints.Add(direction);
+            allPoints.Add(directionPoints[0]);
+        }
+        else if (directionPoints.Count == 2 && -directionPoints[0] == directionPoints[1])
+        {
+            allPoints.Add(directionPoints[0]);
+            allPoints.Add(directionPoints[1]);
         }
         else
         {
-            DrawMultiAngleCurve(allPoints, segmentsPerSegment);
+            DrawMultiAngleCurve(allPoints, segmentsPerSegment, directionPoints);
         }
 
-        _lineRenderer.positionCount = allPoints.Count;
-        _lineRenderer.SetPositions(allPoints.ToArray());
-
-        _lineLight.positionCount = allPoints.Count;
-        _lineLight.SetPositions(allPoints.ToArray());
+        line.positionCount = allPoints.Count;
+        line.SetPositions(allPoints.ToArray());
     }
 
     private void DrawSingleCurve(List<Vector3> points, Vector3 start, Vector3 end, int segments)
@@ -129,15 +140,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
         }
     }
 
-    private void DrawMultiAngleCurve(List<Vector3> points, int segments)
+    private void DrawMultiAngleCurve(List<Vector3> points, int segments, List<Vector3> directionPoints)
     {
-        // Points for all directions
-        var directionPoints = new List<Vector3>();
-        foreach (var angle in _outputAngles)
-        {
-            directionPoints.Add(WireSystem.GetDirection(angle, (this as IWireCell).Width, (this as IWireCell).Height));
-        }
-
         // Connecting points by curve
         for (var i = 0; i < directionPoints.Count - 1; i++)
         {
