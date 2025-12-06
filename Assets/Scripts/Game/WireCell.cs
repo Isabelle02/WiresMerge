@@ -178,7 +178,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             return;
 
         IsHighlighted = true;
-        _lineLight.gameObject.SetActive(true);
+        _lineLight.gameObject.SetActive(_state != WireCellState.Bulb);
         if (_state == WireCellState.Bulb)
             BulbTurnedOn?.Invoke(this);
     }
