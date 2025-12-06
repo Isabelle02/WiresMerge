@@ -198,6 +198,7 @@ MonoBehaviour:
   _collider: {fileID: 5112489920844728694}
   _text: {fileID: 8857940920569487500}
   _titleText: {fileID: 8694441642975957797}
+  _backgroundImage: {fileID: 3775889874093356832}
 --- !u!114 &3775889874093356832
 MonoBehaviour:
   m_ObjectHideFlags: 0

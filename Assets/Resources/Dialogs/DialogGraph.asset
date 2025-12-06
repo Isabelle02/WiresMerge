@@ -455,90 +455,90 @@ MonoBehaviour:
     ChildID: 196
   - ParentID: 193
     ChildID: 197
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
-  - ParentID: -1
-    ChildID: -1
+  - ParentID: 198
+    ChildID: 199
+  - ParentID: 198
+    ChildID: 200
+  - ParentID: 198
+    ChildID: 201
+  - ParentID: 198
+    ChildID: 202
+  - ParentID: 203
+    ChildID: 204
+  - ParentID: 203
+    ChildID: 205
+  - ParentID: 203
+    ChildID: 206
+  - ParentID: 203
+    ChildID: 207
+  - ParentID: 208
+    ChildID: 209
+  - ParentID: 208
+    ChildID: 210
+  - ParentID: 208
+    ChildID: 211
+  - ParentID: 208
+    ChildID: 212
+  - ParentID: 213
+    ChildID: 214
+  - ParentID: 213
+    ChildID: 215
+  - ParentID: 213
+    ChildID: 216
+  - ParentID: 213
+    ChildID: 217
+  - ParentID: 218
+    ChildID: 219
+  - ParentID: 218
+    ChildID: 220
+  - ParentID: 218
+    ChildID: 221
+  - ParentID: 218
+    ChildID: 222
+  - ParentID: 223
+    ChildID: 224
+  - ParentID: 223
+    ChildID: 225
+  - ParentID: 223
+    ChildID: 226
+  - ParentID: 223
+    ChildID: 227
+  - ParentID: 228
+    ChildID: 229
+  - ParentID: 228
+    ChildID: 230
+  - ParentID: 228
+    ChildID: 231
+  - ParentID: 228
+    ChildID: 232
+  - ParentID: 233
+    ChildID: 234
+  - ParentID: 233
+    ChildID: 235
+  - ParentID: 233
+    ChildID: 236
+  - ParentID: 233
+    ChildID: 237
+  - ParentID: 238
+    ChildID: 239
+  - ParentID: 238
+    ChildID: 240
+  - ParentID: 238
+    ChildID: 241
+  - ParentID: 238
+    ChildID: 242
+  - ParentID: 243
+    ChildID: 244
+  - ParentID: 243
+    ChildID: 245
+  - ParentID: 243
+    ChildID: 246
+  - ParentID: 243
+    ChildID: 247
+  - ParentID: 248
+    ChildID: 249
+  - ParentID: 248
+    ChildID: 250
   Nodes:
   - Id: 0
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
@@ -838,7 +838,7 @@ MonoBehaviour:
     Text: "\u0422\u0435\u0431\u0435 \u043F\u043E\u0440\u0430 \u0440\u0430\u0437\u043E\u0433\u043D\u0430\u0442\u044C\u0441\u044F.
       \u0415\u0449\u0451 \u043D\u0435\u043C\u043D\u043E\u0433\u043E, \u0438 \u044F
       \u0442\u0435\u0431\u044F \u043E\u0441\u0442\u0430\u0432\u043B\u044E. \u041C\u043E\u0438
-      \u0437\u0430\u0434\u0430\u0447\u0438 \u043A\u0443\u0434\u0430 \u043F\u043E\u0441\u043B\u043E\u0436\u043D\u0435\u0435."
+      \u0437\u0430\u0434\u0430\u0447\u0438 \u043A\u0443\u0434\u0430 \u0441\u043B\u043E\u0436\u043D\u0435\u0435."
     IsPlayer: 0
     Parameters: 
     Conditions: 
@@ -945,7 +945,7 @@ MonoBehaviour:
     ChildrenIds: 26000000
   - Id: 37
     Speaker: Player
-    Text: "\u0410\u0433\u0430"
+    Text: "\u0410\u0433\u0430."
     IsPlayer: 1
     Parameters: 
     Conditions: 
@@ -1793,7 +1793,7 @@ MonoBehaviour:
     ChildrenIds: 70000000
   - Id: 112
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
-    Text: "\u0418\u0434\u0438\u043E\u0442. \u0418 \u043F\u043E\u0447\u0435\u043C\u0443
+    Text: "\u0413\u043B\u0443\u043F\u0435\u0446. \u0418 \u043F\u043E\u0447\u0435\u043C\u0443
       \u0438\u043C\u0435\u043D\u043D\u043E \u0442\u0430\u043A\u043E\u0439 \u043D\u0435\u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043D\u043D\u044B\u0439
       \u043C\u043E\u043B\u043E\u0434\u043E\u0439 \u0447\u0435\u043B\u043E\u0432\u0435\u043A
       \u043C\u043E\u0439 \u0441\u0442\u0430\u0436\u0451\u0440?"
@@ -1935,8 +1935,7 @@ MonoBehaviour:
     ChildrenIds: 7c0000007d000000
   - Id: 124
     Speaker: Player
-    Text: "\u0414\u0430 \u0431\u0443\u0434\u0435\u0442 \u0441\u0432\u0435\u0442,
-      \u2013 \u0441\u043A\u0430\u0437\u0430\u043B \u044D\u043B\u0435\u043A\u0442\u0440\u0438\u043A\u2026"
+    Text: "\u2026\u0438 \u043F\u0435\u0440\u0435\u0437\u0430\u043B \u043F\u0440\u043E\u0432\u043E\u0434\u0430!"
     IsPlayer: 1
     Parameters: 
     Conditions: 
@@ -1945,7 +1944,8 @@ MonoBehaviour:
     ChildrenIds: 7e000000
   - Id: 125
     Speaker: Player
-    Text: "\u2026\u0438 \u043F\u0435\u0440\u0435\u0437\u0430\u043B \u043F\u0440\u043E\u0432\u043E\u0434\u0430!"
+    Text: "\u0414\u0430 \u0431\u0443\u0434\u0435\u0442 \u0441\u0432\u0435\u0442,
+      \u2013 \u0441\u043A\u0430\u0437\u0430\u043B \u044D\u043B\u0435\u043A\u0442\u0440\u0438\u043A\u2026"
     IsPlayer: 1
     Parameters: 
     Conditions: 
@@ -2714,7 +2714,7 @@ MonoBehaviour:
     IsPlayer: 1
     Parameters: 
     Conditions: 
-    IsCorrect: 1
+    IsCorrect: 0
     ParentIds: c1000000
     ChildrenIds: 
   - Id: 198
@@ -2728,7 +2728,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: c7000000c8000000c9000000ca000000
   - Id: 199
     Speaker: Answer
     Text: "\u041E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0432\u0441\u0451 \u0432\u043A\u043B\u044E\u0447\u0451\u043D\u043D\u044B\u043C
@@ -2738,7 +2738,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: c6000000
     ChildrenIds: 
   - Id: 200
     Speaker: Answer
@@ -2750,7 +2750,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: c6000000
     ChildrenIds: 
   - Id: 201
     Speaker: Answer
@@ -2762,7 +2762,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: c6000000
     ChildrenIds: 
   - Id: 202
     Speaker: Answer
@@ -2774,7 +2774,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: c6000000
     ChildrenIds: 
   - Id: 203
     Speaker: Question
@@ -2788,7 +2788,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: cc000000cd000000ce000000cf000000
   - Id: 204
     Speaker: Answer
     Text: "\u041E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u043A \u0435\u0441\u0442\u044C
@@ -2798,7 +2798,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: cb000000
     ChildrenIds: 
   - Id: 205
     Speaker: Answer
@@ -2811,7 +2811,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: cb000000
     ChildrenIds: 
   - Id: 206
     Speaker: Answer
@@ -2822,7 +2822,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: cb000000
     ChildrenIds: 
   - Id: 207
     Speaker: Answer
@@ -2835,7 +2835,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: cb000000
     ChildrenIds: 
   - Id: 208
     Speaker: Question
@@ -2848,7 +2848,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: d1000000d2000000d3000000d4000000
   - Id: 209
     Speaker: Answer
     Text: "\u0423\u043C\u0435\u043D\u044C\u0448\u0438\u0442\u044C \u044F\u0440\u043A\u043E\u0441\u0442\u044C
@@ -2860,7 +2860,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: d0000000
     ChildrenIds: 
   - Id: 210
     Speaker: Answer
@@ -2871,7 +2871,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: d0000000
     ChildrenIds: 
   - Id: 211
     Speaker: Answer
@@ -2883,7 +2883,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: d0000000
     ChildrenIds: 
   - Id: 212
     Speaker: Answer
@@ -2894,7 +2894,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: d0000000
     ChildrenIds: 
   - Id: 213
     Speaker: Question
@@ -2908,7 +2908,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: d6000000d7000000d8000000d9000000
   - Id: 214
     Speaker: Answer
     Text: "\u0412\u043A\u043B\u044E\u0447\u0430\u0442\u044C \u0432\u0441\u0435 \u043F\u0440\u0438\u0431\u043E\u0440\u044B
@@ -2919,7 +2919,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: d5000000
     ChildrenIds: 
   - Id: 215
     Speaker: Answer
@@ -2930,7 +2930,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: d5000000
     ChildrenIds: 
   - Id: 216
     Speaker: Answer
@@ -2941,7 +2941,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: d5000000
     ChildrenIds: 
   - Id: 217
     Speaker: Answer
@@ -2953,7 +2953,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: d5000000
     ChildrenIds: 
   - Id: 218
     Speaker: Question
@@ -2966,7 +2966,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: db000000dc000000dd000000de000000
   - Id: 219
     Speaker: Answer
     Text: "\u041F\u043E\u043F\u0440\u043E\u0441\u0438\u0442\u044C \u0441\u043E\u0441\u0435\u0434\u0435\u0439
@@ -2975,7 +2975,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: da000000
     ChildrenIds: 
   - Id: 220
     Speaker: Answer
@@ -2986,7 +2986,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: da000000
     ChildrenIds: 
   - Id: 221
     Speaker: Answer
@@ -2998,7 +2998,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: da000000
     ChildrenIds: 
   - Id: 222
     Speaker: Answer
@@ -3012,7 +3012,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: da000000
     ChildrenIds: 
   - Id: 223
     Speaker: Question
@@ -3026,7 +3026,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: e0000000e1000000e2000000e3000000
   - Id: 224
     Speaker: Answer
     Text: "\u041E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043E\u0431\u0430, \u043F\u0443\u0441\u0442\u044C
@@ -3035,7 +3035,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: df000000
     ChildrenIds: 
   - Id: 225
     Speaker: Answer
@@ -3048,7 +3048,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: df000000
     ChildrenIds: 
   - Id: 226
     Speaker: Answer
@@ -3059,7 +3059,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: df000000
     ChildrenIds: 
   - Id: 227
     Speaker: Answer
@@ -3069,7 +3069,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: df000000
     ChildrenIds: 
   - Id: 228
     Speaker: Question
@@ -3083,7 +3083,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: e5000000e6000000e7000000e8000000
   - Id: 229
     Speaker: Answer
     Text: "\u041E\u0441\u0442\u0430\u0432\u043B\u044F\u0442\u044C \u0432\u043A\u043B\u044E\u0447\u0451\u043D\u043D\u044B\u043C\u0438
@@ -3092,7 +3092,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: e4000000
     ChildrenIds: 
   - Id: 230
     Speaker: Answer
@@ -3103,7 +3103,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: e4000000
     ChildrenIds: 
   - Id: 231
     Speaker: Answer
@@ -3113,7 +3113,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: e4000000
     ChildrenIds: 
   - Id: 232
     Speaker: Answer
@@ -3124,7 +3124,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: e4000000
     ChildrenIds: 
   - Id: 233
     Speaker: Question
@@ -3137,7 +3137,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: ea000000eb000000ec000000ed000000
   - Id: 234
     Speaker: Answer
     Text: "\u0412\u044B\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043D\u0435\u043D\u0443\u0436\u043D\u044B\u0435
@@ -3147,7 +3147,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: e9000000
     ChildrenIds: 
   - Id: 235
     Speaker: Answer
@@ -3157,7 +3157,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: e9000000
     ChildrenIds: 
   - Id: 236
     Speaker: Answer
@@ -3169,7 +3169,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: e9000000
     ChildrenIds: 
   - Id: 237
     Speaker: Answer
@@ -3181,7 +3181,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: e9000000
     ChildrenIds: 
   - Id: 238
     Speaker: Question
@@ -3195,7 +3195,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: ef000000f0000000f1000000f2000000
   - Id: 239
     Speaker: Answer
     Text: "\u041E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043A\u0430\u0441\u0442\u0440\u044E\u043B\u044E
@@ -3206,7 +3206,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: ee000000
     ChildrenIds: 
   - Id: 240
     Speaker: Answer
@@ -3218,7 +3218,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: ee000000
     ChildrenIds: 
   - Id: 241
     Speaker: Answer
@@ -3229,7 +3229,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: ee000000
     ChildrenIds: 
   - Id: 242
     Speaker: Answer
@@ -3239,7 +3239,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: ee000000
     ChildrenIds: 
   - Id: 243
     Speaker: Question
@@ -3252,7 +3252,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: f4000000f5000000f6000000f7000000
   - Id: 244
     Speaker: Answer
     Text: "\u041D\u0435 \u0442\u0440\u043E\u0433\u0430\u0442\u044C \u2013 \u044D\u0442\u043E
@@ -3261,7 +3261,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: f3000000
     ChildrenIds: 
   - Id: 245
     Speaker: Answer
@@ -3274,7 +3274,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 1
-    ParentIds: 
+    ParentIds: f3000000
     ChildrenIds: 
   - Id: 246
     Speaker: Answer
@@ -3285,7 +3285,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: f3000000
     ChildrenIds: 
   - Id: 247
     Speaker: Answer
@@ -3295,7 +3295,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: f3000000
     ChildrenIds: 
   - Id: 248
     Speaker: Question
@@ -3308,7 +3308,7 @@ MonoBehaviour:
     Conditions: 
     IsCorrect: 1
     ParentIds: 
-    ChildrenIds: 
+    ChildrenIds: f9000000fa000000
   - Id: 249
     Speaker: Answer
     Text: "\u041F\u0443\u0441\u0442\u044C \u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043B\u0430\u0435\u0442
@@ -3318,7 +3318,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: f8000000
     ChildrenIds: 
   - Id: 250
     Speaker: Answer
@@ -3330,7 +3330,7 @@ MonoBehaviour:
     Parameters: 
     Conditions: 
     IsCorrect: 0
-    ParentIds: 
+    ParentIds: f8000000
     ChildrenIds: 
   - Id: 251
     Speaker: Answer
@@ -3458,7 +3458,7 @@ MonoBehaviour:
     IsPlayer: 1
     Parameters: 
     Conditions: 
-    IsCorrect: 1
+    IsCorrect: 0
     ParentIds: 
     ChildrenIds: 
   - Id: 262

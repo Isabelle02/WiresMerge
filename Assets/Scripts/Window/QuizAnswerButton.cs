@@ -1,10 +1,12 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuizAnswerButton : BaseButton
 {
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private TextMeshProUGUI _titleText;
+    [SerializeField] private Image _backgroundImage;
 
     public DialogNode Node { get; set; }
 
@@ -14,9 +16,14 @@ public class QuizAnswerButton : BaseButton
         _titleText.text = title;
     }
 
-    public void SetColor(Color color)
+    public void SetTextColor(Color color)
     {
-        _text.color = color;
+        _titleText.color = color;
+    }
+
+    public void SetBackgroundColor(Color color)
+    {
+        _backgroundImage.color = color;
     }
 
     public override void OnClick()
