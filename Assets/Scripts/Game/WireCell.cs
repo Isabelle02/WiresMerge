@@ -80,13 +80,13 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
 
     public void Init()
     {
+        IsHighlighted = _state == WireCellState.Source;
         _rectCollider.gameObject.SetActive(_shapeType == ShapeType.Rect);
         _hexCollider.gameObject.SetActive(_shapeType == ShapeType.Hex);
-        _lineRenderer.gameObject.SetActive(_state == WireCellState.Wire);
-        _lineLight.gameObject.SetActive(_state == WireCellState.Wire && IsHighlighted);
+        _lineRenderer.gameObject.SetActive(true);
+        _lineLight.gameObject.SetActive(IsHighlighted);
         _sourceObj.SetActive(_state == WireCellState.Source);
         _bulbObj.SetActive(_state == WireCellState.Bulb);
-        IsHighlighted = _state == WireCellState.Source;
         DrawLines(_lineRenderer);
         DrawLines(_lineLight);
 
@@ -178,7 +178,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell
             return;
 
         IsHighlighted = true;
-        _lineLight.gameObject.SetActive(_state != WireCellState.Bulb);
+        _lineLight.gameObject.SetActive(true);
         if (_state == WireCellState.Bulb)
             BulbTurnedOn?.Invoke(this);
     }

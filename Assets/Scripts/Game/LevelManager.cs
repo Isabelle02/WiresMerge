@@ -61,8 +61,16 @@ public static class LevelManager
         }
     }
 
+    public static void UnloadLevel()
+    {
+
+
+        // unload \ wirecell \ метод очищает ячейки \ вызвать \ не забывать о таймере \ обнулить вайрсистем
+    }
+
     public static void ShowLevel()
     {
         Gameplay.Play();
     }
+
 }
