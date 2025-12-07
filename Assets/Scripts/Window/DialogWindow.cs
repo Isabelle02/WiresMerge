@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -16,11 +16,10 @@ public class DialogWindow : BaseWindow, IClickable
     [SerializeField] private BaseButton _pauseButton;
 
     private DialogSystem _dialogSystem;
-
     private float _delay = 0.05f;
     private bool _isTyping = false;
     private CancellationTokenSource _cancellationTokenSource;
-    private string _textToType;
+    private string _textToType = "";
 
     public Collider2D Collider => _collider;
 
@@ -49,6 +48,9 @@ public class DialogWindow : BaseWindow, IClickable
 
     private void OnButtonClick(BaseButton button)
     {
+        if (_isTyping)
+            return;
+
         var success = _dialogSystem.NextStep((button as DialogChoiceButton).Node);
         if (!success)
         {
@@ -58,9 +60,15 @@ public class DialogWindow : BaseWindow, IClickable
 
     public void OnClick()
     {
+        if (_isTyping)
+        {
+            StopAnimation();
+            return;
+        }
+
         if (_userChoices.Count != 0)
             return;
-        
+
         var success = _dialogSystem.NextPersNode();
         if (!success)
         {
@@ -74,45 +82,31 @@ public class DialogWindow : BaseWindow, IClickable
         gameObject.SetActive(false);
         LevelManager.ShowLevel();
         WindowManager.Open<GameWindow>();
-        //close dialogs, go to game
     }
 
     private void UpdateUI()
     {
         foreach (var choice in _userChoices)
-            Pool<DialogChoiceButton>.Release(choice);
-
-        _userChoices.Clear();
-        if (!_dialogSystem.CurrentRootNode.IsPlayer)
         {
-            _persText.text = _dialogSystem.CurrentRootNode.FormattedText;
-            //_textToType = _dialogSystem.CurrentRootNode.FormattedText;
-            //if (!_isTyping)
-            //{
-            //    StartAnimation();
-            //}
-            //else
-            //{
-            //    StopAnimation();
-            //}
-            _nameText.text = _dialogSystem.CurrentRootNode.Speaker;
+            if (choice != null)
+            {
+                choice.OnButtonClick -= OnButtonClick;
+                MouseManager.RemoveClickable(choice);
+                Pool<DialogChoiceButton>.Release(choice);
+            }
         }
 
-        foreach (var node in _dialogSystem.NextDialogNodes)
+        _userChoices.Clear();
+
+        if (!_dialogSystem.CurrentRootNode.IsPlayer)
         {
-            if (!node.IsPlayer)
-                continue;
-
-            //if (!_isTyping)
-            //    continue;
-
-            var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
-            button.Node = node;
-            button.OnButtonClick += OnButtonClick;
-            button.SetText(node.FormattedText);
-            _userChoices.Add(button);
-            MouseManager.AddClickable(button);
-
+            _nameText.text = _dialogSystem.CurrentRootNode.Speaker;
+            _textToType = _dialogSystem.CurrentRootNode.FormattedText ?? "";
+            StartAnimation();
+        }
+        else
+        {
+            ShowUserChoices();
         }
     }
 
@@ -121,14 +115,74 @@ public class DialogWindow : BaseWindow, IClickable
         _isTyping = true;
         _persText.text = "";
 
-        foreach (char letter in textToType)
+        _choicesGrid.gameObject.SetActive(false);
+
+        try
         {
-            token.ThrowIfCancellationRequested();
-            _persText.text += letter;
-            await UniTask.Delay((int)(_delay * 1000));
+            if (string.IsNullOrEmpty(textToType))
+            {
+                _persText.text = "";
+                OnAnimationComplete();
+                return;
+            }
+
+            foreach (char letter in textToType)
+            {
+                token.ThrowIfCancellationRequested();
+                _persText.text += letter;
+                await UniTask.Delay((int)(_delay * 1000));
+            }
+
+            OnAnimationComplete();
+        }
+        catch (OperationCanceledException)
+        {
+            OnAnimationInterrupted();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error in TypeText: {ex.Message}");
+            OnAnimationInterrupted();
+        }
+    }
+
+    private void OnAnimationComplete()
+    {
+        _isTyping = false;
+        ShowUserChoices();
+    }
+
+    private void OnAnimationInterrupted()
+    {
+        _isTyping = false;
+
+        if (!string.IsNullOrEmpty(_textToType))
+        {
+            _persText.text = _textToType;
         }
 
-        _isTyping = false;
+        ShowUserChoices();
+    }
+
+    private void ShowUserChoices()
+    {
+        if (_dialogSystem?.NextDialogNodes == null)
+            return;
+
+        _choicesGrid.gameObject.SetActive(true);
+
+        foreach (var node in _dialogSystem.NextDialogNodes)
+        {
+            if (!node.IsPlayer)
+                continue;
+
+            var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
+            button.Node = node;
+            button.OnButtonClick += OnButtonClick;
+            button.SetText(node.FormattedText);
+            _userChoices.Add(button);
+            MouseManager.AddClickable(button);
+        }
     }
 
     public void StartAnimation()
@@ -146,9 +200,22 @@ public class DialogWindow : BaseWindow, IClickable
 
     public override UniTask OnClose()
     {
+        StopAnimation();
+
         _dialogSystem.OnNextStep -= UpdateUI;
         _pauseButton.OnButtonClick -= OnPauseClick;
         MouseManager.RemoveClickable(_pauseButton);
+
+        foreach (var choice in _userChoices)
+        {
+            if (choice != null)
+            {
+                choice.OnButtonClick -= OnButtonClick;
+                MouseManager.RemoveClickable(choice);
+                Pool<DialogChoiceButton>.Release(choice);
+            }
+        }
+        _userChoices.Clear();
 
         return base.OnClose();
     }

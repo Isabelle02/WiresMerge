@@ -15,6 +15,7 @@ MonoBehaviour:
   Levels:
   - LevelId: 1
     DialogNodeId: 0
+    TimerDuration: 300
     WireCells:
     - Position: {x: -1.9848855, y: -0.6085809, z: 0}
       ShapeType: 0

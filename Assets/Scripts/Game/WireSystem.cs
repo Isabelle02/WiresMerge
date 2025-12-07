@@ -9,6 +9,8 @@ public class WireSystem
     private int _bulbTurnedOnCount = 0;
     private int _bulbNeedToTurnOnCount = 0;
 
+    public static bool IsWin { get; private set; }
+
     public void AddWireCell(IWireCell wireCell)
     {
         if (_wireCells.Contains(wireCell))
@@ -103,6 +105,9 @@ public class WireSystem
     private void CheckWin()
     {
         if (_bulbNeedToTurnOnCount == _bulbTurnedOnCount && _wireCells.Where(w => w.IsHighlighted).All(w => w.OutputUsedCount == w.OutputCount))
+        {
             Debug.Log("WIN");
+            IsWin = true;
+        }
     }
 }
