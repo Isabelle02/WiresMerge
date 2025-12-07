@@ -48,11 +48,14 @@ public static class LevelManager
         }
     }
 
+    public static float LastTimerDuration { get; set; }
+
     public static void LoadLevel(int id)
     {
         _currentConfig = Config.Levels[id];
         LastId = id;
         LastDialogNodeId = _currentConfig.DialogNodeId;
+        LastTimerDuration = _currentConfig.TimerDuration;
         foreach (var cell in _currentConfig.WireCells)
         {
             var cellObj = Pool.Get<WireCell>(Gameplay.Transform);

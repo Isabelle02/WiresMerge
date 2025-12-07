@@ -72,6 +72,7 @@ public class Gameplay : MonoBehaviour
     {
         _instance.gameObject.SetActive(true);
         TimerSystem.IsRunning = true;
+        TimerSystem.Duration = LevelManager.LastTimerDuration;
 
         Started?.Invoke();
     }

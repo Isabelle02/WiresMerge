@@ -246,8 +246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 72.49, y: 0}
-  m_SizeDelta: {x: 1709.47, y: 108.59}
+  m_AnchoredPosition: {x: 168.95386, y: 0}
+  m_SizeDelta: {x: 1530.5757, y: 108.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4137429847618833117
 MonoBehaviour:
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 3
   m_StartAxis: 0
-  m_CellSize: {x: 1709.47, y: 108.59}
+  m_CellSize: {x: 1530.576, y: 108.59}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -973,11 +973,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPopup: 0
-  _graph: {fileID: 11400000, guid: a64ec4de68bb11b4588642a3c11fcc5f, type: 2}
   _collider: {fileID: 1929694232433061367}
   _persText: {fileID: 291757158145387673}
   _nameText: {fileID: 3476602606639341531}
   _choicesGrid: {fileID: 4137429847618833117}
+  _choicesBackground: {fileID: 0}
+  _maxBackgroundWidth: 500
   _userChoices: []
   _pauseButton: {fileID: 7253972573592130227}
 --- !u!61 &1929694232433061367

@@ -15,6 +15,7 @@ MonoBehaviour:
   Levels:
   - LevelId: 1
     DialogNodeId: 0
+    TimerDuration: 300
     WireCells:
     - Position: {x: -1.5020118, y: -0.8659766, z: 0}
       ShapeType: 1
@@ -67,6 +68,7 @@ MonoBehaviour:
       QuizNodeId: -1
   - LevelId: 2
     DialogNodeId: 0
+    TimerDuration: 300
     WireCells:
     - Position: {x: -2.5, y: 0.5, z: 0}
       ShapeType: 0
