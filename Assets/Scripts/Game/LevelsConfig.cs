@@ -18,6 +18,7 @@ public class LevelConfig
 {
     public int LevelId;
     public int DialogNodeId;
+    public float TimerDuration;
 
     public List<WireCellData> WireCells = new List<WireCellData>();
 }

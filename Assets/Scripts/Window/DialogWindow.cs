@@ -82,7 +82,6 @@ public class DialogWindow : BaseWindow, IClickable
         gameObject.SetActive(false);
         LevelManager.ShowLevel();
         WindowManager.Open<GameWindow>();
-        //close dialogs, go to game
     }
 
     private void UpdateUI()
