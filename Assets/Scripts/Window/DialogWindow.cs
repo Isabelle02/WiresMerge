@@ -33,8 +33,10 @@ public class DialogWindow : BaseWindow, IClickable
         Debug.Log("On Open Dialog");
         await base.OnOpen();
 
-        Gameplay.DialogSystem.OnNextStep += UpdateUI;
-        Gameplay.DialogSystem.Start(LevelManager.LastDialogNodeId);
+        _dialogSystem = Gameplay.DialogSystem;
+
+        _dialogSystem.OnNextStep += UpdateUI;
+        _dialogSystem.Start(LevelManager.LastDialogNodeId);
 
         _pauseButton.OnButtonClick += OnPauseClick;
         MouseManager.AddClickable(_pauseButton);
@@ -91,7 +93,7 @@ public class DialogWindow : BaseWindow, IClickable
             {
                 choice.OnButtonClick -= OnButtonClick;
                 MouseManager.RemoveClickable(choice);
-                Pool<DialogChoiceButton>.Release(choice);
+                Pool.Release(choice);
             }
         }
 
@@ -175,7 +177,7 @@ public class DialogWindow : BaseWindow, IClickable
             if (!node.IsPlayer)
                 continue;
 
-            var button = Pool<DialogChoiceButton>.Get(_choicesGrid.transform);
+            var button = Pool.Get<DialogChoiceButton>(_choicesGrid.transform);
             button.Node = node;
             button.OnButtonClick += OnButtonClick;
             button.SetText(node.FormattedText);
@@ -199,7 +201,7 @@ public class DialogWindow : BaseWindow, IClickable
 
     public override UniTask OnClose()
     {
-        StopAnimation();
+        StopAnimation();    
 
         _dialogSystem.OnNextStep -= UpdateUI;
         _pauseButton.OnButtonClick -= OnPauseClick;
@@ -211,7 +213,7 @@ public class DialogWindow : BaseWindow, IClickable
             {
                 choice.OnButtonClick -= OnButtonClick;
                 MouseManager.RemoveClickable(choice);
-                Pool<DialogChoiceButton>.Release(choice);
+                Pool.Release(choice);
             }
         }
         _userChoices.Clear();
