@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +17,14 @@ public class QuizAnswerButton : BaseButton
         _titleText.text = title;
     }
 
-    public void SetTextColor(Color color)
+    public void AnimateTextColor(Color color, float duration = 0.5f)
     {
-        _titleText.color = color;
+        _titleText.DOColor(color, duration);
     }
 
-    public void SetBackgroundColor(Color color)
+    public void AnimateBackgroundColor(Color color, float duration = 0.5f)
     {
-        _backgroundImage.color = color;
+        _backgroundImage.DOColor(color, duration);
     }
 
     public override void OnClick()

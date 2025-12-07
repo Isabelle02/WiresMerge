@@ -11,6 +11,7 @@ public class QuizPopup : BaseWindow
     [SerializeField] private GridLayoutGroup _grid;
     [SerializeField] private List<QuizAnswerButton> _userAnswers = new List<QuizAnswerButton>();
     [SerializeField] private BaseButton _closeButton;
+    [SerializeField] private Image _closeButtonImage;
 
     private static int _correctAnswers = 0;
 
@@ -57,18 +58,17 @@ public class QuizPopup : BaseWindow
             _correctAnswers++;
         }
 
-        quizButton.SetBackgroundColor(new Color32(0x71, 0x52, 0x3E, 160));
+        quizButton.AnimateBackgroundColor(new Color32(0x71, 0x52, 0x3E, 160));
 
         foreach (var answer in _userAnswers)
         {
-            answer.SetTextColor(quizSystem.NextStep(answer.Node) ? Color.green : Color.red);
+            answer.AnimateTextColor(quizSystem.NextStep(answer.Node) ? Color.green : Color.red);
         }
 
         await UniTask.Delay(1200);
         _closeButton.gameObject.SetActive(true);
-        var img = _closeButton.GetComponent<Image>();
-        img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
-        img.DOFade(1f, 1f);
+        _closeButtonImage.color = new Color(_closeButtonImage.color.r, _closeButtonImage.color.g, _closeButtonImage.color.b, 0f);
+        _closeButtonImage.DOFade(1f, 1f);
     }
 
     private void OnCloseButton(BaseButton button)

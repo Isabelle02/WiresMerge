@@ -59,6 +59,7 @@ MonoBehaviour:
   _grid: {fileID: 5868676558661700657}
   _userAnswers: []
   _closeButton: {fileID: 8287458334920699791}
+  _closeButtonImage: {fileID: 6851298043321701918}
 --- !u!61 &6288463960307193469
 BoxCollider2D:
   m_ObjectHideFlags: 0
