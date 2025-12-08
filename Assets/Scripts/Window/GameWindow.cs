@@ -8,13 +8,10 @@ public class GameWindow : BaseWindow
     [SerializeField] private BaseButton _pauseButton;
     [SerializeField] private Text _timerValue;
 
-    public void Update()
+    private void OnWIn()
     {
-        if (WireSystem.IsWin)
-        {
-            Gameplay.TimerSystem.IsRunning = false;
-            WindowManager.Open<WinPopup>();
-        }
+        Gameplay.TimerSystem.IsRunning = false;
+        WindowManager.Open<WinPopup>();
     }
 
     public override async UniTask OnOpen()

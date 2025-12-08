@@ -13,6 +13,115 @@ MonoBehaviour:
   m_Name: LevelsConfig
   m_EditorClassIdentifier: 
   Levels:
+  - LevelId: 6
+    DialogNodeId: 82
+    TimerDuration: 0
+    WireCells:
+    - Position: {x: -1.1620117, y: -1.6019531, z: 0.5}
+      ShapeType: 1
+      State: 0
+      IsClickable: 0
+      OutputAngles: 1e0000005a000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 1.0879883, y: 1.4289649, z: 0.5}
+      ShapeType: 1
+      State: 2
+      IsClickable: 0
+      OutputAngles: d2000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -1.1620117, y: 0.99597657, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: d20000000e010000
+      CurveIntensity: 0.4
+      QuizNodeId: 193
+    - Position: {x: -0.4120117, y: 0.5629883, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 5a000000960000000e0100004a010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 0.3379883, y: 0.13, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: d20000001e0000005a000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 1.8379883, y: -0.7359766, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 5a00000096000000
+      CurveIntensity: 0.4
+      QuizNodeId: 238
+    - Position: {x: 1.0879883, y: -0.3029883, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 960000000e010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 1.0879883, y: -1.1689649, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: d20000001e00000096000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 0.3379883, y: -1.6019531, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: d20000004a010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 0.3379883, y: -0.7359766, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 4a0100001e0000000e010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: 0.3379883, y: 0.99597657, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 96000000d20000004a010000
+      CurveIntensity: 0.4
+      QuizNodeId: 233
+    - Position: {x: -1.9120117, y: -0.3029883, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 1e0000005a000000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -1.1620117, y: 0.13, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 960000000e0100004a0100005a000000
+      CurveIntensity: 0.4
+      QuizNodeId: 228
+    - Position: {x: -1.1620117, y: -0.7359766, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 96000000d20000004a010000
+      CurveIntensity: 0.4
+      QuizNodeId: -1
+    - Position: {x: -0.4120117, y: -1.1689649, z: 0.5}
+      ShapeType: 1
+      State: 1
+      IsClickable: 1
+      OutputAngles: 0e0100001e000000
+      CurveIntensity: 0.4
+      QuizNodeId: 223
   - LevelId: 1
     DialogNodeId: 0
     TimerDuration: 300
@@ -75,6 +184,7 @@ MonoBehaviour:
       QuizNodeId: -1
   - LevelId: 2
     DialogNodeId: 20
+    TimerDuration: 0
     WireCells:
     - Position: {x: -1.1920118, y: 0.024023369, z: 0.5}
       ShapeType: 1
@@ -127,6 +237,7 @@ MonoBehaviour:
       QuizNodeId: -1
   - LevelId: 3
     DialogNodeId: 29
+    TimerDuration: 0
     WireCells:
     - Position: {x: -3.5088463, y: -0.45005187, z: -1.991162}
       ShapeType: 0
@@ -256,6 +367,7 @@ MonoBehaviour:
       QuizNodeId: -1
   - LevelId: 4
     DialogNodeId: 35
+    TimerDuration: 0
     WireCells:
     - Position: {x: -3.7520118, y: 1.2989649, z: 0.5}
       ShapeType: 1
@@ -434,6 +546,7 @@ MonoBehaviour:
       QuizNodeId: -1
   - LevelId: 5
     DialogNodeId: 46
+    TimerDuration: 0
     WireCells:
     - Position: {x: 2.54, y: -1.24, z: -1.9582891}
       ShapeType: 0
@@ -561,116 +674,9 @@ MonoBehaviour:
       OutputAngles: 00000000b4000000
       CurveIntensity: 0.4
       QuizNodeId: 208
-  - LevelId: 6
-    DialogNodeId: 82
-    WireCells:
-    - Position: {x: -1.1620117, y: -1.6019531, z: 0.5}
-      ShapeType: 1
-      State: 0
-      IsClickable: 0
-      OutputAngles: 1e0000005a000000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 1.0879883, y: 1.4289649, z: 0.5}
-      ShapeType: 1
-      State: 2
-      IsClickable: 0
-      OutputAngles: d2000000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: -1.1620117, y: 0.99597657, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: d20000000e010000
-      CurveIntensity: 0.4
-      QuizNodeId: 193
-    - Position: {x: -0.4120117, y: 0.5629883, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 5a000000960000000e0100004a010000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 0.3379883, y: 0.13, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: d20000001e0000005a000000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 1.8379883, y: -0.7359766, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 5a00000096000000
-      CurveIntensity: 0.4
-      QuizNodeId: 238
-    - Position: {x: 1.0879883, y: -0.3029883, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 960000000e010000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 1.0879883, y: -1.1689649, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: d20000001e00000096000000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 0.3379883, y: -1.6019531, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: d20000004a010000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 0.3379883, y: -0.7359766, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 4a0100001e0000000e010000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: 0.3379883, y: 0.99597657, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 96000000d20000004a010000
-      CurveIntensity: 0.4
-      QuizNodeId: 233
-    - Position: {x: -1.9120117, y: -0.3029883, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 1e0000005a000000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: -1.1620117, y: 0.13, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 960000000e0100004a0100005a000000
-      CurveIntensity: 0.4
-      QuizNodeId: 228
-    - Position: {x: -1.1620117, y: -0.7359766, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 96000000d20000004a010000
-      CurveIntensity: 0.4
-      QuizNodeId: -1
-    - Position: {x: -0.4120117, y: -1.1689649, z: 0.5}
-      ShapeType: 1
-      State: 1
-      IsClickable: 1
-      OutputAngles: 0e0100001e000000
-      CurveIntensity: 0.4
-      QuizNodeId: 223
   - LevelId: 7
     DialogNodeId: 102
+    TimerDuration: 0
     WireCells:
     - Position: {x: -3.53, y: 0.3, z: 0}
       ShapeType: 0
@@ -821,6 +827,7 @@ MonoBehaviour:
       QuizNodeId: -1
   - LevelId: 8
     DialogNodeId: 115
+    TimerDuration: 0
     WireCells:
     - Position: {x: 2.2479882, y: 1.2989649, z: 0.5}
       ShapeType: 1
@@ -950,6 +957,7 @@ MonoBehaviour:
       QuizNodeId: 288
   - LevelId: 9
     DialogNodeId: 120
+    TimerDuration: 0
     WireCells:
     - Position: {x: 3.6879883, y: 1.2389649, z: 0.5}
       ShapeType: 1

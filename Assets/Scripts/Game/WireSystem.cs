@@ -5,11 +5,10 @@ using UnityEngine;
 public class WireSystem
 {
     private List<IWireCell> _wireCells = new List<IWireCell>();
+    private List<IWireCell> _sourceCells = new List<IWireCell>();
 
     private int _bulbTurnedOnCount = 0;
     private int _bulbNeedToTurnOnCount = 0;
-
-    public static bool IsWin { get; private set; }
 
     public void AddWireCell(IWireCell wireCell)
     {
@@ -18,6 +17,9 @@ public class WireSystem
 
         if (wireCell.State == WireCellState.Bulb)
             _bulbNeedToTurnOnCount++;
+
+        if (wireCell.State == WireCellState.Source)
+            _sourceCells.Add(wireCell);
 
         wireCell.Rotated += OnRotated;
         wireCell.BulbTurnedOn += OnBulbTurnedOn;
@@ -28,6 +30,12 @@ public class WireSystem
 
     public void RemoveWireCell(IWireCell wireCell)
     {
+        if (!_wireCells.Contains(wireCell))
+            return;
+
+        if (wireCell.State == WireCellState.Source)
+            _sourceCells.Remove(wireCell);
+
         wireCell.Rotated -= OnRotated;
         wireCell.BulbTurnedOn -= OnBulbTurnedOn;
         wireCell.BulbTurnedOff -= OnBulbTurnedOff;
@@ -51,14 +59,12 @@ public class WireSystem
             cell.Unhighlight();
         }
 
+        var wireCells = new List<IWireCell>(_wireCells);
         var usedSources = new List<IWireCell>();
-        foreach (var cell in _wireCells)
+        foreach (var cell in _sourceCells)
         {
-            if (cell.State == WireCellState.Source && !usedSources.Contains(cell))
-            {
-                var wireCells = new List<IWireCell>(_wireCells);
+            if (!usedSources.Contains(cell))
                 usedSources.AddRange(CheckConnection(cell, wireCells));
-            }
         }
 
         CheckWin();
@@ -67,23 +73,24 @@ public class WireSystem
     private List<IWireCell> CheckConnection(IWireCell wireCell, List<IWireCell> wireCells)
     {
         var usedSources = new List<IWireCell>();
-        wireCells.Remove(wireCell);
-        var remained = new List<IWireCell>(wireCells);
-
+        var remainedCells = new List<IWireCell>(wireCells);
+        remainedCells.Remove(wireCell);
         for (var i = 0; i < wireCell.OutputCount; i++)
         {
             var direction = GetDirection(wireCell.OutputAngles[i], wireCell.Width, wireCell.Height);
             var hit = Physics2D.Raycast((Vector2)wireCell.Position + direction * 1.1f, Vector3.forward);
-            var cell = remained.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
+            var cell = remainedCells.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
             if (cell != null && cell.OutputAngles.Any(angle => (-GetDirection(angle, cell.Width, cell.Height) == direction)))
             {
+                Debug.Log(wireCell.Position + " connected neighbor " + cell.Position);
                 wireCell.OutputUsedCount++;
                 cell.OutputUsedCount++;
                 cell.Highlight();
-                if (wireCell.State == WireCellState.Source)
-                    usedSources.Add(wireCell);
+                remainedCells.Remove(cell);
+                if (_sourceCells.Contains(cell))
+                    usedSources.Add(cell);
 
-                usedSources.AddRange(CheckConnection(cell, wireCells));
+                usedSources.AddRange(CheckConnection(cell, remainedCells));
             }
         }
 
@@ -107,7 +114,6 @@ public class WireSystem
         if (_bulbNeedToTurnOnCount == _bulbTurnedOnCount && _wireCells.Where(w => w.IsHighlighted).All(w => w.OutputUsedCount == w.OutputCount))
         {
             Debug.Log("WIN");
-            IsWin = true;
         }
     }
 }
