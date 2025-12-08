@@ -58,7 +58,7 @@ public static class LevelManager
         LastTimerDuration = _currentConfig.TimerDuration;
         foreach (var cell in _currentConfig.WireCells)
         {
-            var cellObj = Pool<WireCell>.Get(Gameplay.Transform);
+            var cellObj = Pool.Get<WireCell>(Gameplay.Transform);
             cellObj.Set(cell);
             Gameplay.Started += cellObj.Init;
         }

@@ -44,7 +44,7 @@ public static class DialogParser
         }
 
         var lines = csvData.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-        for (var i = 1; i < Mathf.Min(lines.Length, 50); i++)
+        for (var i = 1; i < Mathf.Min(lines.Length, 264); i++) // 350
         {
             var fields = ParseCSVLine(lines[i]);
 
@@ -65,8 +65,9 @@ public static class DialogParser
                 var isPlayer = bool.Parse(fields[6]);
                 var parameters = fields[7];
                 var conditions = fields[8];
+                var isCorrect = bool.Parse(fields[9]);
 
-                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions);
+                var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions, isCorrect);
                 DialogGraph.Nodes.Add(newNode);
             }
         }

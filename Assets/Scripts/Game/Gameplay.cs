@@ -7,11 +7,14 @@ public class Gameplay : MonoBehaviour
     public static readonly string DefaultUserName = "Лев";
 
     public static Action Started;
+    public static Action Finished;
 
     public static Transform Transform => _instance.transform;
 
     public static WireSystem WireSystem { get; private set; }
     public static TimerSystem TimerSystem { get; private set; }
+    public static DialogSystem DialogSystem { get; private set; }
+    public static QuizSystem QuizSystem { get; private set; }
 
     private static string _userName;
     public static string UserName
@@ -46,10 +49,11 @@ public class Gameplay : MonoBehaviour
         if (!_instance)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
 
             WireSystem = new WireSystem();
             TimerSystem = new TimerSystem();
+            DialogSystem = new DialogSystem();
+            QuizSystem = new QuizSystem();
         }
         else
             Destroy(gameObject);
@@ -71,5 +75,11 @@ public class Gameplay : MonoBehaviour
         TimerSystem.Duration = LevelManager.LastTimerDuration;
 
         Started?.Invoke();
+    }
+
+    public static void Finish() 
+    {
+        Finished?.Invoke();
+        Started = null;
     }
 }

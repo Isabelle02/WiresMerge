@@ -7,12 +7,12 @@ public class DialogSystem
 {
     private DialogGraph _graph;
 
-    public DialogNode CurrentRootNode { get; private set; }
-    public List<DialogNode> NextDialogNodes { get; private set; } = new List<DialogNode>();
+    public DialogNode CurrentRootNode { get; protected set; }
+    public List<DialogNode> NextDialogNodes { get; protected set; } = new List<DialogNode>();
 
     public Action OnNextStep { get; set; }
 
-    private DialogGraph Config
+    protected DialogGraph Config
     {
         get
         {
@@ -28,7 +28,7 @@ public class DialogSystem
         NextStep(Config.GetNode(nodeId));
     }
 
-    public bool NextStep(DialogNode node = null)
+    public virtual bool NextStep(DialogNode node = null)
     {
         if (node == null)
             return false;
@@ -53,5 +53,25 @@ public class DialogSystem
     public bool NextPersNode()
     {
         return NextStep(NextDialogNodes.FirstOrDefault(n => n.Available));
+    }
+}
+
+public class QuizSystem : DialogSystem
+{
+    public override bool NextStep(DialogNode node = null)
+    {
+        if (node == null)
+            return false;
+
+        var children = Config.GetChildren(node);
+        if (node.IsPlayer)
+            return node.IsCorrect;
+
+        Debug.Log(node.Id);
+
+        CurrentRootNode = node;
+        NextDialogNodes = children;
+
+        return true;
     }
 }

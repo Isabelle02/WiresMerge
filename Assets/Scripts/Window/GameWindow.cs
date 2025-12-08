@@ -42,6 +42,8 @@ public class GameWindow : BaseWindow
 
     public override async UniTask OnClose()
     {
+        Gameplay.Finish();
+
         _pauseButton.OnButtonClick -= OnPauseClick;
         MouseManager.RemoveClickable(_pauseButton);
 

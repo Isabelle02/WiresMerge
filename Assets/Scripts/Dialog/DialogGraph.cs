@@ -62,6 +62,7 @@ public class DialogNode
     public bool IsPlayer;
     public string Parameters;
     public string Conditions;
+    public bool IsCorrect;
 
     public List<int> ParentIds = new List<int>();
     public List<int> ChildrenIds = new List<int>();
@@ -92,7 +93,7 @@ public class DialogNode
         }
     }
 
-    public DialogNode(int nodeId, string speaker, string text, bool isPlayer, string parameters, string conditions)
+    public DialogNode(int nodeId, string speaker, string text, bool isPlayer, string parameters, string conditions, bool isCorrect)
     {
         Id = nodeId;
         Speaker = speaker;
@@ -100,6 +101,7 @@ public class DialogNode
         IsPlayer = isPlayer;
         Parameters = parameters;
         Conditions = conditions;
+        IsCorrect = isCorrect;
     }
 }
 

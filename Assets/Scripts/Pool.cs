@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Pool : MonoBehaviour
 {
     protected static Pool _instance;
     private static PoolConfig _config;
+
+    protected static List<MonoBehaviour> PoolObjectsGeneral = new List<MonoBehaviour>();
 
     protected static PoolConfig Config
     {
@@ -27,23 +30,21 @@ public class Pool : MonoBehaviour
         else
             Destroy(gameObject);
     }
-}
 
-public class Pool<T> : Pool where T : MonoBehaviour
-{
-    private static Stack<T> _poolObjects = new Stack<T>();
-
-    public static T Get(Transform parent = null)
+    public static T Get<T>(Transform parent = null) where T : MonoBehaviour
     {
         var obj = default(T);
-        if (_poolObjects.Count == 0)
+        if (PoolObjectsGeneral.OfType<T>().Count() == 0)
         {
             var prefab = Config.Get<T>();
             if (prefab)
                 obj = (T)Instantiate(prefab, null);
         }
         else
-            obj = _poolObjects.Pop();
+        {
+            obj = (T)PoolObjectsGeneral.FirstOrDefault(p => p.GetType() == typeof(T));
+            PoolObjectsGeneral.Remove(obj);
+        }
 
         obj.gameObject.SetActive(true);
         obj.transform.SetParent(parent);
@@ -52,13 +53,13 @@ public class Pool<T> : Pool where T : MonoBehaviour
         return (T)obj;
     }
 
-    public static void Release(T obj)
+    public static void Release(MonoBehaviour obj)
     {
         if (obj is IDisposable disposable)
             disposable.Dispose();
 
         obj.gameObject.SetActive(false);
         obj.transform.SetParent(_instance.transform);
-        _poolObjects.Push(obj);
+        PoolObjectsGeneral.Add(obj);
     }
 }
