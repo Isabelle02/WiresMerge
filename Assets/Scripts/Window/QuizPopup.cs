@@ -83,7 +83,14 @@ public class QuizPopup : BaseWindow
         _closeButton.OnButtonClick -= OnCloseButton;
         MouseManager.RemoveClickable(_closeButton);
 
+        foreach (var answer in _userAnswers)
+        {
+            answer.ColorNormalization();
+        }
+
         Gameplay.TimerSystem.IsRunning = true;
         Gameplay.WireSystem.OnRotated();
+
+        Debug.Log("CorrectAnswers: " + CorrectAnswers);
     }
 }

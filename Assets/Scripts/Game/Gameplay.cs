@@ -5,6 +5,7 @@ public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
     public static readonly string DefaultUserName = "Лев";
+    private static int _score;
 
     public static Action Started;
     public static Action Finished;
@@ -35,6 +36,15 @@ public class Gameplay : MonoBehaviour
             PlayerPrefs.SetString("UserName", value);
         }
     }
+    public static int Score
+    {
+        get => _score;
+        private set
+        {
+            _score = value;
+            PlayerPrefs.SetInt("Score", _score);
+        }
+    }
 
     public static bool IsAllWin
     {
@@ -53,6 +63,8 @@ public class Gameplay : MonoBehaviour
             WireSystem = new WireSystem();
             DialogSystem = new DialogSystem();
             QuizSystem = new QuizSystem();
+
+            _score = PlayerPrefs.GetInt("Score", 0);
         }
         else
             Destroy(gameObject);
@@ -87,5 +99,10 @@ public class Gameplay : MonoBehaviour
         Started = null;
 
         Finished?.Invoke();
+    }
+
+    public static void Win(int CorrectAnswers)
+    {
+        Score += CorrectAnswers;
     }
 }

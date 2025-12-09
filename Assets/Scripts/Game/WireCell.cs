@@ -205,12 +205,12 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
     public void OnClick()
     {
         RotateToLeft(true); // _quizNodeId == -1
-        //if (_quizNodeId > -1)
-        //{
-        //    Gameplay.QuizSystem.Start(QuizNodeId);
-        //    WindowManager.Open<QuizPopup>();
-        //    _quizNodeId = -1;
-        //}
+        if (_quizNodeId > -1)
+        {
+            Gameplay.QuizSystem.Start(QuizNodeId);
+            WindowManager.Open<QuizPopup>();
+            _quizNodeId = -1;
+        }
     }
 
     public void RotateToLeft(bool action)

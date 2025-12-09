@@ -22,6 +22,8 @@ public class GameWindow : BaseWindow
     {
         Gameplay.TimerSystem.IsRunning = false;
         LevelManager.LoadLevel(LevelManager.LastId + 1);
+        Gameplay.Win(QuizPopup.CorrectAnswers);
+        Debug.Log("Score: " + Gameplay.Score);
         WindowManager.Open<WinPopup>();
     }
 

@@ -44,7 +44,7 @@ public static class DialogParser
         }
 
         var lines = csvData.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-        for (var i = 1; i < Mathf.Min(lines.Length, 264); i++) // 350
+        for (var i = 1; i < Mathf.Min(lines.Length, 325); i++)
         {
             var fields = ParseCSVLine(lines[i]);
 
