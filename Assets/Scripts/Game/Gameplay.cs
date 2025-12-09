@@ -51,7 +51,6 @@ public class Gameplay : MonoBehaviour
             _instance = this;
 
             WireSystem = new WireSystem();
-            TimerSystem = new TimerSystem();
             DialogSystem = new DialogSystem();
             QuizSystem = new QuizSystem();
         }
@@ -70,6 +69,8 @@ public class Gameplay : MonoBehaviour
 
     public static void Play()
     {
+        TimerSystem = new TimerSystem();
+
         _instance.gameObject.SetActive(true);
         TimerSystem.IsRunning = true;
         TimerSystem.Duration = LevelManager.LastTimerDuration;
@@ -77,9 +78,14 @@ public class Gameplay : MonoBehaviour
         Started?.Invoke();
     }
 
-    public static void Finish() 
+    public static void Finish()
     {
-        Finished?.Invoke();
+        TimerSystem.IntervalElapsed = null;
+        TimerSystem.TimerElapsed = null;
+        TimerSystem.IsRunning = false;
+        TimerSystem = null;
         Started = null;
+
+        Finished?.Invoke();
     }
 }

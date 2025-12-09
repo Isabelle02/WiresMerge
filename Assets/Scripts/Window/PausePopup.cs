@@ -19,6 +19,9 @@ public class PausePopup : BaseWindow
         MouseManager.AddClickable(_settingsButton);
         MouseManager.AddClickable(_exitButton);
         MouseManager.AddClickable(_closeButton);
+
+        if (Gameplay.TimerSystem != null)
+            Gameplay.TimerSystem.IsRunning = false;
     }
 
     private void OnSettingsClick(BaseButton button)
@@ -48,5 +51,8 @@ public class PausePopup : BaseWindow
         MouseManager.RemoveClickable(_settingsButton);
         MouseManager.RemoveClickable(_exitButton);
         MouseManager.RemoveClickable(_closeButton);
+
+        if (Gameplay.TimerSystem != null)
+            Gameplay.TimerSystem.IsRunning = true;
     }
 }

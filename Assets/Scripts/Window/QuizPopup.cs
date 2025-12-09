@@ -19,6 +19,7 @@ public class QuizPopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        Gameplay.TimerSystem.IsRunning = false;
         _closeButton.gameObject.SetActive(false);
 
         UpdateUI();
@@ -34,6 +35,7 @@ public class QuizPopup : BaseWindow
 
         _userAnswers.Clear();
         _questionText.text = Gameplay.QuizSystem.CurrentRootNode.FormattedText;
+        Debug.Log(Gameplay.QuizSystem.CurrentRootNode.FormattedText + " " + Gameplay.QuizSystem.NextDialogNodes.Count);
         for (var i = 0; i < Gameplay.QuizSystem.NextDialogNodes.Count; i++)
         {
             var node = Gameplay.QuizSystem.NextDialogNodes[i];
@@ -80,5 +82,8 @@ public class QuizPopup : BaseWindow
     {
         _closeButton.OnButtonClick -= OnCloseButton;
         MouseManager.RemoveClickable(_closeButton);
+
+        Gameplay.TimerSystem.IsRunning = true;
+        Gameplay.WireSystem.OnRotated();
     }
 }

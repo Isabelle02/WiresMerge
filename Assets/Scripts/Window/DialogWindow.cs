@@ -71,9 +71,13 @@ public class DialogWindow : BaseWindow, IClickable
             return;
 
         var success = _dialogSystem.NextPersNode();
-        if (!success)
+        if (!success && LevelManager.IsNextExist)
         {
             LoadGame();
+        }
+        else
+        {
+            //game finish
         }
     }
 
@@ -81,8 +85,8 @@ public class DialogWindow : BaseWindow, IClickable
     {
         Debug.Log("GAME");
         gameObject.SetActive(false);
-        LevelManager.ShowLevel();
         WindowManager.Open<GameWindow>();
+        LevelManager.ShowLevel();
     }
 
     private void UpdateUI()

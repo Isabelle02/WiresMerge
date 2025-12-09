@@ -62,7 +62,7 @@ public static class DialogParser
                 var nodeId = i - 1;
                 var speaker = fields[4];
                 var text = fields[5];
-                var isPlayer = bool.Parse(fields[6]);
+                var isPlayer = speaker == "Question" ? false : bool.Parse(fields[6]);
                 var parameters = fields[7];
                 var conditions = fields[8];
                 var isCorrect = bool.Parse(fields[9]);

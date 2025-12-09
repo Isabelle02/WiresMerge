@@ -47,7 +47,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
     public float Intensity => _intensity;
     public int QuizNodeId => _quizNodeId;
     public int OutputCount => _outputAngles.Count;
-    public int OutputUsedCount { get; set; } = 0;
+    public Dictionary<int, bool> OutputUsedAngles { get; set; } = new Dictionary<int, bool>();
     public bool IsHighlighted { get; private set; } = false;
     public List<int> OutputAngles => _outputAngles;
     public Action Rotated { get; set; }
@@ -76,6 +76,12 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
         _outputAngles = new List<int>(data.OutputAngles);
         _intensity = data.CurveIntensity;
         _quizNodeId = data.QuizNodeId;
+
+        OutputUsedAngles = new Dictionary<int, bool>();
+        foreach (var angle in _outputAngles)
+        {
+            OutputUsedAngles.Add(angle, false);
+        }
     }
 
     public void Init()
@@ -198,17 +204,16 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
 
     public void OnClick()
     {
-        RotateToLeft();
-
-        if (_quizNodeId > -1)
-        {
-            Gameplay.QuizSystem.Start(QuizNodeId);
-            WindowManager.Open<QuizPopup>();
-            _quizNodeId = -1;
-        }
+        RotateToLeft(true); // _quizNodeId == -1
+        //if (_quizNodeId > -1)
+        //{
+        //    Gameplay.QuizSystem.Start(QuizNodeId);
+        //    WindowManager.Open<QuizPopup>();
+        //    _quizNodeId = -1;
+        //}
     }
 
-    public void RotateToLeft()
+    public void RotateToLeft(bool action)
     {
         _rotateCount++;
         _rotateTween?.Kill();
@@ -222,7 +227,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
 
             _baseAngle = transform.rotation.eulerAngles.z;
             _rotateCount = 0;
-            Rotated?.Invoke();
+            if (action)
+                Rotated?.Invoke();
         });
     }
 

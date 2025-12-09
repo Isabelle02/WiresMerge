@@ -22,7 +22,7 @@ public static class LevelManager
         get
         {
             if (_currentId == -1)
-                _currentId = PlayerPrefs.GetInt("LastLevel", -1);
+                _currentId = PlayerPrefs.GetInt("LastLevel", 0);
 
             return _currentId;
         }
@@ -36,6 +36,8 @@ public static class LevelManager
         }
     }
 
+    public static bool IsNextExist => LastId < Config.Levels.Count;
+
     public static int LastDialogNodeId
     {
         get 
@@ -48,31 +50,39 @@ public static class LevelManager
         }
     }
 
-    public static float LastTimerDuration { get; set; }
+    public static float LastTimerDuration { get; private set; }
 
     public static void LoadLevel(int id)
     {
-        _currentConfig = Config.Levels[id];
-        LastId = id;
-        LastDialogNodeId = _currentConfig.DialogNodeId;
-        LastTimerDuration = _currentConfig.TimerDuration;
-        foreach (var cell in _currentConfig.WireCells)
+        if (Config.Levels.Count > id)
         {
-            var cellObj = Pool.Get<WireCell>(Gameplay.Transform);
-            cellObj.Set(cell);
-            Gameplay.Started += cellObj.Init;
+            _currentConfig = Config.Levels[id];
+            LastId = id;
+            LastDialogNodeId = _currentConfig.DialogNodeId;
+            LastTimerDuration = _currentConfig.TimerDuration;
+        }
+        else
+        {
+            // GameObject finish dialog
+            LastDialogNodeId = 127;
         }
     }
 
     public static void UnloadLevel()
     {
-
+        
 
         // unload \ wirecell \ метод очищает ячейки \ вызвать \ не забывать о таймере \ обнулить вайрсистем
     }
 
     public static void ShowLevel()
     {
+        foreach (var cell in _currentConfig.WireCells)
+        {
+            var cellObj = Pool.Get<WireCell>(Gameplay.Transform);
+            cellObj.Set(cell);
+            Gameplay.Started += cellObj.Init;
+        }
         Gameplay.Play();
     }
 
