@@ -13,6 +13,8 @@ public class LosePopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        AudioManager.PlayOneShot(Sound.LosePopup);
+
         _returnButton.OnButtonClick += OnReturnButton;
         _exitButton.OnButtonClick += OnExitButton;
 

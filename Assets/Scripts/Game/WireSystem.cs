@@ -12,6 +12,12 @@ public class WireSystem
 
     public Action Win;
 
+    public void Reset()
+    {
+        _bulbTurnedOnCount = 0;
+        _bulbNeedToTurnOnCount = 0;
+    }
+
     public void AddWireCell(IWireCell wireCell)
     {
         if (_wireCells.Contains(wireCell))
@@ -43,7 +49,7 @@ public class WireSystem
         return new Vector2(vectorX, vectorY);
     }
 
-    public void OnRotated()
+    private void OnRotated()
     {
         Debug.Log("CheckConnections");
         foreach (var cell in _wireCells)
@@ -78,7 +84,7 @@ public class WireSystem
         for (var i = 0; i < wireCell.OutputCount; i++)
         {
             var direction = GetDirection(wireCell.OutputAngles[i], wireCell.Width, wireCell.Height);
-            var hit = Physics2D.Raycast((Vector2)wireCell.Position + direction * 1.1f, Vector3.forward);
+            var hit = Physics2D.Raycast((Vector2)wireCell.Position + direction * 1.1f, Vector3.forward, int.MaxValue, LayerMask.GetMask("Game"));
             var cell = remained.FirstOrDefault(w => hit.transform && hit.transform.position == w.Position);
             if (cell != null && cell.OutputAngles.Any(angle => angle == (wireCell.OutputAngles[i] + 180) % 360)) //(-GetDirection(angle, cell.Width, cell.Height) == direction)  angle == 360 - wireCell.OutputAngles[i]
             {
@@ -109,6 +115,9 @@ public class WireSystem
 
     private void CheckWin()
     {
+        //if (_bulbTurnedOnCount > 0)
+        //    Win?.Invoke();
+
         if (_bulbNeedToTurnOnCount == _bulbTurnedOnCount)
         {
             foreach (var wireCell in _wireCells)
@@ -120,8 +129,6 @@ public class WireSystem
                 {
                     Debug.Log(wireCell.Position + " " + angle.Key + " " + angle.Value);
                 }
-
-                
             }
 
             if (_wireCells.Where(w => w.IsHighlighted).All(w => w.OutputUsedAngles.All(angle => angle.Value)))

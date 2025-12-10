@@ -10,6 +10,7 @@ public class BaseButton : MonoBehaviour, IClickable, IDisposable
 
     public virtual void OnClick()
     {
+        AudioManager.PlayOneShot(Sound.ButtonClick);
         OnButtonClick?.Invoke(this);
     }
 

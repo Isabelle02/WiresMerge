@@ -13,8 +13,8 @@ public class SettingsPopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
-        _musicVolumeSlider.Init(100f);
-        _soundVolumeSlider.Init(100f);
+        _musicVolumeSlider.Init(AudioManager.MusicVolumeValue * 100f);
+        _soundVolumeSlider.Init(AudioManager.SoundVolumeValue * 100f);
 
         _userNameInputField.Init(Gameplay.DefaultUserName, Gameplay.UserName);
         _updateUserName = Gameplay.UserName;
@@ -32,7 +32,6 @@ public class SettingsPopup : BaseWindow
         MouseManager.AddClickable(_userNameInputField);
         MouseManager.AddClickable(_musicVolumeSlider);
         MouseManager.AddClickable(_soundVolumeSlider);
-
     }
 
     private void OnCloseButton(BaseButton button)
@@ -54,15 +53,13 @@ public class SettingsPopup : BaseWindow
     private void OnMusicVolumeChanged(float volume)
     {
         Debug.Log($"Music val: {(int)volume}");
-        // Here you can apply the value, for example:
-        // AudioManager.SetMusicVolume(volume / 100f); || ((int)volume)
+        AudioManager.MusicVolumeValue = (int)volume / 100f;
     }
 
     private void OnSoundVolumeChanged(float volume)
     {
         Debug.Log($"SoundUI val: {(int)volume}");
-        // Here you can apply the value, for example:
-        // AudioManager.SetSoundVolume(volume / 100f); || ((int)volume)
+        AudioManager.SoundVolumeValue = (int)volume / 100f;
     }
 
     public override async UniTask OnClose()
@@ -78,6 +75,5 @@ public class SettingsPopup : BaseWindow
         MouseManager.RemoveClickable(_userNameInputField);
         MouseManager.RemoveClickable(_musicVolumeSlider);
         MouseManager.RemoveClickable(_soundVolumeSlider);
-
     }
 }

@@ -1215,7 +1215,7 @@ MonoBehaviour:
     ChildrenIds: 33000000
   - Id: 51
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
-    Text: "\u2026"
+    Text: . . .
     IsPlayer: 0
     Parameters: 
     Conditions: 
@@ -1249,7 +1249,7 @@ MonoBehaviour:
     ChildrenIds: 36000000
   - Id: 54
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
-    Text: "\u2026"
+    Text: . . .
     IsPlayer: 0
     Parameters: 
     Conditions: 
@@ -1377,7 +1377,7 @@ MonoBehaviour:
     ChildrenIds: 41000000
   - Id: 65
     Speaker: Player
-    Text: "\u2026"
+    Text: ...
     IsPlayer: 1
     Parameters: 
     Conditions: 
@@ -2277,7 +2277,7 @@ MonoBehaviour:
     ChildrenIds: 92000000a2000000
   - Id: 146
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
-    Text: "\u2026"
+    Text: . . .
     IsPlayer: 0
     Parameters: 
     Conditions: Win
@@ -2421,7 +2421,7 @@ MonoBehaviour:
     ChildrenIds: 
   - Id: 160
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
-    Text: "\u2026"
+    Text: . . .
     IsPlayer: 0
     Parameters: 
     Conditions: 
@@ -2444,7 +2444,7 @@ MonoBehaviour:
     ChildrenIds: 
   - Id: 162
     Speaker: "\u042D\u043D\u0437\u043E \u0424\u0430\u0440\u043D"
-    Text: "\u2026"
+    Text: . . .
     IsPlayer: 0
     Parameters: 
     Conditions: Fall
@@ -4291,3 +4291,4 @@ MonoBehaviour:
     IsCorrect: 1
     ParentIds: 41010000
     ChildrenIds: 57000000
+  QuestionsCount: 25

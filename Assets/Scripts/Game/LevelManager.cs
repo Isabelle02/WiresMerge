@@ -3,7 +3,6 @@
 public static class LevelManager
 {
     private static LevelsConfig _config;
-    private static int _currentId = -1;
     private static LevelConfig _currentConfig;
 
     private static LevelsConfig Config 
@@ -21,17 +20,10 @@ public static class LevelManager
     {
         get
         {
-            if (_currentId == -1)
-                _currentId = PlayerPrefs.GetInt("LastLevel", 0);
-
-            return _currentId;
+            return PlayerPrefs.GetInt("LastLevel", 0);
         }
         private set
         {
-            if (_currentId == value)
-                return;
-
-            _currentId = value;
             PlayerPrefs.SetInt("LastLevel", value);
         }
     }
@@ -42,11 +34,11 @@ public static class LevelManager
     {
         get 
         {
-            return PlayerPrefs.GetInt($"LastDialogNodeId{_currentId}", -1);
+            return PlayerPrefs.GetInt($"LastDialogNodeId{LastId}", -1);
         }
         set
         {
-            PlayerPrefs.SetInt($"LastDialogNodeId{_currentId}", value);
+            PlayerPrefs.SetInt($"LastDialogNodeId{LastId}", value);
         }
     }
 
@@ -54,10 +46,10 @@ public static class LevelManager
 
     public static void LoadLevel(int id)
     {
+        LastId = id;
         if (Config.Levels.Count > id)
         {
             _currentConfig = Config.Levels[id];
-            LastId = id;
             LastDialogNodeId = _currentConfig.DialogNodeId;
             LastTimerDuration = _currentConfig.TimerDuration;
         }

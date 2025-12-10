@@ -5,7 +5,7 @@ public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
     public static readonly string DefaultUserName = "Лев";
-    private static int _score;
+    private static string _userName;
 
     public static Action Started;
     public static Action Finished;
@@ -17,7 +17,6 @@ public class Gameplay : MonoBehaviour
     public static DialogSystem DialogSystem { get; private set; }
     public static QuizSystem QuizSystem { get; private set; }
 
-    private static string _userName;
     public static string UserName
     {
         get
@@ -36,23 +35,19 @@ public class Gameplay : MonoBehaviour
             PlayerPrefs.SetString("UserName", value);
         }
     }
+
+    public static int CorrectAnswers { get; set; }
+
     public static int Score
     {
-        get => _score;
+        get => PlayerPrefs.GetInt("Score", 0);
         private set
         {
-            _score = value;
-            PlayerPrefs.SetInt("Score", _score);
+            PlayerPrefs.SetInt("Score", value);
         }
     }
 
-    public static bool IsAllWin
-    {
-        get
-        {
-            return true;
-        }
-    }
+    public static bool IsAllWin => Score >= DialogSystem.QuestionsCount / 2;
 
     void Awake()
     {
@@ -63,8 +58,6 @@ public class Gameplay : MonoBehaviour
             WireSystem = new WireSystem();
             DialogSystem = new DialogSystem();
             QuizSystem = new QuizSystem();
-
-            _score = PlayerPrefs.GetInt("Score", 0);
         }
         else
             Destroy(gameObject);
@@ -92,17 +85,21 @@ public class Gameplay : MonoBehaviour
 
     public static void Finish()
     {
+        CorrectAnswers = 0;
+        WireSystem.Reset();
+
         TimerSystem.IntervalElapsed = null;
         TimerSystem.TimerElapsed = null;
         TimerSystem.IsRunning = false;
         TimerSystem = null;
-        Started = null;
 
+        Started = null;
         Finished?.Invoke();
     }
 
-    public static void Win(int CorrectAnswers)
+    public static void Win()
     {
         Score += CorrectAnswers;
+        CorrectAnswers = 0;
     }
 }

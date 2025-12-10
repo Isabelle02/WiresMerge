@@ -13,10 +13,6 @@ public class QuizPopup : BaseWindow
     [SerializeField] private BaseButton _closeButton;
     [SerializeField] private Image _closeButtonImage;
 
-    private static int _correctAnswers = 0;
-
-    public static int CorrectAnswers => _correctAnswers;
-
     public override async UniTask OnOpen()
     {
         Gameplay.TimerSystem.IsRunning = false;
@@ -57,7 +53,7 @@ public class QuizPopup : BaseWindow
 
         if (isCorrect)
         {
-            _correctAnswers++;
+            Gameplay.CorrectAnswers++;
         }
 
         quizButton.AnimateBackgroundColor(new Color32(0x71, 0x52, 0x3E, 160));
@@ -89,8 +85,5 @@ public class QuizPopup : BaseWindow
         }
 
         Gameplay.TimerSystem.IsRunning = true;
-        Gameplay.WireSystem.OnRotated();
-
-        Debug.Log("CorrectAnswers: " + CorrectAnswers);
     }
 }

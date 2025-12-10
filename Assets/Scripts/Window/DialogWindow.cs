@@ -53,9 +53,13 @@ public class DialogWindow : BaseWindow, IClickable
             return;
 
         var success = _dialogSystem.NextStep((button as DialogChoiceButton).Node);
-        if (!success)
+        if (!success && LevelManager.IsNextExist)
         {
             LoadGame();
+        }
+        else if (!success)
+        {
+            WindowManager.Open<RestartPopup>();
         }
     }
 
@@ -75,16 +79,15 @@ public class DialogWindow : BaseWindow, IClickable
         {
             LoadGame();
         }
-        else
+        else if (!success)
         {
-            //game finish
+            WindowManager.Open<RestartPopup>();
         }
     }
 
     private void LoadGame()
     {
         Debug.Log("GAME");
-        gameObject.SetActive(false);
         WindowManager.Open<GameWindow>();
         LevelManager.ShowLevel();
     }
@@ -190,13 +193,13 @@ public class DialogWindow : BaseWindow, IClickable
         }
     }
 
-    public void StartAnimation()
+    private void StartAnimation()
     {
         _cancellationTokenSource = new CancellationTokenSource();
         TypeText(_textToType, _cancellationTokenSource.Token).Forget();
     }
 
-    public void StopAnimation()
+    private void StopAnimation()
     {
         _cancellationTokenSource?.Cancel();
         _persText.text = _textToType;

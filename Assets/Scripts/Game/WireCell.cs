@@ -204,7 +204,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
 
     public void OnClick()
     {
-        RotateToLeft(true); // _quizNodeId == -1
+        RotateToLeft();
         if (_quizNodeId > -1)
         {
             Gameplay.QuizSystem.Start(QuizNodeId);
@@ -213,8 +213,10 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
         }
     }
 
-    public void RotateToLeft(bool action)
+    public void RotateToLeft()
     {
+        AudioManager.PlayOneShot(Sound.WireClick);
+
         _rotateCount++;
         _rotateTween?.Kill();
         _rotateTween = RotateAnimation();
@@ -227,8 +229,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
 
             _baseAngle = transform.rotation.eulerAngles.z;
             _rotateCount = 0;
-            if (action)
-                Rotated?.Invoke();
+            Rotated?.Invoke();
         });
     }
 

@@ -69,6 +69,8 @@ public static class DialogParser
 
                 var newNode = new DialogNode(nodeId, speaker, text, isPlayer, parameters, conditions, isCorrect);
                 DialogGraph.Nodes.Add(newNode);
+                if (speaker == "Question")
+                    DialogGraph.QuestionsCount++;
             }
         }
 

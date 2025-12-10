@@ -1,15 +1,14 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class WinPopup : BaseWindow
+public class RestartPopup : BaseWindow
 {
     [SerializeField] private BaseButton _nextButton;
     [SerializeField] private BaseButton _exitButton;
 
     public override async UniTask OnOpen()
     {
-        AudioManager.PlayOneShot(Sound.WinPopup);
-
+        Debug.Log("On Open RestartPopup");
         _nextButton.OnButtonClick += OnNextButton;
         _exitButton.OnButtonClick += OnExitButton;
 
@@ -19,7 +18,9 @@ public class WinPopup : BaseWindow
 
     private void OnNextButton(BaseButton button)
     {
-        WindowManager.Open<DialogWindow>();
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        OnExitButton(null);
     }
 
     private void OnExitButton(BaseButton button)
