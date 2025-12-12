@@ -63,6 +63,12 @@ public class DialogWindow : BaseWindow, IClickable
         }
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            OnClick();
+    }
+
     public void OnClick()
     {
         if (_isTyping)
@@ -138,7 +144,7 @@ public class DialogWindow : BaseWindow, IClickable
             {
                 token.ThrowIfCancellationRequested();
                 _persText.text += letter;
-                await UniTask.Delay((int)(_delay * 1000));
+                await UniTask.Delay((int)(_delay * 700));
             }
 
             OnAnimationComplete();
@@ -208,7 +214,7 @@ public class DialogWindow : BaseWindow, IClickable
 
     public override UniTask OnClose()
     {
-        StopAnimation();    
+        StopAnimation();
 
         _dialogSystem.OnNextStep -= UpdateUI;
         _pauseButton.OnButtonClick -= OnPauseClick;

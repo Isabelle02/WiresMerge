@@ -20,6 +20,20 @@ public class QuizPopup : BaseWindow
 
         UpdateUI();
 
+        foreach (var answer in _userAnswers)
+        {
+            answer.enabled = false;
+            MouseManager.RemoveClickable(answer);
+        }
+
+        await UniTask.Delay(1200);
+
+        foreach (var answer in _userAnswers)
+        {
+            answer.enabled = true;
+            MouseManager.AddClickable(answer);
+        }
+
         _closeButton.OnButtonClick += OnCloseButton;
         MouseManager.AddClickable(_closeButton);
     }
@@ -27,7 +41,10 @@ public class QuizPopup : BaseWindow
     private void UpdateUI()
     {
         foreach (var answer in _userAnswers)
+        {
+            answer.enabled = true;
             Pool.Release(answer);
+        }
 
         _userAnswers.Clear();
         _questionText.text = Gameplay.QuizSystem.CurrentRootNode.FormattedText;
@@ -60,6 +77,8 @@ public class QuizPopup : BaseWindow
 
         foreach (var answer in _userAnswers)
         {
+            answer.enabled = false;
+            MouseManager.RemoveClickable(answer);
             answer.AnimateTextColor(quizSystem.NextStep(answer.Node) ? Color.green : Color.red);
         }
 
@@ -67,6 +86,7 @@ public class QuizPopup : BaseWindow
         _closeButton.gameObject.SetActive(true);
         _closeButtonImage.color = new Color(_closeButtonImage.color.r, _closeButtonImage.color.g, _closeButtonImage.color.b, 0f);
         _closeButtonImage.DOFade(1f, 1f);
+        Debug.Log("CorrectAnswers: " + Gameplay.CorrectAnswers);
     }
 
     private void OnCloseButton(BaseButton button)
