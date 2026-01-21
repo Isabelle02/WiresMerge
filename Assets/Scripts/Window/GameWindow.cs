@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,20 +9,33 @@ public class GameWindow : BaseWindow
     [SerializeField] private BaseButton _pauseButton;
     [SerializeField] private Text _timerValue;
 
-    public void Update()
-    {
-        if (WireSystem.IsWin)
-        {
-            Gameplay.TimerSystem.IsRunning = false;
-            WindowManager.Open<WinPopup>();
-        }
-    }
-
     public override async UniTask OnOpen()
     {
+        Gameplay.Started += OnStarted;
+        Gameplay.Finished += OnFinished;
+        Gameplay.WireSystem.Win += OnWIn;
         _pauseButton.OnButtonClick += OnPauseClick;
         MouseManager.AddClickable(_pauseButton);
+    }
 
+    private void OnWIn()
+    {
+        Gameplay.TimerSystem.IsRunning = false;
+        LevelManager.LoadLevel(LevelManager.LastId + 1);
+        Gameplay.Win();
+        Debug.Log("Score: " + Gameplay.Score);
+        WindowManager.Open<WinPopup>();
+    }
+
+    private void OnFinished()
+    {
+        Gameplay.Started += OnStarted;
+    }
+
+    private void OnStarted()
+    {
+        Debug.Log("on started game window");
+        _timerValue.text = LevelManager.LastTimerDuration.ToString();
         Gameplay.TimerSystem.IntervalElapsed += OnIntervalElapsed;
         Gameplay.TimerSystem.TimerElapsed += OnTimerElapsed;
     }
@@ -31,10 +45,9 @@ public class GameWindow : BaseWindow
         WindowManager.Open<PausePopup>();
     }
 
-    private void OnIntervalElapsed(float tick)
+    private void OnIntervalElapsed(float remained)
     {
-        _timerValue.text = (LevelManager.LastTimerDuration--).ToString();
-        Debug.Log("LastTimerDuration " + LevelManager.LastTimerDuration);
+        _timerValue.text = ((int)remained).ToString();
     }
 
     private void OnTimerElapsed()
@@ -45,12 +58,11 @@ public class GameWindow : BaseWindow
 
     public override async UniTask OnClose()
     {
-        Gameplay.Finish();
-
         _pauseButton.OnButtonClick -= OnPauseClick;
         MouseManager.RemoveClickable(_pauseButton);
 
-        Gameplay.TimerSystem.IntervalElapsed -= OnIntervalElapsed;
-        Gameplay.TimerSystem.TimerElapsed -= OnTimerElapsed;
+        Gameplay.Finished -= OnFinished;
+        Gameplay.WireSystem.Win -= OnWIn;
+        Gameplay.Finish();
     }
 }

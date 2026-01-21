@@ -7,6 +7,7 @@ public class DialogSystem
 {
     private DialogGraph _graph;
 
+    public int QuestionsCount => _graph.QuestionsCount;
     public DialogNode CurrentRootNode { get; protected set; }
     public List<DialogNode> NextDialogNodes { get; protected set; } = new List<DialogNode>();
 

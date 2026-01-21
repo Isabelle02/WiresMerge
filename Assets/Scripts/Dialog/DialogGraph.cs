@@ -8,11 +8,13 @@ public class DialogGraph : ScriptableObject
 {
     public List<DialogRelation> Relations = new List<DialogRelation>();
     public List<DialogNode> Nodes = new List<DialogNode>();
+    public int QuestionsCount = 0;
 
     public void Set(DialogGraph graph)
     {
         Relations = graph.Relations;
         Nodes = graph.Nodes;
+        QuestionsCount = graph.QuestionsCount;
     }
 
     public DialogNode GetNode(int id)
@@ -50,6 +52,7 @@ public class DialogGraph : ScriptableObject
     {
         Relations.Clear();
         Nodes.Clear();
+        QuestionsCount = 0;
     }
 }
 

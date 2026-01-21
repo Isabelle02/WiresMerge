@@ -20,6 +20,8 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
     private float caretBlinkRate = 0.5f;
     private float caretTimer = 0f;
 
+    private TouchScreenKeyboard _keyboard;
+
     public Collider2D Collider => _collider;
     public string InitialTextValue => _initialText.text;
     public string DisplayTextValue => _displayText.text;
@@ -38,10 +40,33 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
         _isSelected = true;
         caretText.gameObject.SetActive(true);
         UpdateVisuals();
+#if UNITY_ANDROID
+        _keyboard = TouchScreenKeyboard.Open(DisplayTextValue, TouchScreenKeyboardType.Default);
+#endif
     }
 
     private void Update()
     {
+#if UNITY_ANDROID
+        if (_keyboard != null)
+        {
+            if (_keyboard.active)
+            {
+                if (_keyboard.text != DisplayTextValue)
+                {
+                    _displayText.text = _keyboard.text;
+                    OnValueChanged?.Invoke(_displayText.text);
+                    UpdateVisuals();
+                }
+            }
+            else if (_keyboard.done || _keyboard.wasCanceled)
+            {
+                _keyboard = null;
+                _isSelected = false;
+                UpdateVisuals();
+            }
+        }
+#else
         if (_isSelected && Input.anyKeyDown)
         {
             foreach (var c in Input.inputString)
@@ -66,6 +91,7 @@ public class BaseInputField : MonoBehaviour, IClickable, IDisposable
             UpdateVisuals();
             OnValueChanged?.Invoke(_displayText.text);
         }
+#endif
         if (Input.GetMouseButtonDown(0))
         {
             var mousePosition = CameraManager.MainCamera.ScreenToWorldPoint(Input.mousePosition);

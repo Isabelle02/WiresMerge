@@ -17,14 +17,20 @@ public class QuizAnswerButton : BaseButton
         _titleText.text = title;
     }
 
-    public void AnimateTextColor(Color color, float duration = 0.5f)
+    public void AnimateTextColor(UnityEngine.Color color, float duration = 0.5f)
     {
         _titleText.DOColor(color, duration);
     }
 
-    public void AnimateBackgroundColor(Color color, float duration = 0.5f)
+    public void AnimateBackgroundColor(UnityEngine.Color color, float duration = 0.5f)
     {
         _backgroundImage.DOColor(color, duration);
+    }
+
+    public void ColorNormalization()
+    {
+        _titleText.color = Color.white;
+        _backgroundImage.color = new Color32(60, 50, 43, 160);
     }
 
     public override void OnClick()

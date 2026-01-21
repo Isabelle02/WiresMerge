@@ -20,6 +20,7 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
         {
             _value = Mathf.Clamp(value, _minValue, _maxValue);
             UpdateHandlePosition();
+            OnValueChanged?.Invoke(value);
         }
     }
 
@@ -49,7 +50,6 @@ public class BaseSlider : MonoBehaviour, IClickable, IDisposable
 
         if (Input.GetMouseButtonUp(0))
         {
-            OnValueChanged?.Invoke(_value);
             _isDragging = false;
         }
     }

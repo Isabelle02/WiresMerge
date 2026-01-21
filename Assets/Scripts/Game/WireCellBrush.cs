@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -61,3 +62,4 @@ public class WireCellBrush : GridBrush
         }
     }
 }
+#endif

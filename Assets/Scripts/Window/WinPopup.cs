@@ -1,9 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class WinPopup : BaseWindow
@@ -13,6 +8,8 @@ public class WinPopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        AudioManager.PlayOneShot(Sound.WinPopup);
+
         _nextButton.OnButtonClick += OnNextButton;
         _exitButton.OnButtonClick += OnExitButton;
 

@@ -53,10 +53,20 @@ public class DialogWindow : BaseWindow, IClickable
             return;
 
         var success = _dialogSystem.NextStep((button as DialogChoiceButton).Node);
-        if (!success)
+        if (!success && LevelManager.IsNextExist)
         {
             LoadGame();
         }
+        else if (!success)
+        {
+            WindowManager.Open<RestartPopup>();
+        }
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            OnClick();
     }
 
     public void OnClick()
@@ -71,18 +81,21 @@ public class DialogWindow : BaseWindow, IClickable
             return;
 
         var success = _dialogSystem.NextPersNode();
-        if (!success)
+        if (!success && LevelManager.IsNextExist)
         {
             LoadGame();
+        }
+        else if (!success)
+        {
+            WindowManager.Open<RestartPopup>();
         }
     }
 
     private void LoadGame()
     {
         Debug.Log("GAME");
-        gameObject.SetActive(false);
-        LevelManager.ShowLevel();
         WindowManager.Open<GameWindow>();
+        LevelManager.ShowLevel();
     }
 
     private void UpdateUI()
@@ -131,7 +144,7 @@ public class DialogWindow : BaseWindow, IClickable
             {
                 token.ThrowIfCancellationRequested();
                 _persText.text += letter;
-                await UniTask.Delay((int)(_delay * 1000));
+                await UniTask.Delay((int)(_delay * 700));
             }
 
             OnAnimationComplete();
@@ -186,13 +199,13 @@ public class DialogWindow : BaseWindow, IClickable
         }
     }
 
-    public void StartAnimation()
+    private void StartAnimation()
     {
         _cancellationTokenSource = new CancellationTokenSource();
         TypeText(_textToType, _cancellationTokenSource.Token).Forget();
     }
 
-    public void StopAnimation()
+    private void StopAnimation()
     {
         _cancellationTokenSource?.Cancel();
         _persText.text = _textToType;
@@ -201,7 +214,7 @@ public class DialogWindow : BaseWindow, IClickable
 
     public override UniTask OnClose()
     {
-        StopAnimation();    
+        StopAnimation();
 
         _dialogSystem.OnNextStep -= UpdateUI;
         _pauseButton.OnButtonClick -= OnPauseClick;

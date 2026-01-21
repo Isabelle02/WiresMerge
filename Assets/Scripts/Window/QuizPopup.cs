@@ -13,15 +13,26 @@ public class QuizPopup : BaseWindow
     [SerializeField] private BaseButton _closeButton;
     [SerializeField] private Image _closeButtonImage;
 
-    private static int _correctAnswers = 0;
-
-    public static int CorrectAnswers => _correctAnswers;
-
     public override async UniTask OnOpen()
     {
+        Gameplay.TimerSystem.IsRunning = false;
         _closeButton.gameObject.SetActive(false);
 
         UpdateUI();
+
+        foreach (var answer in _userAnswers)
+        {
+            answer.enabled = false;
+            MouseManager.RemoveClickable(answer);
+        }
+
+        await UniTask.Delay(1200);
+
+        foreach (var answer in _userAnswers)
+        {
+            answer.enabled = true;
+            MouseManager.AddClickable(answer);
+        }
 
         _closeButton.OnButtonClick += OnCloseButton;
         MouseManager.AddClickable(_closeButton);
@@ -30,10 +41,14 @@ public class QuizPopup : BaseWindow
     private void UpdateUI()
     {
         foreach (var answer in _userAnswers)
+        {
+            answer.enabled = true;
             Pool.Release(answer);
+        }
 
         _userAnswers.Clear();
         _questionText.text = Gameplay.QuizSystem.CurrentRootNode.FormattedText;
+        Debug.Log(Gameplay.QuizSystem.CurrentRootNode.FormattedText + " " + Gameplay.QuizSystem.NextDialogNodes.Count);
         for (var i = 0; i < Gameplay.QuizSystem.NextDialogNodes.Count; i++)
         {
             var node = Gameplay.QuizSystem.NextDialogNodes[i];
@@ -55,13 +70,15 @@ public class QuizPopup : BaseWindow
 
         if (isCorrect)
         {
-            _correctAnswers++;
+            Gameplay.CorrectAnswers++;
         }
 
         quizButton.AnimateBackgroundColor(new Color32(0x71, 0x52, 0x3E, 160));
 
         foreach (var answer in _userAnswers)
         {
+            answer.enabled = false;
+            MouseManager.RemoveClickable(answer);
             answer.AnimateTextColor(quizSystem.NextStep(answer.Node) ? Color.green : Color.red);
         }
 
@@ -69,6 +86,7 @@ public class QuizPopup : BaseWindow
         _closeButton.gameObject.SetActive(true);
         _closeButtonImage.color = new Color(_closeButtonImage.color.r, _closeButtonImage.color.g, _closeButtonImage.color.b, 0f);
         _closeButtonImage.DOFade(1f, 1f);
+        Debug.Log("CorrectAnswers: " + Gameplay.CorrectAnswers);
     }
 
     private void OnCloseButton(BaseButton button)
@@ -80,5 +98,12 @@ public class QuizPopup : BaseWindow
     {
         _closeButton.OnButtonClick -= OnCloseButton;
         MouseManager.RemoveClickable(_closeButton);
+
+        foreach (var answer in _userAnswers)
+        {
+            answer.ColorNormalization();
+        }
+
+        Gameplay.TimerSystem.IsRunning = true;
     }
 }

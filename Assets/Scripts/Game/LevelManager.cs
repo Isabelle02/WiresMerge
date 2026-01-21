@@ -3,7 +3,6 @@
 public static class LevelManager
 {
     private static LevelsConfig _config;
-    private static int _currentId = -1;
     private static LevelConfig _currentConfig;
 
     private static LevelsConfig Config 
@@ -21,51 +20,62 @@ public static class LevelManager
     {
         get
         {
-            if (_currentId == -1)
-                _currentId = PlayerPrefs.GetInt("LastLevel", -1);
-
-            return _currentId;
+            return PlayerPrefs.GetInt("LastLevel", 0);
         }
         private set
         {
-            if (_currentId == value)
-                return;
-
-            _currentId = value;
             PlayerPrefs.SetInt("LastLevel", value);
         }
     }
+
+    public static bool IsNextExist => LastId < Config.Levels.Count;
 
     public static int LastDialogNodeId
     {
         get 
         {
-            return PlayerPrefs.GetInt($"LastDialogNodeId{_currentId}", -1);
+            return PlayerPrefs.GetInt($"LastDialogNodeId{LastId}", -1);
         }
         set
         {
-            PlayerPrefs.SetInt($"LastDialogNodeId{_currentId}", value);
+            PlayerPrefs.SetInt($"LastDialogNodeId{LastId}", value);
         }
     }
 
-    public static float LastTimerDuration { get; set; }
+    public static float LastTimerDuration { get; private set; }
 
     public static void LoadLevel(int id)
     {
-        _currentConfig = Config.Levels[id];
         LastId = id;
-        LastDialogNodeId = _currentConfig.DialogNodeId;
-        LastTimerDuration = _currentConfig.TimerDuration;
+        if (Config.Levels.Count > id)
+        {
+            _currentConfig = Config.Levels[id];
+            LastDialogNodeId = _currentConfig.DialogNodeId;
+            LastTimerDuration = _currentConfig.TimerDuration;
+        }
+        else
+        {
+            // GameObject finish dialog
+            LastDialogNodeId = 127;
+        }
+    }
+
+    public static void UnloadLevel()
+    {
+        
+
+        // unload \ wirecell \ метод очищает ячейки \ вызвать \ не забывать о таймере \ обнулить вайрсистем
+    }
+
+    public static void ShowLevel()
+    {
         foreach (var cell in _currentConfig.WireCells)
         {
             var cellObj = Pool.Get<WireCell>(Gameplay.Transform);
             cellObj.Set(cell);
             Gameplay.Started += cellObj.Init;
         }
-    }
-
-    public static void ShowLevel()
-    {
         Gameplay.Play();
     }
+
 }

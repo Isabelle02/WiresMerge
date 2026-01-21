@@ -13,6 +13,8 @@ public class LosePopup : BaseWindow
 
     public override async UniTask OnOpen()
     {
+        AudioManager.PlayOneShot(Sound.LosePopup);
+
         _returnButton.OnButtonClick += OnReturnButton;
         _exitButton.OnButtonClick += OnExitButton;
 
@@ -22,8 +24,10 @@ public class LosePopup : BaseWindow
 
     private void OnReturnButton(BaseButton button)
     {
+        Gameplay.Finish();
+        LevelManager.LoadLevel(LevelManager.LastId);
+        LevelManager.ShowLevel();
         WindowManager.ClosePopup();
-        SceneHandler.LoadScene(SceneHandler.GameScene);
     }
 
     private void OnExitButton(BaseButton button)

@@ -23,8 +23,9 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
     [SerializeField] private ShapeType _shapeType;
     [SerializeField] private Collider2D _rectCollider;
     [SerializeField] private Collider2D _hexCollider;
-    [SerializeField] private GameObject _rectLight;
-    [SerializeField] private GameObject _hexLight;
+    [SerializeField] private GameObject _sourceObj;
+    [SerializeField] private GameObject _bulbObj;
+    [SerializeField] private LineRenderer _lineLight;
 
     [SerializeField] private bool _isClickable;
     [SerializeField] private WireCellState _state;
@@ -46,20 +47,21 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
     public float Intensity => _intensity;
     public int QuizNodeId => _quizNodeId;
     public int OutputCount => _outputAngles.Count;
-    public int OutputUsedCount { get; set; } = 0;
+    public Dictionary<int, bool> OutputUsedAngles { get; set; } = new Dictionary<int, bool>();
     public bool IsHighlighted { get; private set; } = false;
     public List<int> OutputAngles => _outputAngles;
     public Action Rotated { get; set; }
     public Action<IWireCell> BulbTurnedOn { get; set; }
     public Action<IWireCell> BulbTurnedOff { get; set; }
-
     public Collider2D Collider => _shapeType == ShapeType.Rect ? _rectCollider : _hexCollider;
-    public GameObject Light => _shapeType == ShapeType.Rect ? _rectLight : _hexLight;
 
     public void OnValidate()
     {
         if (_lineRenderer)
-            DrawLines();
+            DrawLines(_lineRenderer);
+
+        if (_lineLight)
+            DrawLines(_lineLight);
     }
 
     public void Set(WireCellData data)
@@ -74,15 +76,25 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
         _outputAngles = new List<int>(data.OutputAngles);
         _intensity = data.CurveIntensity;
         _quizNodeId = data.QuizNodeId;
+
+        OutputUsedAngles = new Dictionary<int, bool>();
+        foreach (var angle in _outputAngles)
+        {
+            OutputUsedAngles.Add(angle, false);
+        }
     }
 
     public void Init()
     {
+        IsHighlighted = _state == WireCellState.Source;
         _rectCollider.gameObject.SetActive(_shapeType == ShapeType.Rect);
         _hexCollider.gameObject.SetActive(_shapeType == ShapeType.Hex);
-        IsHighlighted = _state == WireCellState.Source;
-        Light.SetActive(IsHighlighted);
-        DrawLines();
+        _lineRenderer.gameObject.SetActive(true);
+        _lineLight.gameObject.SetActive(IsHighlighted);
+        _sourceObj.SetActive(_state == WireCellState.Source);
+        _bulbObj.SetActive(_state == WireCellState.Bulb);
+        DrawLines(_lineRenderer);
+        DrawLines(_lineLight);
 
         if (_isClickable)
             MouseManager.AddClickable(this);
@@ -92,27 +104,38 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
         Gameplay.Finished += OnFinished;
     }
 
-    private void DrawLines()
+
+    private void DrawLines(LineRenderer line)
     {
-        if (_outputAngles == null || _outputAngles.Count == 0) 
+        if (_outputAngles == null || _outputAngles.Count == 0)
             return;
 
         var allPoints = new List<Vector3>();
         var segmentsPerSegment = 15;
 
-        if (_outputAngles.Count == 1)
+        var directionPoints = new List<Vector3>();
+        foreach (var angle in _outputAngles)
         {
-            var direction = WireSystem.GetDirection(_outputAngles[0], (this as IWireCell).Width, (this as IWireCell).Height);
+            directionPoints.Add(WireSystem.GetDirection(angle, (this as IWireCell).Width, (this as IWireCell).Height));
+        }
+
+        if (directionPoints.Count == 1)
+        {
             allPoints.Add(Vector2.zero);
-            allPoints.Add(direction);
+            allPoints.Add(directionPoints[0]);
+        }
+        else if (directionPoints.Count == 2 && -directionPoints[0] == directionPoints[1])
+        {
+            allPoints.Add(directionPoints[0]);
+            allPoints.Add(directionPoints[1]);
         }
         else
         {
-            DrawMultiAngleCurve(allPoints, segmentsPerSegment);
+            DrawMultiAngleCurve(allPoints, segmentsPerSegment, directionPoints);
         }
 
-        _lineRenderer.positionCount = allPoints.Count;
-        _lineRenderer.SetPositions(allPoints.ToArray());
+        line.positionCount = allPoints.Count;
+        line.SetPositions(allPoints.ToArray());
     }
 
     private void DrawSingleCurve(List<Vector3> points, Vector3 start, Vector3 end, int segments)
@@ -125,15 +148,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
         }
     }
 
-    private void DrawMultiAngleCurve(List<Vector3> points, int segments)
+    private void DrawMultiAngleCurve(List<Vector3> points, int segments, List<Vector3> directionPoints)
     {
-        // Points for all directions
-        var directionPoints = new List<Vector3>();
-        foreach (var angle in _outputAngles)
-        {
-            directionPoints.Add(WireSystem.GetDirection(angle, (this as IWireCell).Width, (this as IWireCell).Height));
-        }
-
         // Connecting points by curve
         for (var i = 0; i < directionPoints.Count - 1; i++)
         {
@@ -170,7 +186,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
             return;
 
         IsHighlighted = true;
-        Light.SetActive(true);
+        _lineLight.gameObject.SetActive(true);
         if (_state == WireCellState.Bulb)
             BulbTurnedOn?.Invoke(this);
     }
@@ -181,7 +197,7 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
             return;
 
         IsHighlighted = false;
-        Light.SetActive(false);
+        _lineLight.gameObject.SetActive(false);
         if (_state == WireCellState.Bulb)
             BulbTurnedOff?.Invoke(this);
     }
@@ -189,7 +205,6 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
     public void OnClick()
     {
         RotateToLeft();
-
         if (_quizNodeId > -1)
         {
             Gameplay.QuizSystem.Start(QuizNodeId);
@@ -200,6 +215,8 @@ public class WireCell : MonoBehaviour, IClickable, IWireCell, IDisposable
 
     public void RotateToLeft()
     {
+        AudioManager.PlayOneShot(Sound.WireClick);
+
         _rotateCount++;
         _rotateTween?.Kill();
         _rotateTween = RotateAnimation();

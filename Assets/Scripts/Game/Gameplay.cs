@@ -5,6 +5,7 @@ public class Gameplay : MonoBehaviour
 {
     private static Gameplay _instance;
     public static readonly string DefaultUserName = "Лев";
+    private static string _userName;
 
     public static Action Started;
     public static Action Finished;
@@ -16,7 +17,6 @@ public class Gameplay : MonoBehaviour
     public static DialogSystem DialogSystem { get; private set; }
     public static QuizSystem QuizSystem { get; private set; }
 
-    private static string _userName;
     public static string UserName
     {
         get
@@ -36,13 +36,18 @@ public class Gameplay : MonoBehaviour
         }
     }
 
-    public static bool IsAllWin
+    public static int CorrectAnswers { get; set; }
+
+    public static int Score
     {
-        get
+        get => PlayerPrefs.GetInt("Score", 0);
+        private set
         {
-            return true;
+            PlayerPrefs.SetInt("Score", value);
         }
     }
+
+    public static bool IsAllWin => Score >= DialogSystem.QuestionsCount / 2;
 
     void Awake()
     {
@@ -51,7 +56,6 @@ public class Gameplay : MonoBehaviour
             _instance = this;
 
             WireSystem = new WireSystem();
-            TimerSystem = new TimerSystem();
             DialogSystem = new DialogSystem();
             QuizSystem = new QuizSystem();
         }
@@ -70,6 +74,8 @@ public class Gameplay : MonoBehaviour
 
     public static void Play()
     {
+        TimerSystem = new TimerSystem();
+
         _instance.gameObject.SetActive(true);
         TimerSystem.IsRunning = true;
         TimerSystem.Duration = LevelManager.LastTimerDuration;
@@ -77,9 +83,23 @@ public class Gameplay : MonoBehaviour
         Started?.Invoke();
     }
 
-    public static void Finish() 
+    public static void Finish()
     {
-        Finished?.Invoke();
+        CorrectAnswers = 0;
+        WireSystem.Reset();
+
+        TimerSystem.IntervalElapsed = null;
+        TimerSystem.TimerElapsed = null;
+        TimerSystem.IsRunning = false;
+        TimerSystem = null;
+
         Started = null;
+        Finished?.Invoke();
+    }
+
+    public static void Win()
+    {
+        Score += CorrectAnswers;
+        CorrectAnswers = 0;
     }
 }
